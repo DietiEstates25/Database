@@ -226,7 +226,7 @@ ALTER TABLE tb_feature_comp
 ALTER TABLE tb_feature_comp
   ADD CONSTRAINT ck_liveable_kitchen_only_if_kitchens
   CHECK (
-    kitchens > 0 OR liveable_kitchen = false
+    kitchens > 0 OR NOT liveable_kitchen
   );
 
 CREATE TABLE tb_feature_energy_eff (
