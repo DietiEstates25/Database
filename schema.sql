@@ -1,4 +1,3 @@
-
 CREATE TABLE tb_email (
   id    serial PRIMARY KEY,
   email dm_email UNIQUE NOT NULL
@@ -13,8 +12,8 @@ CREATE TABLE tb_usr_data (
 );
 
 ALTER TABLE tb_usr_data
-  CONSTRAINT usr_data_fk_email
-  FOREIGN KEY id_email REFERENCES tb_email(id)
+  ADD CONSTRAINT usr_data_fk_email
+  FOREIGN KEY (id_email) REFERENCES tb_email(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
@@ -24,8 +23,8 @@ CREATE TABLE tb_phone (
 );
 
 ALTER TABLE tb_phone
-  CONSTRAINT phone_fk_email
-  FOREIGN KEY id_email REFERENCES tb_email(id)
+  ADD CONSTRAINT phone_fk_email
+  FOREIGN KEY (id_email) REFERENCES tb_email(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
@@ -51,26 +50,26 @@ CREATE TABLE tb_bss_usr (
 );
 
 ALTER TABLE tb_bss_usr
-  CONSTRAINT bss_usr_fk_email
-  FOREIGN KEY id_email REFERENCES tb_email(id)
+  ADD CONSTRAINT bss_usr_fk_email
+  FOREIGN KEY (id_email) REFERENCES tb_email(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_bss_usr
-  CONSTRAINT bss_usr_fk_role
-  FOREIGN KEY id_role REFERENCES tb_role(id)
+  ADD CONSTRAINT bss_usr_fk_role
+  FOREIGN KEY (id_role) REFERENCES tb_bss_role(hierarchy)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_bss_usr
-  CONSTRAINT bss_usr_fk_bss_usr
-  FOREIGN KEY id_super REFERENCES tb_bss_usr(id_email)
+  ADD CONSTRAINT bss_usr_fk_bss_usr
+  FOREIGN KEY (id_super) REFERENCES tb_bss_usr(id_email)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_bss_usr
-  CONSTRAINT bss_usr_fk_agency
-  FOREIGN KEY id_agency REFERENCES tb_agency(id)
+  ADD CONSTRAINT bss_usr_fk_agency
+  FOREIGN KEY (id_agency) REFERENCES tb_agency(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
@@ -80,7 +79,7 @@ CREATE TABLE tb_ads_type (
   type  dm_smp_str UNIQUE NOT NULL
 );
 
-CREATE TABLE tb_esate_type (
+CREATE TABLE tb_estate_type (
   id    serial PRIMARY KEY,
   type  dm_smp_str UNIQUE NOT NULL
 );
@@ -129,26 +128,26 @@ CREATE TABLE tb_estate (
   id              serial PRIMARY KEY,
   id_bss_usr      integer NOT NULL,
   id_estate_type  integer NOT NULL,
-  position        geography NOT NULL,
+  position        text NOT NULL, -- TODO: remember the canna da zucchero
   id_ads_type     integer NOT NULL,
   is_available    boolean NOT NULL
 );
 
 ALTER TABLE tb_estate
-  CONSTRAINT estate_fk_bss_usr
-  FOREIGN KEY id_bss_usr REFERENCES tb_bss_usr(id_email)
+  ADD CONSTRAINT estate_fk_bss_usr
+  FOREIGN KEY (id_bss_usr) REFERENCES tb_bss_usr(id_email)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_estate
-  CONSTRAINT estate_fk_estate_type
-  FOREIGN KEY id_estate_type REFERENCES tb_estate_type(id)
+  ADD CONSTRAINT estate_fk_estate_type
+  FOREIGN KEY (id_estate_type) REFERENCES tb_estate_type(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_estate
-  CONSTRAINT estate_fk_asd_type
-  FOREIGN KEY id_asd_type REFERENCES tb_asd_type(id)
+  ADD CONSTRAINT estate_fk_ads_type
+  FOREIGN KEY (id_ads_type) REFERENCES tb_ads_type(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
@@ -165,19 +164,19 @@ CREATE TABLE tb_feature_sz (
 );
 
 ALTER TABLE tb_feature_sz
-  CONSTRAINT feature_sz_fk_estate
-  FOREIGN KEY id_estate REFERENCES tb_estate(id)
+  ADD CONSTRAINT feature_sz_fk_estate
+  FOREIGN KEY (id_estate) REFERENCES tb_estate(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_feature_sz
-  CONSTRAINT ck_main_area_plus
+  ADD CONSTRAINT ck_main_area_plus
   CHECK (
     main_area > 0
   );
 
 ALTER TABLE tb_feature_sz
-  CONSTRAINT ck_n_park_garage_area -- TODO change this name
+  ADD CONSTRAINT ck_n_park_garage_area -- TODO change this name
   CHECK (
     garage_area <> 0 OR (n_indoor_park = 0 AND n_outdoor_park = 0) 
   );
@@ -191,13 +190,13 @@ CREATE TABLE tb_feature_floor (
 );
 
 ALTER TABLE tb_feature_floor
-  CONSTRAINT feature_floor_fk_estate
-  FOREIGN KEY id_estate REFERENCES tb_estate(id)
+  ADD CONSTRAINT feature_floor_fk_estate
+  FOREIGN KEY (id_estate) REFERENCES tb_estate(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_feature_floor
-  CONSTRAINT ck_total_floor_less_estate_floor
+  ADD CONSTRAINT ck_total_floor_less_estate_floor
   CHECK (
     total_floor >= estate_floor
   );
@@ -209,23 +208,23 @@ CREATE TABLE tb_feature_comp (
   kitchens                 dm_int0plus NOT NULL DEFAULT 0,
   liveable_kitchen         boolean NOT NULL DEFAULT false,
   bedrooms                 dm_int0plus NOT NULL DEFAULT 0,
-  id_type_furniture        integer NOT NULL,
+  id_type_furniture        integer NOT NULL
 );
 
 ALTER TABLE tb_feature_comp
-  CONSTRAINT feature_comp_fk_estate
-  FOREIGN KEY id_estate REFERENCES tb_estate(id)
+  ADD CONSTRAINT feature_comp_fk_estate
+  FOREIGN KEY (id_estate) REFERENCES tb_estate(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_feature_comp
-  CONSTRAINT feature_comp_fk_furniture_type
-  FOREIGN KEY id_type_furniture REFERENCES tb_furniture_type(id)
+  ADD CONSTRAINT feature_comp_fk_furniture_type
+  FOREIGN KEY (id_type_furniture) REFERENCES tb_furniture_type(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_feature_comp
-  CONSTRAINT ck_liveable_kitchen_only_if_kitchens
+  ADD CONSTRAINT ck_liveable_kitchen_only_if_kitchens
   CHECK (
     kitchens > 0 OR liveable_kitchen = false
   );
@@ -233,57 +232,57 @@ ALTER TABLE tb_feature_comp
 CREATE TABLE tb_feature_energy_eff (
   id_estate                integer PRIMARY KEY,
   id_energy_class_type     integer NOT NULL,
-  energy_performance_index       dm_int0plus NOT NULL -- TODO change with acronym
-  id_type_heating          integer NOT NULL,
-  id_type_air_cond         integer NOT NULL
+  energy_performance_index dm_int0plus NOT NULL, -- TODO change with acronym
+  id_heating_type          integer NOT NULL,
+  id_air_cond_type         integer NOT NULL
 );
 
 ALTER TABLE tb_feature_energy_eff
-  CONSTRAINT feature_energy_eff_fk_estate
-  FOREIGN KEY id_estate REFERENCES tb_estate(id)
+  ADD CONSTRAINT feature_energy_eff_fk_estate
+  FOREIGN KEY (id_estate) REFERENCES tb_estate(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_feature_energy_eff
-  CONSTRAINT feature_energy_eff_fk_energy_class_type
-  FOREIGN KEY id_energy_class_type REFERENCES tb_energy_class_type(id)
+  ADD CONSTRAINT feature_energy_eff_fk_energy_class_type
+  FOREIGN KEY (id_energy_class_type) REFERENCES tb_energy_class_type(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_feature_energy_eff
-  CONSTRAINT feature_energy_eff_fk_heating_type
-  FOREIGN KEY id_type_heating REFERENCES tb_heating_type(id)
+  ADD CONSTRAINT feature_energy_eff_fk_heating_type
+  FOREIGN KEY (id_heating_type) REFERENCES tb_heating_type(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_feature_energy_eff
-  CONSTRAINT feature_energy_eff_fk_air_cond_type
-  FOREIGN KEY id_type_air_cond REFERENCES tb_air_cond_type(id)
+  ADD CONSTRAINT feature_energy_eff_fk_air_cond_type
+  FOREIGN KEY (id_air_cond_type) REFERENCES tb_air_cond_type(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 CREATE TABLE tb_feature_condition (
   id_estate                integer PRIMARY KEY,
   id_type_property         integer NOT NULL,
-  id_type_condition        integer NOT NULL
+  id_type_condition        integer NOT NULL,
   construction_year        dm_int0plus NOT NULL
 );
 
 ALTER TABLE tb_feature_condition
-  CONSTRAINT feature_condition_fk_estate
-  FOREIGN KEY id_estate REFERENCES tb_estate(id)
+  ADD CONSTRAINT feature_condition_fk_estate
+  FOREIGN KEY (id_estate) REFERENCES tb_estate(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_feature_condition
-  CONSTRAINT feature_condition_fk_property_type
-  FOREIGN KEY id_type_property REFERENCES tb_property_type(id)
+  ADD CONSTRAINT feature_condition_fk_property_type
+  FOREIGN KEY (id_type_property) REFERENCES tb_property_type(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_feature_condition
-  CONSTRAINT feature_condition_fk_condition_type
-  FOREIGN KEY id_type_condition REFERENCES tb_condition_type(id)
+  ADD CONSTRAINT feature_condition_fk_condition_type
+  FOREIGN KEY (id_type_condition) REFERENCES tb_condition_type(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
@@ -316,13 +315,13 @@ CREATE TABLE tb_feature_other (
   near_secondary_school    boolean NOT NULL DEFAULT false,
   near_high_school         boolean NOT NULL DEFAULT false,
   lgbt_friendly            boolean NOT NULL DEFAULT false,
-  pet_friendly             boolean NOT NULL DEFAULT false,
+  pet_friendly             boolean NOT NULL DEFAULT false
 );
 
 
 ALTER TABLE tb_feature_other
-  CONSTRAINT feature_other_fk_estate
-  FOREIGN KEY id_estate REFERENCES tb_estate(id)
+  ADD CONSTRAINT feature_other_fk_estate
+  FOREIGN KEY (id_estate) REFERENCES tb_estate(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
@@ -336,40 +335,40 @@ CREATE TABLE tb_price (
 );
 
 ALTER TABLE tb_price
-  CONSTRAINT price_fk_estate
-  FOREIGN KEY id_estate REFERENCES tb_estate(id)
+  ADD CONSTRAINT price_fk_estate
+  FOREIGN KEY (id_estate) REFERENCES tb_estate(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_price
-  CONSTRAINT ck_price_plus
+  ADD CONSTRAINT ck_price_plus
   CHECK (
     price > 0
   );
 
 CREATE TABLE tb_rental_info (
-  id_estate               integer PRIMARY KEY,
-  id_rental_contract_type integer NOT NULL,
-  rent_to_own             boolean NOT NULL DEFAULT false,
-  roommates               boolean NOT NULL DEFAULT false,
-  id_rental_utilities_type         boolean NOT NULL DEFAULT false,
+  id_estate                 integer PRIMARY KEY,
+  id_rental_contract_type   integer NOT NULL,
+  rent_to_own               boolean NOT NULL DEFAULT false,
+  roommates                 boolean NOT NULL DEFAULT false,
+  id_rental_utilities_type  integer NOT NULL
 );
 
 ALTER TABLE tb_rental_info
-  CONSTRAINT rental_info_fk_estate
-  FOREIGN KEY id_estate REFERENCES tb_estate(id)
+  ADD CONSTRAINT rental_info_fk_estate
+  FOREIGN KEY (id_estate) REFERENCES tb_estate(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_rental_info
-  CONSTRAINT rental_info_fk_rental_contract_type
-  FOREIGN KEY id_rental_contract_type REFERENCES tb_rental_contract_type(id)
+  ADD CONSTRAINT rental_info_fk_rental_contract_type
+  FOREIGN KEY (id_rental_contract_type) REFERENCES tb_rental_contract_type(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_rental_info
-  CONSTRAINT rental_info_fk_rental_utilities_type
-  FOREIGN KEY id_rental_utilities_type REFERENCES tb_rental_utilities_type(id)
+  ADD CONSTRAINT rental_info_fk_rental_utilities_type
+  FOREIGN KEY (id_rental_utilities_type) REFERENCES tb_rental_utilities_type(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
@@ -379,21 +378,21 @@ CREATE TABLE tb_email_views (
   id_email  integer NOT NULL,
   id_estate integer NOT NULL,
   view_date date NOT NULL,
-  views     dm_int0plus NOT NULL,
+  views     dm_int0plus NOT NULL
 );
 
 ALTER TABLE tb_email_views
   ADD CONSTRAINT email_views_pk PRIMARY KEY (id_email, id_estate);
 
 ALTER TABLE tb_email_views
-  CONSTRAINT email_views_fk_email
-  FOREIGN KEY id_email REFERENCES tb_email(id)
+  ADD CONSTRAINT email_views_fk_email
+  FOREIGN KEY (id_email) REFERENCES tb_email(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_email_views
-  CONSTRAINT email_views_fk_estate
-  FOREIGN KEY id_estate REFERENCES tb_estate(id)
+  ADD CONSTRAINT email_views_fk_estate
+  FOREIGN KEY (id_estate) REFERENCES tb_estate(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
@@ -401,21 +400,21 @@ CREATE TABLE tb_email_booking (
   id_email     integer NOT NULL,
   id_estate    integer NOT NULL,
   date         date NOT NULL,
-  bookings     dm_int0plus NOT NULL,
+  bookings     dm_int0plus NOT NULL
 );
 
 ALTER TABLE tb_email_booking
   ADD CONSTRAINT email_booking_pk PRIMARY KEY (id_email, id_estate);
 
 ALTER TABLE tb_email_booking
-  CONSTRAINT email_booking_fk_email
-  FOREIGN KEY id_email REFERENCES tb_email(id)
+  ADD CONSTRAINT email_booking_fk_email
+  FOREIGN KEY (id_email) REFERENCES tb_email(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_email_booking  
-  CONSTRAINT email_booking_fk_estate
-  FOREIGN KEY id_estate REFERENCES tb_estate(id)
+  ADD CONSTRAINT email_booking_fk_estate
+  FOREIGN KEY (id_estate) REFERENCES tb_estate(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
@@ -431,14 +430,14 @@ ALTER TABLE tb_email_offer
   ADD CONSTRAINT email_offer_pk PRIMARY KEY (id_email, id_estate);
 
 ALTER TABLE tb_email_offer
-  CONSTRAINT email_offer_fk_email
-  FOREIGN KEY id_email REFERENCES tb_email(id)
+  ADD CONSTRAINT email_offer_fk_email
+  FOREIGN KEY (id_email) REFERENCES tb_email(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
 ALTER TABLE tb_email_offer
-  CONSTRAINT email_offer_fk_estate
-  FOREIGN KEY id_estate REFERENCES tb_estate(id)
+  ADD CONSTRAINT email_offer_fk_estate
+  FOREIGN KEY (id_estate) REFERENCES tb_estate(id)
   ON DELETE cascade
   ON UPDATE cascade;
 
@@ -446,20 +445,12 @@ CREATE TABLE estate_statistic (
   id_estate integer PRIMARY KEY,
   views     dm_int0plus NOT NULL DEFAULT 0,
   bookings  dm_int0plus NOT NULL DEFAULT 0,
-  offers    dm_int0plus NOT NULL DEFAULT 0
+  offers    dm_int0plus NOT NULL DEFAULT 0,
   date      date NOT NULL
 );
 
 ALTER TABLE estate_statistic
-  CONSTRAINT estate_statistic_fk_estate
-  FOREIGN KEY id_estate REFERENCES tb_estate(id)
+  ADD CONSTRAINT estate_statistic_fk_estate
+  FOREIGN KEY (id_estate) REFERENCES tb_estate(id)
   ON DELETE cascade
   ON UPDATE cascade;
-
-CREATE TABLE ();
-CREATE TABLE ();
-CREATE TABLE ();
-CREATE TABLE ();
-CREATE TABLE ();
-CREATE TABLE ();
-CREATE TABLE ();

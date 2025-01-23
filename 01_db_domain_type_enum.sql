@@ -1,3 +1,9 @@
+DROP SCHEMA IF EXISTS dieti_estate CASCADE;
+
+CREATE SCHEMA dieti_estate;
+
+SET search_path TO dieti_estate, public;
+
 CREATE DOMAIN dm_dob AS date
   CHECK (
     extract(year FROM (age(VALUE::timestamp))) > 18
@@ -24,7 +30,7 @@ CREATE DOMAIN dm_phone AS varchar(16)
     VALUE ~ '^\+?[0-9]{3,15}$'
   );
 
-CREATE DOMAIN dm_string AS varchar(666)
+CREATE DOMAIN dm_smp_str AS varchar(666)
   CHECK (
   	VALUE ~ '(?=^'
   				'['
