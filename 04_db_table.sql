@@ -74,7 +74,6 @@ CREATE TABLE tb_agency (
     id          serial PRIMARY KEY,
     name        dm_smp_str UNIQUE NOT NULL,
     id_address  integer NOT NULL
---    address text  NOT NULL
 );
 -------------------------------------------------------------------------------
 
@@ -144,7 +143,6 @@ CREATE TABLE tb_estate (
     id_bss_usr      integer NOT NULL,
     id_estate_type  integer NOT NULL,
     id_address      integer NOT NULL,
---    position        text NOT NULL, -- TODO: remember the canna da zucchero
     id_ads_type     integer NOT NULL,
     is_sold         boolean NOT NULL DEFAULT false
 );
@@ -163,7 +161,6 @@ CREATE TABLE tb_tmp_estate (
     id_bss_usr      integer NOT NULL,
     id_estate_type  integer,
     id_address      integer,
-    -- position     text, -- TODO: remember the canna da zucchero
     id_ads_type     integer NOT NULL,
     is_completed    boolean DEFAULT false
 );
@@ -378,6 +375,7 @@ CREATE TABLE tb_feature_other (
     near_high_school        boolean NOT NULL DEFAULT false,
     lgbt_friendly           boolean NOT NULL DEFAULT false,
     pet_friendly            boolean NOT NULL DEFAULT false
+    opt_fiber_coverage      boolean NOT NULL DEFAULT false
 );
 -------------------------------------------------------------------------------
 
@@ -418,6 +416,7 @@ CREATE TABLE tb_tmp_feature_other (
     near_high_school        boolean NOT NULL DEFAULT false,
     lgbt_friendly           boolean NOT NULL DEFAULT false,
     pet_friendly            boolean NOT NULL DEFAULT false
+    opt_fiber_coverage      boolean NOT NULL DEFAULT false
 );
 -------------------------------------------------------------------------------
 
@@ -431,7 +430,7 @@ CREATE TABLE tb_tmp_feature_other (
 CREATE TABLE tb_price (
     id_estate       integer PRIMARY KEY,
     price           dm_int0plus NOT NULL,
-    condom_exp      dm_int0plus NOT NULL DEFAULT 0,
+    condo_fees      dm_int0plus NOT NULL DEFAULT 0,
     income_property boolean NOT NULL DEFAULT false,
     is_free         boolean NOT NULL DEFAULT false,
     is_negotiable   boolean NOT NULL DEFAULT false
@@ -448,7 +447,7 @@ CREATE TABLE tb_price (
 CREATE TABLE tb_tmp_price (
     id_estate       integer PRIMARY KEY,
     price           dm_int0plus NOT NULL,
-    condom_exp      dm_int0plus NOT NULL DEFAULT 0,
+    condo_fees      dm_int0plus NOT NULL DEFAULT 0,
     income_property boolean NOT NULL DEFAULT false,
     is_free         boolean NOT NULL DEFAULT false,
     is_negotiable   boolean NOT NULL DEFAULT false
@@ -538,13 +537,13 @@ CREATE TABLE tb_email_offer (
  * TYPE: table
  * NAME: estate_statistic
  *
- * DESC: table storing daily aggregated statistics for properties
+ * DESC: table storing hourly aggregated statistics for properties
  *****************************************************************************/
 CREATE TABLE estate_statistic (
     id_estate   integer PRIMARY KEY,
     views       dm_int0plus NOT NULL DEFAULT 0,
     bookings    dm_int0plus NOT NULL DEFAULT 0,
     offers      dm_int0plus NOT NULL DEFAULT 0,
-    date        date NOT NULL
+    time_stamp  timestamp NOT NULL
 );
 -------------------------------------------------------------------------------
