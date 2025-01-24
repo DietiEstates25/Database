@@ -7,7 +7,7 @@
 ALTER TABLE tb_usr_data
     ADD CONSTRAINT usr_data_fk_email
         FOREIGN KEY (id_email)
-        REFRENCES tb_email(id)
+        REFERENCES tb_email(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ ALTER TABLE tb_usr_data
 ALTER TABLE tb_phone
     ADD CONSTRAINT phone_fk_email
         FOREIGN KEY (id_email)
-        REFRENCES tb_email(id)
+        REFERENCES tb_email(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ ALTER TABLE tb_phone
 ALTER TABLE tb_agency
     ADD CONSTRAINT agency_fk_address
         FOREIGN KEY (id_address)
-        REFRENCES tb_address(id)
+        REFERENCES tb_address(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ ALTER TABLE tb_agency
 ALTER TABLE tb_bss_usr
     ADD CONSTRAINT bss_usr_fk_email
         FOREIGN KEY (id_email)
-        REFRENCES tb_email(id)
+        REFERENCES tb_email(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ ALTER TABLE tb_bss_usr
 ALTER TABLE tb_bss_usr
     ADD CONSTRAINT bss_usr_fk_role
         FOREIGN KEY (id_role)
-        REFRENCES tb_bss_role(hierarchy)
+        REFERENCES tb_bss_role(hierarchy)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ ALTER TABLE tb_bss_usr
 ALTER TABLE tb_bss_usr
     ADD CONSTRAINT bss_usr_fk_super_bss_usr
         FOREIGN KEY (id_super)
-        REFRENCES tb_bss_usr(id_email)
+        REFERENCES tb_bss_usr(id_email)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -98,7 +98,7 @@ ALTER TABLE tb_bss_usr
 ALTER TABLE tb_bss_usr
     ADD CONSTRAINT bss_usr_fk_agency
         FOREIGN KEY (id_agency)
-        REFRENCES tb_agency(id)
+        REFERENCES tb_agency(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -114,7 +114,7 @@ ALTER TABLE tb_bss_usr
 ALTER TABLE tb_tmp_bss_usr
     ADD CONSTRAINT tmp_bss_usr_fk_email
         FOREIGN KEY (id_email)
-        REFRENCES tb_email(id)
+        REFERENCES tb_email(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -131,7 +131,7 @@ ALTER TABLE tb_tmp_bss_usr
 ALTER TABLE tb_tmp_bss_usr
     ADD CONSTRAINT tmp_bss_usr_fk_role
         FOREIGN KEY (id_role)
-        REFRENCES tb_bss_role(hierarchy)
+        REFERENCES tb_bss_role(hierarchy)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -147,7 +147,7 @@ ALTER TABLE tb_tmp_bss_usr
 ALTER TABLE tb_tmp_bss_usr
     ADD CONSTRAINT tmp_bss_usr_fk_bss_usr
         FOREIGN KEY (id_super)
-        REFRENCES tb_bss_usr(id_email)
+        REFERENCES tb_bss_usr(id_email)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -163,7 +163,7 @@ ALTER TABLE tb_tmp_bss_usr
 ALTER TABLE tb_tmp_bss_usr
     ADD CONSTRAINT tmp_bss_usr_fk_agency
         FOREIGN KEY (id_agency)
-        REFRENCES tb_agency(id)
+        REFERENCES tb_agency(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -179,7 +179,7 @@ ALTER TABLE tb_tmp_bss_usr
 ALTER TABLE tb_estate
     ADD CONSTRAINT estate_fk_bss_usr
         FOREIGN KEY (id_bss_usr)
-        REFRENCES tb_bss_usr(id_email)
+        REFERENCES tb_bss_usr(id_email)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -194,7 +194,7 @@ ALTER TABLE tb_estate
 ALTER TABLE tb_estate
     ADD CONSTRAINT estate_fk_estate_type
         FOREIGN KEY (id_estate_type)
-        REFRENCES tb_estate_type(id)
+        REFERENCES tb_estate_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -209,7 +209,7 @@ ALTER TABLE tb_estate
 ALTER TABLE tb_estate
     ADD CONSTRAINT estate_fk_address
         FOREIGN KEY (id_address)
-        REFRENCES tb_address(id)
+        REFERENCES tb_address(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -225,7 +225,7 @@ ALTER TABLE tb_estate
 ALTER TABLE tb_estate
     ADD CONSTRAINT estate_fk_ads_type
         FOREIGN KEY (id_ads_type)
-        REFRENCES tb_ads_type(id)
+        REFERENCES tb_ads_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -241,7 +241,7 @@ ALTER TABLE tb_estate
 ALTER TABLE tb_tmp_estate
     ADD CONSTRAINT tmp_estate_fk_bss_usr
         FOREIGN KEY (id_bss_usr)
-        REFRENCES tb_bss_usr(id_email)
+        REFERENCES tb_bss_usr(id_email)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -257,7 +257,7 @@ ALTER TABLE tb_tmp_estate
 ALTER TABLE tb_tmp_estate
     ADD CONSTRAINT tmp_estate_fk_estate_type
         FOREIGN KEY (id_estate_type)
-        REFRENCES tb_estate_type(id)
+        REFERENCES tb_estate_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -273,7 +273,7 @@ ALTER TABLE tb_tmp_estate
 ALTER TABLE tb_tmp_estate
     ADD CONSTRAINT tmp_estate_fk_address
         FOREIGN KEY (id_address)
-        REFRENCES tb_address(id)
+        REFERENCES tb_address(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -289,7 +289,7 @@ ALTER TABLE tb_tmp_estate
 ALTER TABLE tb_tmp_estate
     ADD CONSTRAINT tmp_estate_fk_ads_type
         FOREIGN KEY (id_ads_type)
-        REFRENCES tb_ads_type(id)
+        REFERENCES tb_ads_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -304,7 +304,7 @@ ALTER TABLE tb_tmp_estate
 ALTER TABLE tb_feature_sz
     ADD CONSTRAINT feature_sz_fk_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_estate(id)
+        REFERENCES tb_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -349,7 +349,7 @@ ALTER TABLE tb_feature_sz
 ALTER TABLE tb_tmp_feature_sz
     ADD CONSTRAINT tmp_feature_sz_fk_tmp_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -393,7 +393,7 @@ ALTER TABLE tb_tmp_feature_sz
 ALTER TABLE tb_feature_floor
     ADD CONSTRAINT feature_floor_fk_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_estate(id)
+        REFERENCES tb_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -424,7 +424,7 @@ ALTER TABLE tb_feature_floor
 ALTER TABLE tb_tmp_feature_floor
     ADD CONSTRAINT tmp_feature_floor_fk_tmp_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -455,7 +455,7 @@ ALTER TABLE tb_tmp_feature_floor
 ALTER TABLE tb_feature_comp
     ADD CONSTRAINT feature_comp_fk_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_estate(id)
+        REFERENCES tb_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -471,7 +471,7 @@ ALTER TABLE tb_feature_comp
 ALTER TABLE tb_feature_comp
     ADD CONSTRAINT feature_comp_fk_furniture_type
         FOREIGN KEY (id_type_furniture)
-        REFRENCES tb_furniture_type(id)
+        REFERENCES tb_furniture_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -502,7 +502,7 @@ ALTER TABLE tb_feature_comp
 ALTER TABLE tb_tmp_feature_comp
     ADD CONSTRAINT tmp_feature_comp_fk_tmp_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -518,7 +518,7 @@ ALTER TABLE tb_tmp_feature_comp
 ALTER TABLE tb_tmp_feature_comp
     ADD CONSTRAINT tmp_feature_comp_fk_furniture_type
         FOREIGN KEY (id_type_furniture)
-        REFRENCES tb_furniture_type(id)
+        REFERENCES tb_furniture_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -549,7 +549,7 @@ ALTER TABLE tb_tmp_feature_comp
 ALTER TABLE tb_feature_energy_eff
     ADD CONSTRAINT feature_energy_eff_fk_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_estate(id)
+        REFERENCES tb_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -565,7 +565,7 @@ ALTER TABLE tb_feature_energy_eff
 ALTER TABLE tb_feature_energy_eff
     ADD CONSTRAINT feature_energy_eff_fk_energy_class_type
         FOREIGN KEY (id_energy_class_type)
-        REFRENCES tb_energy_class_type(id)
+        REFERENCES tb_energy_class_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -581,7 +581,7 @@ ALTER TABLE tb_feature_energy_eff
 ALTER TABLE tb_feature_energy_eff
     ADD CONSTRAINT feature_energy_eff_fk_heating_type
         FOREIGN KEY (id_heating_type)
-        REFRENCES tb_heating_type(id)
+        REFERENCES tb_heating_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -597,7 +597,7 @@ ALTER TABLE tb_feature_energy_eff
 ALTER TABLE tb_feature_energy_eff
     ADD CONSTRAINT feature_energy_eff_fk_air_cond_type
         FOREIGN KEY (id_air_cond_type)
-        REFRENCES tb_air_cond_type(id)
+        REFERENCES tb_air_cond_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -613,7 +613,7 @@ ALTER TABLE tb_feature_energy_eff
 ALTER TABLE tb_tmp_feature_energy_eff
     ADD CONSTRAINT tmp_feature_energy_eff_fk_tmp_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -629,7 +629,7 @@ ALTER TABLE tb_tmp_feature_energy_eff
 ALTER TABLE tb_tmp_feature_energy_eff
     ADD CONSTRAINT tmp_feature_energy_eff_fk_energy_class_type
         FOREIGN KEY (id_energy_class_type)
-        REFRENCES tb_energy_class_type(id)
+        REFERENCES tb_energy_class_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -645,7 +645,7 @@ ALTER TABLE tb_tmp_feature_energy_eff
 ALTER TABLE tb_tmp_feature_energy_eff
     ADD CONSTRAINT tmp_feature_energy_eff_fk_heating_type
         FOREIGN KEY (id_heating_type)
-        REFRENCES tb_heating_type(id)
+        REFERENCES tb_heating_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -661,7 +661,7 @@ ALTER TABLE tb_tmp_feature_energy_eff
 ALTER TABLE tb_tmp_feature_energy_eff
     ADD CONSTRAINT tmp_feature_energy_eff_fk_air_cond_type
         FOREIGN KEY (id_air_cond_type)
-        REFRENCES tb_air_cond_type(id)
+        REFERENCES tb_air_cond_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -677,7 +677,7 @@ ALTER TABLE tb_tmp_feature_energy_eff
 ALTER TABLE tb_feature_condition
     ADD CONSTRAINT feature_condition_fk_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_estate(id)
+        REFERENCES tb_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -693,7 +693,7 @@ ALTER TABLE tb_feature_condition
 ALTER TABLE tb_feature_condition
     ADD CONSTRAINT feature_condition_fk_property_type
         FOREIGN KEY (id_type_property)
-        REFRENCES tb_property_type(id)
+        REFERENCES tb_property_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -709,7 +709,7 @@ ALTER TABLE tb_feature_condition
 ALTER TABLE tb_feature_condition
     ADD CONSTRAINT feature_condition_fk_condition_type
         FOREIGN KEY (id_type_condition)
-        REFRENCES tb_condition_type(id)
+        REFERENCES tb_condition_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -725,7 +725,7 @@ ALTER TABLE tb_feature_condition
 ALTER TABLE tb_tmp_feature_condition
     ADD CONSTRAINT tmp_feature_condition_fk_tmp_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -741,7 +741,7 @@ ALTER TABLE tb_tmp_feature_condition
 ALTER TABLE tb_tmp_feature_condition
     ADD CONSTRAINT tmp_feature_condition_fk_property_type
         FOREIGN KEY (id_type_property)
-        REFRENCES tb_property_type(id)
+        REFERENCES tb_property_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -757,7 +757,7 @@ ALTER TABLE tb_tmp_feature_condition
 ALTER TABLE tb_tmp_feature_condition
     ADD CONSTRAINT tmp_feature_condition_fk_condition_type
         FOREIGN KEY (id_type_condition)
-        REFRENCES tb_condition_type(id)
+        REFERENCES tb_condition_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -772,7 +772,7 @@ ALTER TABLE tb_tmp_feature_condition
 ALTER TABLE tb_feature_other
     ADD CONSTRAINT feature_other_fk_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_estate(id)
+        REFERENCES tb_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -788,7 +788,7 @@ ALTER TABLE tb_feature_other
 ALTER TABLE tb_tmp_feature_other
     ADD CONSTRAINT tmp_feature_other_fk_tmp_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -803,7 +803,7 @@ ALTER TABLE tb_tmp_feature_other
 ALTER TABLE tb_price
     ADD CONSTRAINT price_fk_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_estate(id)
+        REFERENCES tb_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -832,7 +832,7 @@ ALTER TABLE tb_price
 ALTER TABLE tb_tmp_price
     ADD CONSTRAINT tmp_price_fk_tmp_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -861,7 +861,7 @@ ALTER TABLE tb_tmp_price
 ALTER TABLE tb_rental_info
     ADD CONSTRAINT rental_info_fk_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_estate(id)
+        REFERENCES tb_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -877,7 +877,7 @@ ALTER TABLE tb_rental_info
 ALTER TABLE tb_rental_info
     ADD CONSTRAINT rental_info_fk_rental_contract_type
         FOREIGN KEY (id_rental_contract_type)
-        REFRENCES tb_rental_contract_type(id)
+        REFERENCES tb_rental_contract_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -893,7 +893,7 @@ ALTER TABLE tb_rental_info
 ALTER TABLE tb_rental_info
     ADD CONSTRAINT rental_info_fk_rental_utilities_type
         FOREIGN KEY (id_rental_utilities_type)
-        REFRENCES tb_rental_utilities_type(id)
+        REFERENCES tb_rental_utilities_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -909,7 +909,7 @@ ALTER TABLE tb_rental_info
 ALTER TABLE tb_tmp_rental_info
     ADD CONSTRAINT tmp_rental_info_fk_tmp_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -925,7 +925,7 @@ ALTER TABLE tb_tmp_rental_info
 ALTER TABLE tb_tmp_rental_info
     ADD CONSTRAINT tmp_rental_info_fk_rental_contract_type
         FOREIGN KEY (id_rental_contract_type)
-        REFRENCES tb_rental_contract_type(id)
+        REFERENCES tb_rental_contract_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -941,7 +941,7 @@ ALTER TABLE tb_tmp_rental_info
 ALTER TABLE tb_tmp_rental_info
     ADD CONSTRAINT tmp_rental_info_fk_rental_utilities_type
         FOREIGN KEY (id_rental_utilities_type)
-        REFRENCES tb_rental_utilities_type(id)
+        REFERENCES tb_rental_utilities_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -968,7 +968,7 @@ ALTER TABLE tb_email_views
 ALTER TABLE tb_email_views
     ADD CONSTRAINT email_views_fk_email
         FOREIGN KEY (id_email)
-        REFRENCES tb_email(id)
+        REFERENCES tb_email(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -984,7 +984,7 @@ ALTER TABLE tb_email_views
 ALTER TABLE tb_email_views
     ADD CONSTRAINT email_views_fk_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_estate(id)
+        REFERENCES tb_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -1011,7 +1011,7 @@ ALTER TABLE tb_email_booking
 ALTER TABLE tb_email_booking
     ADD CONSTRAINT email_booking_fk_email
         FOREIGN KEY (id_email)
-        REFRENCES tb_email(id)
+        REFERENCES tb_email(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -1027,7 +1027,7 @@ ALTER TABLE tb_email_booking
 ALTER TABLE tb_email_booking  
     ADD CONSTRAINT email_booking_fk_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_estate(id)
+        REFERENCES tb_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -1054,7 +1054,7 @@ ALTER TABLE tb_email_offer
 ALTER TABLE tb_email_offer
     ADD CONSTRAINT email_offer_fk_email
         FOREIGN KEY (id_email)
-        REFRENCES tb_email(id)
+        REFERENCES tb_email(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -1070,7 +1070,7 @@ ALTER TABLE tb_email_offer
 ALTER TABLE tb_email_offer
     ADD CONSTRAINT email_offer_fk_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_estate(id)
+        REFERENCES tb_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -1086,7 +1086,7 @@ ALTER TABLE tb_email_offer
 ALTER TABLE estate_statistic
     ADD CONSTRAINT estate_statistic_fk_estate
         FOREIGN KEY (id_estate)
-        REFRENCES tb_estate(id)
+        REFERENCES tb_estate(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
