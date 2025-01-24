@@ -1,21 +1,21 @@
 /******************************************************************************
- * TYPE: domain
- * NAME: dm_dob
- *
- * DESC: domain for date of birth that ensures user is over 18 years old
- *****************************************************************************/
+  * TYPE: domain
+  * NAME: dm_dob
+  *
+  * DESC: domain for date of birth that ensures user is over 18 years old
+ ******************************************************************************/
 CREATE DOMAIN dm_dob AS date CHECK (
-    extract( year FROM (age(VALUE::timestamp)) ) > 18
+    extract( year FROM (age(VALUE::timestamp)) ) >= 18
 );
 -------------------------------------------------------------------------------
 
 
 /******************************************************************************
- * TYPE: domain
- * NAME: dm_email
- *
- * DESC: domain for email addresses with format validation -- TODO: quale standard?
- *****************************************************************************/
+  * TYPE: domain
+  * NAME: dm_email
+  *
+  * DESC: domain for email addresses with format validation (RFC 5322)
+ ******************************************************************************/
 CREATE DOMAIN dm_email AS varchar(320) CHECK (
     VALUE ~ '^((?:[A-Za-z0-9!#$%&''*+\-\/=?^_`{|}~]|'
             '(?<=^|\.)"|"(?=$|\.|@)|(?<=".*)[.](?=.*")|(?<!\.)\.){1,64})(@)'
@@ -25,11 +25,11 @@ CREATE DOMAIN dm_email AS varchar(320) CHECK (
 
 
 /******************************************************************************
- * TYPE: domain
- * NAME: dm_int0plus
- *
- * DESC: domain for non-negative integers
- *****************************************************************************/
+  * TYPE: domain
+  * NAME: dm_int0plus
+  *
+  * DESC: domain for non-negative integers
+ ******************************************************************************/
 CREATE DOMAIN dm_int0plus AS integer CHECK (
     VALUE >= 0
 );
@@ -37,11 +37,11 @@ CREATE DOMAIN dm_int0plus AS integer CHECK (
 
 
 /******************************************************************************
- * TYPE: domain
- * NAME: dm_phone
- *
- * DESC: domain for phone numbers with international format validation
- *****************************************************************************/
+  * TYPE: domain
+  * NAME: dm_phone
+  *
+  * DESC: domain for phone numbers with international format validation
+ ******************************************************************************/
 CREATE DOMAIN dm_phone AS varchar(16) CHECK (
     VALUE ~ '^\+?[0-9]{3,15}$'
 );
@@ -49,16 +49,16 @@ CREATE DOMAIN dm_phone AS varchar(16) CHECK (
 
 
 /******************************************************************************
- * TYPE: domain
- * NAME: dm_smp_str
- *
- * DESC: domain for strings (max 666 chars) that must:
- *       - Start with a letter (including accented)
- *       - End with a letter or period
- *       - Allow spaces, apostrophes, hyphens, and periods in middle
- *       - No consecutive spaces/punctuation
- *       - Support extended Latin alphabet (basic + accented chars)
- *****************************************************************************/
+  * TYPE: domain
+  * NAME: dm_smp_str
+  *
+  * DESC: domain for strings (max 666 chars) that must:
+  *       - Start with a letter (including accented)
+  *       - End with a letter or period
+  *       - Allow spaces, apostrophes, hyphens, and periods in middle
+  *       - No consecutive spaces/punctuation
+  *       - Support extended Latin alphabet (basic + accented chars)
+ ******************************************************************************/
 CREATE DOMAIN dm_smp_str AS varchar(666)
 CHECK
 (

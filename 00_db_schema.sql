@@ -1,9 +1,9 @@
 /******************************************************************************
- * TYPE: schema
- * NAME: dieti_estate
- *
- * DESC: main schema for the real estate database system
- *****************************************************************************/
+  * TYPE: schema
+  * NAME: dieti_estate
+  *
+  * DESC: main schema for the real estate database system
+ ******************************************************************************/
 DROP SCHEMA IF EXISTS dieti_estate CASCADE;
 
 CREATE SCHEMA dieti_estate;

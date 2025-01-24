@@ -1,8 +1,8 @@
 /******************************************************************************
- * TYPE: enum
- * NAME: ty_gender
- *
- * DESC: enumerated type for gender identification (Male, Female, Other)
- *****************************************************************************/
+  * TYPE: enum
+  * NAME: ty_gender
+  *
+  * DESC: enumerated type for gender identification (Male, Female, Other)
+ ******************************************************************************/
 CREATE TYPE ty_gender AS ENUM ('M', 'F', 'O');
 -------------------------------------------------------------------------------
