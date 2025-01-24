@@ -45,6 +45,21 @@ ALTER TABLE tb_agency
 
 /******************************************************************************
  * TYPE: constraint - foreign key
+ * NAME: end_usr_fk_email
+ *
+ * DESC: foreign key constraint associating each end user their email
+ *****************************************************************************/
+ALTER TABLE tb_end_usr
+    ADD CONSTRAINT end_usr_fk_email
+        FOREIGN KEY (id_email)
+        REFERENCES tb_email(id)
+        ON DELETE cascade
+        ON UPDATE cascade;
+-------------------------------------------------------------------------------
+
+
+/******************************************************************************
+ * TYPE: constraint - foreign key
  * NAME: bss_usr_fk_email
  *
  * DESC: foreign key constraint associating each businesses user their email
@@ -139,12 +154,12 @@ ALTER TABLE tb_tmp_bss_usr
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_bss_usr_fk_bss_usr
+ * NAME: tmp_bss_usr_fk_super_bss_usr
  *
  * DESC: foreign key constraint associating each temporary businesses user with 
  *       their superior
  *****************************************************************************/
-ALTER TABLE tb_tmp_bss_usr
+ALTER TABLE tb_tmp_super_bss_usr
     ADD CONSTRAINT tmp_bss_usr_fk_bss_usr
         FOREIGN KEY (id_super)
         REFERENCES tb_bss_usr(id_email)
@@ -202,7 +217,7 @@ ALTER TABLE tb_estate
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: estaet_fk_address
+ * NAME: estate_fk_address
  *
  * DESC: foreign key constraint associating each estate with it's address
  *****************************************************************************/
@@ -373,7 +388,7 @@ ALTER TABLE tb_tmp_feature_sz
  * TYPE: constraint - check
  * NAME: ck_tmp_garage_area_parking_spaces
  *
- * DESC: check constraint to ensure temmporary number of parking spaces is 0 if
+ * DESC: check constraint to ensure temporary number of parking spaces is 0 if
  *       garage area is 0
  *****************************************************************************/
 ALTER TABLE tb_tmp_feature_sz
@@ -604,6 +619,20 @@ ALTER TABLE tb_feature_energy_eff
 
 
 /******************************************************************************
+ * TYPE: constraint - check
+ * NAME: ck_EPGL_plus
+ *
+ * DESC: check constraint to ensure that EPGL is a positive integer
+ *****************************************************************************/
+ALTER TABLE tb_feature_energy_eff
+    ADD CONSTRAINT ck_EPGL_plus
+        CHECK (
+            epgl > 0
+        );
+-------------------------------------------------------------------------------
+
+
+/******************************************************************************
  * TYPE: constraint - foreign key
  * NAME: tmp_feature_energy_eff_fk_tmp_estate
  *
@@ -664,6 +693,20 @@ ALTER TABLE tb_tmp_feature_energy_eff
         REFERENCES tb_air_cond_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
+-------------------------------------------------------------------------------
+
+
+/******************************************************************************
+ * TYPE: constraint - check
+ * NAME: ck_tmp_EPGL_plus
+ *
+ * DESC: check constraint to ensure that EPGL is a positive integer
+ *****************************************************************************/
+ALTER TABLE tb_tmp_feature_energy_eff
+    ADD CONSTRAINT ck_tmp_EPGL_plus
+        CHECK (
+            epgl > 0
+        );
 -------------------------------------------------------------------------------
 
 
