@@ -1,142 +1,5 @@
 /******************************************************************************
  * TYPE: table
- * NAME: tb_asd_type
- *
- * DESC: table of the possible types of real estate advertisment
- *****************************************************************************/
-CREATE TABLE tb_ads_type (
-    id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_estate_type
- *
- * DESC: table of the possible types of real estate properties
- *       (apartment, house, etc.)
- *****************************************************************************/
-CREATE TABLE tb_estate_type (
-    id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_furniture_type
- *
- * DESC: table of the possible furniture states of properties
- *       (furnished, unfurnished, etc.)
- *****************************************************************************/
-CREATE TABLE tb_furniture_type (
-    id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_energy_class_type
- *
- * DESC: table of energy efficiency classifications for properties
- *       (A, B, C, etc.)
- *****************************************************************************/
-CREATE TABLE tb_energy_class_type (
-    id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
-);
--------------------------------------------------------------------------------
- 
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_heating_type
- *
- * DESC: table of possible heating system types
- *       (central, autonomous, etc.)
- *****************************************************************************/
-CREATE TABLE tb_heating_type (
-    id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_air_cond_type
- *
- * DESC: table of possible air conditioning system types
- *****************************************************************************/
-CREATE TABLE tb_air_cond_type (
-    id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_property_type
- *
- * DESC: table of property ownership types
- *       (freehold, leasehold, etc.)
- *****************************************************************************/
-CREATE TABLE tb_property_type (
-    id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_condition_type
- *
- * DESC: table of possible property conditions
- *       (new, renovated, to be renovated, etc.)
- *****************************************************************************/
-CREATE TABLE tb_condition_type (
-    id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_rental_contract_type
- *
- * DESC: table of possible rental contract types
- *       (short-term, long-term, etc.)
- *****************************************************************************/
-CREATE TABLE tb_rental_contract_type (
-    id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_rental_utilities_type
- *
- * DESC: table of possible utility inclusion types in rental properties
- *****************************************************************************/
-CREATE TABLE tb_rental_utilities_type (
-    id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
  * NAME: tb_email
  *
  * DESC: table storing unique email addresses for all system users
@@ -177,20 +40,6 @@ CREATE TABLE tb_phone (
 -------------------------------------------------------------------------------
 
 
-/******************************************************************************
- * TYPE: table
- * NAME: tb_bss_role
- *
- * DESC: table defining business user roles and their hierarchical relationships
- *****************************************************************************/
-CREATE TABLE tb_bss_role (
-    hierarchy   dm_int0plus PRIMARY KEY,    -- bottom up
-    role        dm_smp_str UNIQUE NOT NULL
-);
--------------------------------------------------------------------------------
-
-
-
 -- TODO: idea. Let's think about it
 /******************************************************************************
  * TYPE: table
@@ -213,7 +62,8 @@ CREATE TABLE tb_address (
 );
 -------------------------------------------------------------------------------
 
--- ! Agency should have an email? or we can use root admin email?
+
+-- TOD Agency should have an email? or we can use root admin email?
 /******************************************************************************
  * TYPE: table
  * NAME: tb_agency
@@ -246,6 +96,7 @@ CREATE TABLE tb_end_usr (
 -------------------------------------------------------------------------------
 
 
+-- TODO: check hierarchy (Maybe only in temp)
 /******************************************************************************
  * TYPE: table
  * NAME: tb_bss_usr
@@ -262,7 +113,7 @@ CREATE TABLE tb_bss_usr (
 );
 -------------------------------------------------------------------------------
 
-
+-- TODO: check hierarchy
 /******************************************************************************
  * TYPE: table
  * NAME: tb_tmp_bss_usr
@@ -310,8 +161,8 @@ CREATE TABLE tb_tmp_estate (
     id              serial PRIMARY KEY,
     time_stamp      timestamp NOT NULL DEFAULT NOW(),         
     id_bss_usr      integer NOT NULL,
-    id_estate_type  integer NOT NULL,
-    id_address      integer ,
+    id_estate_type  integer,
+    id_address      integer,
     -- position     text, -- TODO: remember the canna da zucchero
     id_ads_type     integer NOT NULL,
     is_completed    boolean DEFAULT false
@@ -437,7 +288,7 @@ CREATE TABLE tb_tmp_feature_comp (
 CREATE TABLE tb_feature_energy_eff (
     id_estate               integer PRIMARY KEY,
     id_energy_class_type    integer NOT NULL,
-    energy_perf_indx        dm_int0plus NOT NULL, -- TODO change with acronym
+    epgl                    dm_int0plus NOT NULL,
     id_heating_type         integer NOT NULL,
     id_air_cond_type        integer NOT NULL
 );
@@ -454,7 +305,7 @@ CREATE TABLE tb_feature_energy_eff (
 CREATE TABLE tb_tmp_feature_energy_eff (
     id_estate               integer PRIMARY KEY,
     id_energy_class_type    integer NOT NULL,
-    energy_perf_indx        dm_int0plus NOT NULL, -- TODO change with acronym
+    epgl                    dm_int0plus NOT NULL,
     id_heating_type         integer NOT NULL,
     id_air_cond_type        integer NOT NULL
 );
@@ -605,6 +456,7 @@ CREATE TABLE tb_tmp_price (
 -------------------------------------------------------------------------------
 
 
+-- TODO: trigger to see if estate is at rent
 /******************************************************************************
  * TYPE: table
  * NAME: tb_rental_info
@@ -636,9 +488,8 @@ CREATE TABLE tb_tmp_rental_info (
 );
 -------------------------------------------------------------------------------
 
+
 -- TODO refine stats tables
-
-
 /******************************************************************************
  * TYPE: table
  * NAME: tb_email_views
