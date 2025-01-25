@@ -374,7 +374,7 @@ CREATE TABLE tb_feature_other (
     near_secondary_school   boolean NOT NULL DEFAULT false,
     near_high_school        boolean NOT NULL DEFAULT false,
     lgbt_friendly           boolean NOT NULL DEFAULT false,
-    pet_friendly            boolean NOT NULL DEFAULT false
+    pet_friendly            boolean NOT NULL DEFAULT false,
     opt_fiber_coverage      boolean NOT NULL DEFAULT false
 );
 -------------------------------------------------------------------------------
@@ -415,7 +415,7 @@ CREATE TABLE tb_tmp_feature_other (
     near_secondary_school   boolean NOT NULL DEFAULT false,
     near_high_school        boolean NOT NULL DEFAULT false,
     lgbt_friendly           boolean NOT NULL DEFAULT false,
-    pet_friendly            boolean NOT NULL DEFAULT false
+    pet_friendly            boolean NOT NULL DEFAULT false,
     opt_fiber_coverage      boolean NOT NULL DEFAULT false
 );
 -------------------------------------------------------------------------------
@@ -494,7 +494,7 @@ CREATE TABLE tb_tmp_rental_info (
  *
  * DESC: table tracking action made by users on properties
  *****************************************************************************/
-CREATE TABLE tb_email_offer (
+CREATE TABLE tb_email_action (
     id_email    integer NOT NULL,
     id_estate   integer NOT NULL,
     time_stamp  timestamp NOT NULL DEFAULT NOW(),

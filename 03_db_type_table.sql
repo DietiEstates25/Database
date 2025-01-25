@@ -158,7 +158,7 @@ CREATE TABLE tb_bss_role (
  *
  * DESC: table defining user possible action
  *****************************************************************************/
-CREATE TABLE tb_bss_role (
+CREATE TABLE tb_action (
     id      serial PRIMARY KEY,
     action  dm_smp_str UNIQUE NOT NULL
 );

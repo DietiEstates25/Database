@@ -159,7 +159,7 @@ ALTER TABLE tb_tmp_bss_usr
  * DESC: foreign key constraint associating each temporary businesses user with 
  *       their superior
  *****************************************************************************/
-ALTER TABLE tb_tmp_super_bss_usr
+ALTER TABLE tb_tmp_bss_usr
     ADD CONSTRAINT tmp_bss_usr_fk_bss_usr
         FOREIGN KEY (id_super)
         REFERENCES tb_bss_usr(id_email)
@@ -992,98 +992,12 @@ ALTER TABLE tb_tmp_rental_info
 
 /******************************************************************************
  * TYPE: constraint - primary key
- * NAME: pk_email_views
+ * NAME: pk_email_action
  *
- * DESC: primary key constraint for the views stats associated with the email
+ * DESC: primary key constraint for the action stats associated with the email
  *****************************************************************************/
-ALTER TABLE tb_email_views
-    ADD CONSTRAINT pk_email_views
-        PRIMARY KEY (id_email, id_estate);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: constraint - foreign key
- * NAME: email_views_fk_email
- *
- * DESC: foreign key constraint associating the views stats with the email
- *****************************************************************************/
-ALTER TABLE tb_email_views
-    ADD CONSTRAINT email_views_fk_email
-        FOREIGN KEY (id_email)
-        REFERENCES tb_email(id)
-        ON DELETE cascade
-        ON UPDATE cascade;
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: constraint - foreign key
- * NAME: email_views_fk_estate
- *
- * DESC: foreign key constraint associating the views stats, associated with 
- *       the email, with the estate
- *****************************************************************************/
-ALTER TABLE tb_email_views
-    ADD CONSTRAINT email_views_fk_estate
-        FOREIGN KEY (id_estate)
-        REFERENCES tb_estate(id)
-        ON DELETE cascade
-        ON UPDATE cascade;
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: constraint - primary key
- * NAME: pk_email_booking
- *
- * DESC: primary key constraint for the booking stats associated with the email
- *****************************************************************************/
-ALTER TABLE tb_email_booking
-    ADD CONSTRAINT pk_email_booking
-        PRIMARY KEY (id_email, id_estate);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: constraint - foreign key
- * NAME: email_booking_fk_email
- *
- * DESC: foreign key constraint associating the booking stats with the email
- *****************************************************************************/
-ALTER TABLE tb_email_booking
-    ADD CONSTRAINT email_booking_fk_email
-        FOREIGN KEY (id_email)
-        REFERENCES tb_email(id)
-        ON DELETE cascade
-        ON UPDATE cascade;
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: constraint - foreign key
- * NAME: email_booking_fk_estate
- *
- * DESC: foreign key constraint associating the booking stats, associated with 
- *       the email, with the estate
- *****************************************************************************/
-ALTER TABLE tb_email_booking  
-    ADD CONSTRAINT email_booking_fk_estate
-        FOREIGN KEY (id_estate)
-        REFERENCES tb_estate(id)
-        ON DELETE cascade
-        ON UPDATE cascade;
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: constraint - primary key
- * NAME: pk_email_offer
- *
- * DESC: primary key constraint for the offer stats associated with the email
- *****************************************************************************/
-ALTER TABLE tb_email_offer
-    ADD CONSTRAINT pk_email_offer
+ALTER TABLE tb_email_action
+    ADD CONSTRAINT pk_email_action
         PRIMARY KEY (id_email, id_estate);
 -------------------------------------------------------------------------------
 
