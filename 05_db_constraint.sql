@@ -1,5 +1,21 @@
 /******************************************************************************
  * TYPE: constraint - foreign key
+ * NAME: credential_fk_email
+ *
+ * DESC: foreign key constraint associating credential information
+ *       with an email
+ *****************************************************************************/
+ALTER TABLE tb_credential
+    ADD CONSTRAINT credential_fk_email
+        FOREIGN KEY (id_email)
+        REFERENCES tb_email(id)
+        ON DELETE cascade
+        ON UPDATE cascade;
+-------------------------------------------------------------------------------
+
+
+/******************************************************************************
+ * TYPE: constraint - foreign key
  * NAME: usr_data_fk_email
  *
  * DESC: foreign key constraint associating each user data with an email

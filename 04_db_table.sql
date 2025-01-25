@@ -13,6 +13,25 @@ CREATE TABLE tb_email (
 
 /******************************************************************************
  * TYPE: table
+ * NAME: tb_credential
+ *
+ * DESC: table storing secure authentication credentials for system users
+ *****************************************************************************/
+CREATE TABLE tb_credential (
+    id_email        integer PRIMARY KEY,
+    password_hash   text NOT NULL,
+    salt            text NOT NULL,
+    password_algo   text NOT NULL DEFAULT 'argon2id',
+    last_changed    timestamp NOT NULL DEFAULT NOW(),
+    failed_attempts integer NOT NULL DEFAULT 0,
+    locked_until    timestamp,
+    force_reset     boolean NOT NULL DEFAULT false
+);
+-------------------------------------------------------------------------------
+
+
+/******************************************************************************
+ * TYPE: table
  * NAME: tb_usr_data
  *
  * DESC: table storing personal information of all system users
