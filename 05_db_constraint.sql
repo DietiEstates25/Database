@@ -1090,12 +1090,12 @@ ALTER TABLE tb_email_offer
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: email_offer_fk_email
+ * NAME: email_action_fk_email
  *
- * DESC: foreign key constraint associating the offer stats with the email
+ * DESC: foreign key constraint associating the action stats with the email
  *****************************************************************************/
-ALTER TABLE tb_email_offer
-    ADD CONSTRAINT email_offer_fk_email
+ALTER TABLE tb_email_action
+    ADD CONSTRAINT email_action_fk_email
         FOREIGN KEY (id_email)
         REFERENCES tb_email(id)
         ON DELETE cascade
@@ -1105,13 +1105,13 @@ ALTER TABLE tb_email_offer
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: email_offer_fk_estate
+ * NAME: email_action_fk_estate
  *
- * DESC: foreign key constraint associating the offer stats, associated with 
+ * DESC: foreign key constraint associating the action stats, associated with 
  *       the email, with the estate
  *****************************************************************************/
-ALTER TABLE tb_email_offer
-    ADD CONSTRAINT email_offer_fk_estate
+ALTER TABLE tb_email_action
+    ADD CONSTRAINT email_action_fk_estate
         FOREIGN KEY (id_estate)
         REFERENCES tb_estate(id)
         ON DELETE cascade
@@ -1121,15 +1121,15 @@ ALTER TABLE tb_email_offer
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: estate_statistic_fk_estate
+ * NAME: email_action_fk_action
  *
- * DESC: foreign key constraint associating the aggregated estate statistics
- *       with the estate
+ * DESC: foreign key constraint associating the action stats, associated with 
+ *       the email, with the action
  *****************************************************************************/
-ALTER TABLE estate_statistic
-    ADD CONSTRAINT estate_statistic_fk_estate
+ALTER TABLE tb_email_action
+    ADD CONSTRAINT email_action_fk_action
         FOREIGN KEY (id_estate)
-        REFERENCES tb_estate(id)
+        REFERENCES tb_action(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------

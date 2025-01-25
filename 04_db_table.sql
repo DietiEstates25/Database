@@ -488,62 +488,16 @@ CREATE TABLE tb_tmp_rental_info (
 -------------------------------------------------------------------------------
 
 
--- TODO refine stats tables
 /******************************************************************************
  * TYPE: table
- * NAME: tb_email_views
+ * NAME: tb_email_action
  *
- * DESC: table tracking property views by users
- *****************************************************************************/
-CREATE TABLE tb_email_views (
-    id_email    integer NOT NULL,
-    id_estate   integer NOT NULL,
-    time_stamp  timestamp NOT NULL DEFAULT NOW(),
-    views       dm_int0plus NOT NULL
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_email_booking
- *
- * DESC: table tracking property viewing appointments booked by users
- *****************************************************************************/
-CREATE TABLE tb_email_booking (
-    id_email    integer NOT NULL,
-    id_estate   integer NOT NULL,
-    time_stamp  timestamp NOT NULL DEFAULT NOW()
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_email_offer
- *
- * DESC: table tracking offers made by users on properties
+ * DESC: table tracking action made by users on properties
  *****************************************************************************/
 CREATE TABLE tb_email_offer (
     id_email    integer NOT NULL,
     id_estate   integer NOT NULL,
     time_stamp  timestamp NOT NULL DEFAULT NOW(),
-    offer_price dm_int0plus NOT NULL
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: estate_statistic
- *
- * DESC: table storing hourly aggregated statistics for properties
- *****************************************************************************/
-CREATE TABLE estate_statistic (
-    id_estate   integer PRIMARY KEY,
-    views       dm_int0plus NOT NULL DEFAULT 0,
-    bookings    dm_int0plus NOT NULL DEFAULT 0,
-    offers      dm_int0plus NOT NULL DEFAULT 0,
-    time_stamp  timestamp NOT NULL
+    id_action   integer NOT NULL
 );
 -------------------------------------------------------------------------------
