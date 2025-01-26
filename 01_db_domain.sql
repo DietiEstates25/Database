@@ -111,15 +111,3 @@ CREATE DOMAIN dm_smp_str AS varchar(666)
     			'))'
     );
 -------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: domain
- * NAME: dm_error_code
-
- * DESC: domain for error codes with format validation (CE + 3 digits)
- *****************************************************************************/
-CREATE DOMAIN dm_error_code AS varchar(5)
-CHECK (
-        VALUE ~ '^CE[0-9]{3}$'
-    );
