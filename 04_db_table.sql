@@ -10,7 +10,7 @@ CREATE TABLE tb_email (
 );
 -------------------------------------------------------------------------------
 
-
+-- ! probably not needed if we'll use cognito
 /******************************************************************************
  * TYPE: table
  * NAME: tb_credential
@@ -520,3 +520,16 @@ CREATE TABLE tb_email_action (
     id_action   integer NOT NULL
 );
 -------------------------------------------------------------------------------
+
+
+/******************************************************************************
+ * TYPE: table
+ * NAME: tb_custom_errors
+ *
+ * DESC: table storing custom error messages and hints
+ *****************************************************************************/
+CREATE TABLE tb_custom_errors (
+    error_code      dm_error_code PRIMARY KEY,
+    error_message   text NOT NULL,
+    error_hint      text
+);
