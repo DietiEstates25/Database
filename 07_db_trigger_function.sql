@@ -28,20 +28,3 @@ BEGIN
 
 END;
 $$;
-
--- TEST
-
-CREATE OR REPLACE FUNCTION test()
-    RETURNS TRIGGER
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-    call raise_custom_error('aaaa');
-    RETURN NEW;
-END;
-$$;
-
-CREATE TRIGGER test_t
-    BEFORE INSERT ON tb_email
-    FOR EACH ROW
-    EXECUTE FUNCTION test();
