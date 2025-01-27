@@ -20,27 +20,29 @@ AS $$
             RETURN (NULL);
         END IF;
 
-        SELECT tb_usr_type.id, tb_usr_type.is_bss
-        INTO new_role_record
+        SELECT tb_usr_type.id
+        INTO new_role_id
         FROM tb_usr_type
-        WHERE tb_usr_type.type = new_role;
+        WHERE tb_usr_type.type = new_role AND tb_usr_type.is_bss;
 
-        IF ((new_role_record IS NULL) OR (NOT new_role_record.is_bss)) THEN
+        IF (new_role_id IS NULL) THEN
             -- raise exeption
             RETURN (NULL);
         END IF;
 
-        IF (creator_record.id_usr_type >= new_role_record.id) THEN
+        IF (creator_record.id_usr_type >= new_role_id) THEN
            -- raise exeption 
             RETURN (NULL);
         END IF;
 
         INSERT INTO tb_usr(
             new_email,
+            id_usr_type,
             is_bss
         )
         VALUES (
             email,
+            new_role_id
             true 
         )
         RETURNING id INTO id_new_usr;
@@ -52,8 +54,8 @@ AS $$
         )
         VALUES (
             id_new_usr,
-            id_creator,
-            id_creator_agency 
+            creator_record.id,
+            creator_record.id_agency 
         );
 
         RETURN (id_new_usr);

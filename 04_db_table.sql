@@ -8,7 +8,8 @@ CREATE TABLE tb_usr (
     id          serial PRIMARY KEY,
     email       dm_email UNIQUE NOT NULL,
     creation    timestamp NOT NULL DEFAULT NOW(),
-    id_usr_type integer NOT NULL
+    id_usr_type integer NOT NULL,
+    is_bss      boolean NOT NULL
 );
 -------------------------------------------------------------------------------
 

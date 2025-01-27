@@ -6,8 +6,8 @@
  *****************************************************************************/
 ALTER TABLE tb_usr
     ADD CONSTRAINT usr_fk_usr_type
-        FOREIGN KEY (id_usr_type)
-        REFERENCES tb_usr_type(id)
+        FOREIGN KEY (id_usr_type, is_bss)
+        REFERENCES tb_usr_type(id, is_bss)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
