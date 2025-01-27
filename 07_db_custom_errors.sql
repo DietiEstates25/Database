@@ -5,7 +5,7 @@
  * DESC: domain for error name with format validation
  *****************************************************************************/
 CREATE DOMAIN dm_err_name AS text
-CHECK (
+    CHECK (
         VALUE ~ '^([0-9a-z]+_)*[0-9a-z]+$'
     );
 
@@ -21,6 +21,7 @@ CREATE TABLE tb_custom_errors (
     error_message   text UNIQUE NOT NULL,
     error_hint      text
 );
+-------------------------------------------------------------------------------
 
 /******************************************************************************
  * TYPE: constraint - check
@@ -43,12 +44,11 @@ ALTER TABLE tb_custom_errors
  *****************************************************************************/
 CREATE OR REPLACE FUNCTION int2err_code (num_err_code smallint)
     RETURNS varchar(5)
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-    RETURN 'CE' || to_char(num_err_code, '999');
-END;
-$$;
+AS $$
+    BEGIN
+        RETURN 'CE' || to_char(num_err_code, '999');
+    END;
+$$ LANGUAGE plpgsql;
 
 
 
@@ -58,36 +58,37 @@ $$;
  *
  * DESC: given custom error details raise an exception accordingly
  *****************************************************************************/
-CREATE OR REPLACE PROCEDURE handle_custom_error(err_code smallint,
-                                                err_msg text,
-                                                err_hint text)
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-    str_err_code varchar(5);
-BEGIN
+CREATE OR REPLACE PROCEDURE handle_custom_error(
+    err_code smallint,
+    err_msg text,
+    err_hint text
+)
+AS $$
+    DECLARE
+        str_err_code varchar(5);
+    BEGIN
 
-    IF err_msg IS NULL THEN
-        err_msg := '(CE000) An unknown error occurred';
-        str_err_code := 'CE000';
-    ELSE
-        str_err_code = int2err_code(err_code);
-        err_msg = '[' || str_err_code || '] ' || err_msg;
-    END IF;
+        IF err_msg IS NULL THEN
+            err_msg := '(CE000) An unknown error occurred';
+            str_err_code := 'CE000';
+        ELSE
+            str_err_code = int2err_code(err_code);
+            err_msg = '[' || str_err_code || '] ' || err_msg;
+        END IF;
 
-    IF err_hint IS NOT NULL THEN
-        RAISE EXCEPTION USING
-            ERRCODE = str_err_code,
-            MESSAGE = err_msg,
-            HINT = err_hint;
-    ELSE
-        RAISE EXCEPTION USING
-            ERRCODE = str_err_code,
-            MESSAGE = err_msg,
-            HINT = '';
-    END IF;
+        IF err_hint IS NOT NULL THEN
+            RAISE EXCEPTION USING
+                ERRCODE = str_err_code,
+                MESSAGE = err_msg,
+                HINT = err_hint;
+        ELSE
+            RAISE EXCEPTION USING
+                ERRCODE = str_err_code,
+                MESSAGE = err_msg,
+                HINT = '';
+        END IF;
     END;
-$$;
+$$ LANGUAGE plpgsql;
 
 /******************************************************************************
  * TYPE: function - utility

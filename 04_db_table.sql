@@ -1,31 +1,14 @@
 /******************************************************************************
  * TYPE: table
- * NAME: tb_email
+ * NAME: tb_usr
  *
- * DESC: table storing unique email addresses for all system users
+ * DESC: table storing info for all system users
  *****************************************************************************/
-CREATE TABLE tb_email (
-    id      serial PRIMARY KEY,
-    email   dm_email UNIQUE NOT NULL
-);
--------------------------------------------------------------------------------
-
--- ! probably not needed if we'll use cognito
-/******************************************************************************
- * TYPE: table
- * NAME: tb_credential
- *
- * DESC: table storing secure authentication credentials for system users
- *****************************************************************************/
-CREATE TABLE tb_credential (
-    id_email        integer PRIMARY KEY,
-    password_hash   text NOT NULL,
-    salt            text NOT NULL,
-    password_algo   text NOT NULL DEFAULT 'argon2id',
-    last_changed    timestamp NOT NULL DEFAULT NOW(),
-    failed_attempts integer NOT NULL DEFAULT 0,
-    locked_until    timestamp,
-    force_reset     boolean NOT NULL DEFAULT false
+CREATE TABLE tb_usr (
+    id          serial PRIMARY KEY,
+    email       dm_email UNIQUE NOT NULL,
+    creation    timestamp NOT NULL DEFAULT NOW(),
+    id_usr_type integer NOT NULL
 );
 -------------------------------------------------------------------------------
 
@@ -37,7 +20,7 @@ CREATE TABLE tb_credential (
  * DESC: table storing personal information of all system users
  *****************************************************************************/
 CREATE TABLE tb_usr_data (
-    id_email    integer PRIMARY KEY,
+    id_usr      integer PRIMARY KEY,
     firs_name   dm_smp_str NOT NULL,
     last_name   dm_smp_str NOT NULL,
     dob         dm_dob NOT NULL,
@@ -53,13 +36,12 @@ CREATE TABLE tb_usr_data (
  * DESC: table storing phone numbers associated with user email addresses
  *****************************************************************************/
 CREATE TABLE tb_phone (
-    id_email    integer PRIMARY KEY,
-    phone       dm_phone UNIQUE NOT NULL
+    id_usr  integer PRIMARY KEY,
+    phone   dm_phone UNIQUE NOT NULL
 );
 -------------------------------------------------------------------------------
 
 
--- TODO: idea. Let's think about it
 /******************************************************************************
  * TYPE: table
  * NAME: tb_address
@@ -82,7 +64,6 @@ CREATE TABLE tb_address (
 -------------------------------------------------------------------------------
 
 
--- TOD Agency should have an email? or we can use root admin email?
 /******************************************************************************
  * TYPE: table
  * NAME: tb_agency
@@ -97,23 +78,6 @@ CREATE TABLE tb_agency (
 -------------------------------------------------------------------------------
 
 
-/******************************************************************************
- * TYPE: table
- * NAME: tb_end_usr
- *
- * DESC: table storing end user account information and verification status
- *****************************************************************************/
-CREATE TABLE tb_end_usr (
-    id_email        integer PRIMARY KEY,
-    has_profile     boolean NOT NULL,
-    has_phone       boolean NOT NULL,
-    creation        timestamp NOT NULL DEFAULT NOW(),
-    verified_email  boolean NOT NULL DEFAULT false,
-    verified_phone  boolean NOT NULL DEFAULT false
-);
--------------------------------------------------------------------------------
-
-
 -- TODO: check hierarchy (Maybe only in temp)
 /******************************************************************************
  * TYPE: table
@@ -123,9 +87,7 @@ CREATE TABLE tb_end_usr (
  *       and agency affiliations
  *****************************************************************************/
 CREATE TABLE tb_bss_usr (
-    id_email    integer PRIMARY KEY,
-    creation    timestamp NOT NULL DEFAULT NOW(),
-    id_role     integer NOT NULL,
+    id_usr      integer PRIMARY KEY,
     id_super    integer,
     id_agency   integer NOT NULL
 );
@@ -139,10 +101,7 @@ CREATE TABLE tb_bss_usr (
  * DESC: temporary table for business user registration process
  *****************************************************************************/
 CREATE TABLE tb_tmp_bss_usr (
-    id_email    integer PRIMARY KEY,
-    has_profile boolean NOT NULL DEFAULT false,
-    has_phone   boolean NOT NULL DEFAULT false,
-    creation    timestamp NOT NULL DEFAULT NOW(),
+    id_usr      integer PRIMARY KEY,
     id_role     integer NOT NULL,
     id_super    integer,
     id_agency   integer NOT NULL
@@ -516,7 +475,7 @@ CREATE TABLE tb_tmp_rental_info (
  * DESC: table tracking action made by users on properties
  *****************************************************************************/
 CREATE TABLE tb_email_action (
-    id_email    integer NOT NULL,
+    id_usr      integer NOT NULL,
     id_estate   integer NOT NULL,
     time_stamp  timestamp NOT NULL DEFAULT NOW(),
     id_action   integer NOT NULL
