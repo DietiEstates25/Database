@@ -1,4 +1,17 @@
 /******************************************************************************
+ * TYPE: constraint - unique
+ * NAME: uq_id_is_bss
+ *
+ * DESC: unique constraint associating an id for an user type and information
+ *       if it is a business type or not 
+ *****************************************************************************/
+ALTER TABLE tb_usr_type
+    ADD CONSTRAINT uq_id_is_bss
+        UNIQUE (id, is_bss);
+-------------------------------------------------------------------------------
+
+
+/******************************************************************************
  * TYPE: constraint - foreign key
  * NAME: usr_fk_usr_type
  *

@@ -45,10 +45,11 @@ CREATE TRIGGER tg_bss_usr_agency
  * NAME: tg_rental_info_only_if_rental
  *
  * DESC: trigger to check if the rental information is consistent with the
-         property type
+ *       property type
  *****************************************************************************/
 CREATE TRIGGER rental_info_only_if_rental
     BEFORE INSERT OR UPDATE
-    ON tb_tmp_property
+    ON tb_tmp_rental_info
     FOR EACH ROW
     EXECUTE FUNCTION tf_rental_info_only_if_rental();
+------------------------------------------------------------------------------- 
