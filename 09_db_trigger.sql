@@ -1,25 +1,25 @@
 
 /******************************************************************************
  * TYPE: trigger
- * NAME: trg_bss_usr_hierarchy
+ * NAME: tg_bss_usr_hierarchy
  *
  * DESC: trigger to check if the role hierarchy is consistent
  *****************************************************************************/
-CREATE TRIGGER trg_bss_usr_hierarchy
+CREATE TRIGGER tg_bss_usr_hierarchy
     BEFORE INSERT OR UPDATE
-    ON tb_tmp_bss_usr
+    ON tb_usr
     FOR EACH ROW
-    EXECUTE FUNCTION bss_hierarchy_check();
+    EXECUTE FUNCTION tf_bss_hierarchy_check();
 -------------------------------------------------------------------------------
 
 
 /******************************************************************************
  * TYPE: trigger
- * NAME: trg_bss_usr_root
+ * NAME: tg_bss_usr_root
  *
  * DESC: trigger to prevent multiple root roles per agency
  *****************************************************************************/
-CREATE TRIGGER trg_bss_usr_root
+CREATE TRIGGER tg_bss_usr_root
     BEFORE INSERT OR UPDATE
     ON tb_tmp_bss_usr
     FOR EACH ROW
@@ -28,12 +28,12 @@ CREATE TRIGGER trg_bss_usr_root
 
 /******************************************************************************
  * TYPE: trigger
- * NAME: trg_bss_usr_agency
+ * NAME: tg_bss_usr_agency
  *
  * DESC: trigger to check if the agency of the user is consistent with the
          agency of the superior role
  *****************************************************************************/
-CREATE TRIGGER trg_bss_usr_agency
+CREATE TRIGGER tg_bss_usr_agency
     BEFORE INSERT OR UPDATE
     ON tb_tmp_bss_usr
     FOR EACH ROW
@@ -42,7 +42,7 @@ CREATE TRIGGER trg_bss_usr_agency
 
 /******************************************************************************
  * TYPE: trigger
- * NAME: trg_rental_info_only_if_rental
+ * NAME: tg_rental_info_only_if_rental
  *
  * DESC: trigger to check if the rental information is consistent with the
          property type
