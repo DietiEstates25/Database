@@ -53,7 +53,7 @@ $$ LANGUAGE plpgsql;
 
 
 /******************************************************************************
- * TYPE: function - utility
+ * TYPE: procedure - utility
  * NAME: handle_custom_error
  *
  * DESC: given custom error details raise an exception accordingly
@@ -91,7 +91,7 @@ AS $$
 $$ LANGUAGE plpgsql;
 
 /******************************************************************************
- * TYPE: function - utility
+ * TYPE: procedure - utility
  * NAME: raise_custom_error
  *
  * DESC: retrieve error message from custom_error_messages table and raise
@@ -119,7 +119,7 @@ $$;
 
 
 /******************************************************************************
- * TYPE: function - utility
+ * TYPE: procedure - utility
  * NAME: raise_custom_error
  *
  * DESC: overloaded version for raising custom error by name

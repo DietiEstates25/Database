@@ -31,9 +31,8 @@
 - [ ] Informarsi su estensione GIS per PostgreSQL
 - [ ] Informarsi su estensione azioni on clock per PostgreSQL
 
-
 ## 27/01
 
-### Dettagli partizionamenti
+### Dettagli partizionamenti 2
 
 - [ ] Partition estate table on ads_type
