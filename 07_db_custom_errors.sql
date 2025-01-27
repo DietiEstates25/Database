@@ -41,21 +41,11 @@ ALTER TABLE tb_custom_errors
  * DESC: given an integer err_code return a well formatted string 
          error code with that integer
  *****************************************************************************/
-CREATE OR REPLACE FUNCTION int2err_code (num_err_code smallserial)
+CREATE OR REPLACE FUNCTION int2err_code (num_err_code smallint)
     RETURNS varchar(5)
     LANGUAGE plpgsql
     AS $$
---DECLARE
-  --  string_code varchar(5);
 BEGIN
-    
-    -- IF num_err_code < 1000 THEN
-    --     string_code = 'CE' || to_char(num_err_code, '999');
-    -- ELSE
-    --     string_code = 'CE000';
-    -- END IF;
-
-    -- RETURN ret
     RETURN 'CE' || to_char(num_err_code, '999');
 END;
 $$;
@@ -161,4 +151,13 @@ INSERT INTO tb_custom_errors (error_name, error_message, error_hint)
 VALUES
     ('bss_hierarchy_violation',
         'Business role hierarchy violation',
-        'Subordinate roles must be lower in hierarchy than superior roles');
+        'Subordinate roles must be lower in hierarchy than superior roles'),
+    ('bss_multiple_root_violation',
+        'Multiple business user with root role in agency',
+        'Only one business user can have the root role in an agency'),
+    ('bss_agency_violation',
+        'Business user agency violation',
+        'Business user must belong to the same agency of his superior'),
+    ('rental_info_only_if_rental',
+        'Rental information are only allowed for rental properties',
+        null);
