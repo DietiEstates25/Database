@@ -102,7 +102,6 @@ CREATE TABLE tb_bss_usr (
  *****************************************************************************/
 CREATE TABLE tb_tmp_bss_usr (
     id_usr      integer PRIMARY KEY,
-    id_role     integer NOT NULL,
     id_super    integer,
     id_agency   integer NOT NULL
 );
@@ -474,7 +473,7 @@ CREATE TABLE tb_tmp_rental_info (
  *
  * DESC: table tracking action made by users on properties
  *****************************************************************************/
-CREATE TABLE tb_email_action (
+CREATE TABLE tb_usr_action (
     id_usr      integer NOT NULL,
     id_estate   integer NOT NULL,
     time_stamp  timestamp NOT NULL DEFAULT NOW(),

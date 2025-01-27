@@ -1,14 +1,13 @@
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: credential_fk_email
+ * NAME: usr_fk_usr_type
  *
- * DESC: foreign key constraint associating credential information
- *       with an email
+ * DESC: foreign key constraint associating an user with an user type
  *****************************************************************************/
-ALTER TABLE tb_credential
-    ADD CONSTRAINT credential_fk_email
-        FOREIGN KEY (id_email)
-        REFERENCES tb_email(id)
+ALTER TABLE tb_usr
+    ADD CONSTRAINT usr_fk_usr_type
+        FOREIGN KEY (id_usr_type)
+        REFERENCES tb_usr_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -16,14 +15,14 @@ ALTER TABLE tb_credential
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: usr_data_fk_email
+ * NAME: usr_data_fk_usr
  *
- * DESC: foreign key constraint associating each user data with an email
+ * DESC: foreign key constraint associating each user data with an user
  *****************************************************************************/
 ALTER TABLE tb_usr_data
-    ADD CONSTRAINT usr_data_fk_email
-        FOREIGN KEY (id_email)
-        REFERENCES tb_email(id)
+    ADD CONSTRAINT usr_data_fk_usr
+        FOREIGN KEY (id_usr)
+        REFERENCES tb_usr(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -31,14 +30,14 @@ ALTER TABLE tb_usr_data
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: phone_fk_email
+ * NAME: phone_fk_usr
  *
- * DESC: foreign key constraint associating each phone number with an email
+ * DESC: foreign key constraint associating each phone number with an user
  *****************************************************************************/
 ALTER TABLE tb_phone
-    ADD CONSTRAINT phone_fk_email
-        FOREIGN KEY (id_email)
-        REFERENCES tb_email(id)
+    ADD CONSTRAINT phone_fk_usr
+        FOREIGN KEY (id_usr)
+        REFERENCES tb_usr(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -73,44 +72,14 @@ ALTER TABLE tb_agency
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: end_usr_fk_email
+ * NAME: bss_usr_fk_usr
  *
- * DESC: foreign key constraint associating each end user their email
- *****************************************************************************/
-ALTER TABLE tb_end_usr
-    ADD CONSTRAINT end_usr_fk_email
-        FOREIGN KEY (id_email)
-        REFERENCES tb_email(id)
-        ON DELETE cascade
-        ON UPDATE cascade;
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: constraint - foreign key
- * NAME: bss_usr_fk_email
- *
- * DESC: foreign key constraint associating each businesses user their email
+ * DESC: foreign key constraint associating each businesses user their user
  *****************************************************************************/
 ALTER TABLE tb_bss_usr
-    ADD CONSTRAINT bss_usr_fk_email
-        FOREIGN KEY (id_email)
-        REFERENCES tb_email(id)
-        ON DELETE cascade
-        ON UPDATE cascade;
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: constraint - foreign key
- * NAME: bss_usr_fk_role
- *
- * DESC: foreign key constraint associating each businesses user their role
- *****************************************************************************/
-ALTER TABLE tb_bss_usr
-    ADD CONSTRAINT bss_usr_fk_role
-        FOREIGN KEY (id_role)
-        REFERENCES tb_bss_role(hierarchy)
+    ADD CONSTRAINT bss_usr_fk_usr
+        FOREIGN KEY (id_usr)
+        REFERENCES tb_usr(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -126,7 +95,7 @@ ALTER TABLE tb_bss_usr
 ALTER TABLE tb_bss_usr
     ADD CONSTRAINT bss_usr_fk_super_bss_usr
         FOREIGN KEY (id_super)
-        REFERENCES tb_bss_usr(id_email)
+        REFERENCES tb_bss_usr(id_usr)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -149,35 +118,19 @@ ALTER TABLE tb_bss_usr
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_bss_usr_fk_email
+ * NAME: tmp_bss_usr_fk_usr
  *
  * DESC: foreign key constraint associating each temporary businesses user with 
- *       their email
+ *       their usr
  *****************************************************************************/
 ALTER TABLE tb_tmp_bss_usr
-    ADD CONSTRAINT tmp_bss_usr_fk_email
-        FOREIGN KEY (id_email)
-        REFERENCES tb_email(id)
+    ADD CONSTRAINT tmp_bss_usr_fk_usr
+        FOREIGN KEY (id_usr)
+        REFERENCES tb_usr(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
-  -- TODO: here we need a trigger to check if the email is already in tb_bss_usr
-
-
-/******************************************************************************
- * TYPE: constraint - foreign key
- * NAME: tmp_bss_usr_fk_role
- *
- * DESC: foreign key constraint associating each temporary businesses user with 
- *       their role
- *****************************************************************************/
-ALTER TABLE tb_tmp_bss_usr
-    ADD CONSTRAINT tmp_bss_usr_fk_role
-        FOREIGN KEY (id_role)
-        REFERENCES tb_bss_role(hierarchy)
-        ON DELETE cascade
-        ON UPDATE cascade;
--------------------------------------------------------------------------------
+  -- TODO: here we need a trigger to check if the usr is already in tb_bss_usr
 
 
 /******************************************************************************
@@ -190,7 +143,7 @@ ALTER TABLE tb_tmp_bss_usr
 ALTER TABLE tb_tmp_bss_usr
     ADD CONSTRAINT tmp_bss_usr_fk_bss_usr
         FOREIGN KEY (id_super)
-        REFERENCES tb_bss_usr(id_email)
+        REFERENCES tb_bss_usr(id_usr)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -222,7 +175,7 @@ ALTER TABLE tb_tmp_bss_usr
 ALTER TABLE tb_estate
     ADD CONSTRAINT estate_fk_bss_usr
         FOREIGN KEY (id_bss_usr)
-        REFERENCES tb_bss_usr(id_email)
+        REFERENCES tb_bss_usr(id_usr)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -284,7 +237,7 @@ ALTER TABLE tb_estate
 ALTER TABLE tb_tmp_estate
     ADD CONSTRAINT tmp_estate_fk_bss_usr
         FOREIGN KEY (id_bss_usr)
-        REFERENCES tb_bss_usr(id_email)
+        REFERENCES tb_bss_usr(id_usr)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -1020,26 +973,26 @@ ALTER TABLE tb_tmp_rental_info
 
 /******************************************************************************
  * TYPE: constraint - primary key
- * NAME: pk_email_action
+ * NAME: pk_usr_action
  *
- * DESC: primary key constraint for the action stats associated with the email
+ * DESC: primary key constraint for the action stats associated with the usr
  *****************************************************************************/
-ALTER TABLE tb_email_action
-    ADD CONSTRAINT pk_email_action
-        PRIMARY KEY (id_email, id_estate);
+ALTER TABLE tb_usr_action
+    ADD CONSTRAINT pk_usr_action
+        PRIMARY KEY (id_usr, id_estate);
 -------------------------------------------------------------------------------
 
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: email_action_fk_email
+ * NAME: usr_action_fk_usr
  *
- * DESC: foreign key constraint associating the action stats with the email
+ * DESC: foreign key constraint associating the action stats with the user
  *****************************************************************************/
-ALTER TABLE tb_email_action
-    ADD CONSTRAINT email_action_fk_email
-        FOREIGN KEY (id_email)
-        REFERENCES tb_email(id)
+ALTER TABLE tb_usr_action
+    ADD CONSTRAINT usr_action_fk_usr
+        FOREIGN KEY (id_usr)
+        REFERENCES tb_usr(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -1047,13 +1000,13 @@ ALTER TABLE tb_email_action
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: email_action_fk_estate
+ * NAME: usr_action_fk_estate
  *
  * DESC: foreign key constraint associating the action stats, associated with 
- *       the email, with the estate
+ *       the user, with the estate
  *****************************************************************************/
-ALTER TABLE tb_email_action
-    ADD CONSTRAINT email_action_fk_estate
+ALTER TABLE tb_usr_action
+    ADD CONSTRAINT usr_action_fk_estate
         FOREIGN KEY (id_estate)
         REFERENCES tb_estate(id)
         ON DELETE cascade
@@ -1063,13 +1016,13 @@ ALTER TABLE tb_email_action
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: email_action_fk_action
+ * NAME: usr_action_fk_action
  *
  * DESC: foreign key constraint associating the action stats, associated with 
- *       the email, with the action
+ *       the usr, with the action
  *****************************************************************************/
-ALTER TABLE tb_email_action
-    ADD CONSTRAINT email_action_fk_action
+ALTER TABLE tb_usr_action
+    ADD CONSTRAINT usr_action_fk_action
         FOREIGN KEY (id_estate)
         REFERENCES tb_action(id)
         ON DELETE cascade

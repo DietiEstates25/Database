@@ -140,14 +140,14 @@ CREATE TABLE tb_rental_utilities_type (
 
 /******************************************************************************
  * TYPE: table
- * NAME: tb_bss_role
+ * NAME: tb_usr_type
  *
- * DESC: table defining business user roles
- *       and their hierarchical relationships
+ * DESC: table defining user types and hierarchy
  *****************************************************************************/
-CREATE TABLE tb_bss_role (
-    hierarchy   dm_int0plus PRIMARY KEY,    -- bottom up
-    role        dm_smp_str UNIQUE NOT NULL
+CREATE TABLE tb_usr_type (
+    id      dm_int0plus PRIMARY KEY,
+    type    dm_smp_str UNIQUE NOT NULL,
+    is_bss  boolean NOT NULL
 );
 -------------------------------------------------------------------------------
 
