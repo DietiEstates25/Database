@@ -45,6 +45,18 @@ ALTER TABLE tb_phone
 
 
 /******************************************************************************
+ * TYPE: constraint - unique
+ * NAME: unique_coordinates
+
+ * DESC: unique constraint for the coordinates
+ *****************************************************************************/
+ALTER TABLE tb_address
+    ADD CONSTRAINT unique_coordinates
+        UNIQUE (latitude, longitude);
+-------------------------------------------------------------------------------
+
+
+/******************************************************************************
  * TYPE: constraint - foreign key
  * NAME: agency_fk_address
  *
@@ -751,7 +763,7 @@ ALTER TABLE tb_feature_condition
  *****************************************************************************/
 ALTER TABLE tb_feature_condition
     ADD CONSTRAINT feature_condition_fk_property_type
-        FOREIGN KEY (id_type_property)
+        FOREIGN KEY (id_property_type)
         REFERENCES tb_property_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
@@ -767,7 +779,7 @@ ALTER TABLE tb_feature_condition
  *****************************************************************************/
 ALTER TABLE tb_feature_condition
     ADD CONSTRAINT feature_condition_fk_condition_type
-        FOREIGN KEY (id_type_condition)
+        FOREIGN KEY (id_condition_type)
         REFERENCES tb_condition_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
@@ -799,7 +811,7 @@ ALTER TABLE tb_tmp_feature_condition
  *****************************************************************************/
 ALTER TABLE tb_tmp_feature_condition
     ADD CONSTRAINT tmp_feature_condition_fk_property_type
-        FOREIGN KEY (id_type_property)
+        FOREIGN KEY (id_property_type)
         REFERENCES tb_property_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
@@ -815,7 +827,7 @@ ALTER TABLE tb_tmp_feature_condition
  *****************************************************************************/
 ALTER TABLE tb_tmp_feature_condition
     ADD CONSTRAINT tmp_feature_condition_fk_condition_type
-        FOREIGN KEY (id_type_condition)
+        FOREIGN KEY (id_condition_type)
         REFERENCES tb_condition_type(id)
         ON DELETE cascade
         ON UPDATE cascade;

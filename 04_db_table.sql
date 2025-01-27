@@ -70,7 +70,7 @@ CREATE TABLE tb_address (
     id              serial PRIMARY KEY,
     street_address  text NOT NULL,
     street_number   text NOT NULL,
-    neighborhood    text NOT NULL,
+    neighborhood    text NOT NULL, -- ? shouldn't it be nullable?
     city            text NOT NULL,
     state_province  text NOT NULL,
     postal_code     text NOT NULL,
@@ -150,6 +150,7 @@ CREATE TABLE tb_tmp_bss_usr (
 -------------------------------------------------------------------------------
 
 
+-- IDEA: what about partitioning for ads_type?
 /******************************************************************************
  * TYPE: table
  * NAME: tb_estate
@@ -167,7 +168,7 @@ CREATE TABLE tb_estate (
 );
 -------------------------------------------------------------------------------
 
--- ! Updated the table to have nullable fields
+
 /******************************************************************************
  * TYPE: table
  * NAME: tb_tmp_estate
@@ -186,6 +187,7 @@ CREATE TABLE tb_tmp_estate (
 -------------------------------------------------------------------------------
 
 
+-- TODO: discuss about storing total area in db (maybe needed for search)
 /******************************************************************************
  * TYPE: table
  * NAME: tb_feature_sz
@@ -336,8 +338,8 @@ CREATE TABLE tb_tmp_feature_energy_eff (
  *****************************************************************************/
 CREATE TABLE tb_feature_condition (
     id_estate           integer PRIMARY KEY,
-    id_type_property    integer NOT NULL,
-    id_type_condition   integer NOT NULL,
+    id_property_type    integer NOT NULL,
+    id_condition_type   integer NOT NULL,
     construction_year   dm_int0plus NOT NULL
 );
 -------------------------------------------------------------------------------
@@ -351,8 +353,8 @@ CREATE TABLE tb_feature_condition (
  *****************************************************************************/
 CREATE TABLE tb_tmp_feature_condition (
     id_estate           integer PRIMARY KEY,
-    id_type_property    integer NOT NULL,
-    id_type_condition   integer NOT NULL,
+    id_property_type    integer NOT NULL,
+    id_condition_type   integer NOT NULL,
     construction_year   dm_int0plus NOT NULL
 );
 -------------------------------------------------------------------------------
