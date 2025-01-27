@@ -6,12 +6,12 @@
 
 ### Dettagli trigger e aggiunte tabelle
 
-- [ ] Check ruoli in gerarchia
-- [ ] Check unico root per agenzia
-- [ ] Check stessa agenzia di super
-- [ ] Check tabelle per affitto controllare se ads_type è affitto
+- [x] Check ruoli in gerarchia
+- [x] Check unico root per agenzia
+- [x] Check stessa agenzia di super
+- [x] Check tabelle per affitto controllare se ads_type è affitto
 - [ ] Aggiungere timestamp a temporanee per autoeliminazione
-- [ ] Gestione statistiche con trigger e clock
+- [ ] Gestione statistiche con trigger e clock (serve ancora con idea di materialized view?)
 
 ### Dettagli partizionamenti
 
@@ -30,3 +30,10 @@
 
 - [ ] Informarsi su estensione GIS per PostgreSQL
 - [ ] Informarsi su estensione azioni on clock per PostgreSQL
+
+
+## 27/01
+
+### Dettagli partizionamenti
+
+- [ ] Partition estate table on ads_type
