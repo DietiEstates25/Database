@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "" > .log
+
 echo "Start script for creating PostgreSQL database"
 echo "using .sql file in the current directory"
 echo ""
@@ -9,17 +11,22 @@ DB_USER="ingsw"
 
 read -sp "Enter password: " DB_PASS </dev/tty
 
+echo "LOG DATE: $(date)" >> .log
+
 export PGPASSWORD="${DB_PASS}"
 
 for file in *.sql; do
-    echo ""
-    echo "Executing file ""${file}"
-    psql -h localhost -d "${DB_NAME}" -U "${DB_USER}" -f "${file}"
+    echo "" >> .log
+    echo "Executing file ""${file}" >> .log
+    psql -h localhost -d "${DB_NAME}" -U "${DB_USER}" -f "${file}" >> .log 2>&1
 done
 
 unset PGPASSWORD
 
+echo "" >> .log
+echo "Database PostgreSQL created successfully" >> .log
 echo ""
-echo "Database PostgreSQL created successfully"
+
+cat .log
 
 exit 0
