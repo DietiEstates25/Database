@@ -117,7 +117,7 @@ CREATE INDEX idx_rental_utilities_type_on_type
  * DESC: index for the action column in the action table
  *****************************************************************************/
 CREATE INDEX idx_aciton_on_action
-    ON tb_action(action);
+    ON tb_action_type(action);
 -------------------------------------------------------------------------------
 
 

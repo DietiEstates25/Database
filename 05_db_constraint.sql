@@ -1037,7 +1037,7 @@ ALTER TABLE tb_usr_action
 ALTER TABLE tb_usr_action
     ADD CONSTRAINT usr_action_fk_action
         FOREIGN KEY (id_estate)
-        REFERENCES tb_action(id)
+        REFERENCES tb_action_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------

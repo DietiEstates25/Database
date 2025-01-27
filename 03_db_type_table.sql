@@ -6,7 +6,7 @@
  *****************************************************************************/
 CREATE TABLE tb_ads_type (
     id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
+    type    text UNIQUE NOT NULL
 );
 -------------------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ CREATE TABLE tb_ads_type (
  *****************************************************************************/
 CREATE TABLE tb_estate_type (
     id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
+    type    text UNIQUE NOT NULL
 );
 -------------------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ CREATE TABLE tb_estate_type (
  *****************************************************************************/
 CREATE TABLE tb_furniture_type (
     id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
+    type    text UNIQUE NOT NULL
 );
 -------------------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ CREATE TABLE tb_furniture_type (
  *****************************************************************************/
 CREATE TABLE tb_energy_class_type (
     id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
+    type    text UNIQUE NOT NULL
 );
 -------------------------------------------------------------------------------
  
@@ -63,7 +63,7 @@ CREATE TABLE tb_energy_class_type (
  *****************************************************************************/
 CREATE TABLE tb_heating_type (
     id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
+    type    text UNIQUE NOT NULL
 );
 -------------------------------------------------------------------------------
 
@@ -77,7 +77,7 @@ CREATE TABLE tb_heating_type (
  *****************************************************************************/
 CREATE TABLE tb_air_cond_type (
     id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
+    type    text UNIQUE NOT NULL
 );
 -------------------------------------------------------------------------------
 
@@ -91,7 +91,7 @@ CREATE TABLE tb_air_cond_type (
  *****************************************************************************/
 CREATE TABLE tb_property_type (
     id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
+    type    text UNIQUE NOT NULL
 );
 -------------------------------------------------------------------------------
 
@@ -106,7 +106,7 @@ CREATE TABLE tb_property_type (
  *****************************************************************************/
 CREATE TABLE tb_condition_type (
     id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
+    type    text UNIQUE NOT NULL
 );
 -------------------------------------------------------------------------------
 
@@ -120,7 +120,7 @@ CREATE TABLE tb_condition_type (
  *****************************************************************************/
 CREATE TABLE tb_rental_contract_type (
     id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
+    type    text UNIQUE NOT NULL
 );
 -------------------------------------------------------------------------------
 
@@ -133,7 +133,7 @@ CREATE TABLE tb_rental_contract_type (
  *****************************************************************************/
 CREATE TABLE tb_rental_utilities_type (
     id      serial PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL
+    type    text UNIQUE NOT NULL
 );
 -------------------------------------------------------------------------------
 
@@ -146,7 +146,7 @@ CREATE TABLE tb_rental_utilities_type (
  *****************************************************************************/
 CREATE TABLE tb_usr_type (
     id      dm_int0plus PRIMARY KEY,
-    type    dm_smp_str UNIQUE NOT NULL,
+    type    text UNIQUE NOT NULL,
     is_bss  boolean NOT NULL
 );
 -------------------------------------------------------------------------------
@@ -158,8 +158,8 @@ CREATE TABLE tb_usr_type (
  *
  * DESC: table defining user possible action
  *****************************************************************************/
-CREATE TABLE tb_action (
+CREATE TABLE tb_action_type(
     id      serial PRIMARY KEY,
-    action  dm_smp_str UNIQUE NOT NULL
+    action  text UNIQUE NOT NULL
 );
 -------------------------------------------------------------------------------
