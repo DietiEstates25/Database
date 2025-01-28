@@ -1,7 +1,7 @@
 /******************************************************************************
  * TYPE: trigger
  * NAME: tg_ads_type
-
+ *
  * DESC: trigger to block any action but select on the ads_type table
  *****************************************************************************/
 CREATE TRIGGER tg_ads_type
@@ -14,7 +14,7 @@ CREATE TRIGGER tg_ads_type
 /******************************************************************************
  * TYPE: trigger
  * NAME: tg_estate_type
-
+ *
  * DESC: trigger to block any action but select on the estate_type table
  *****************************************************************************/
 CREATE TRIGGER tg_estate_type
@@ -27,7 +27,7 @@ CREATE TRIGGER tg_estate_type
 /******************************************************************************
  * TYPE: trigger
  * NAME: tg_furniture_type
-
+ *
  * DESC: trigger to block any action but select on the furniture_type table
  *****************************************************************************/
 CREATE TRIGGER tg_furniture_type
@@ -40,7 +40,7 @@ CREATE TRIGGER tg_furniture_type
 /******************************************************************************
  * TYPE: trigger
  * NAME: tg_energy_class_type
-
+ *
  * DESC: trigger to block any action but select on the energy_class_type table
  *****************************************************************************/
 CREATE TRIGGER tg_energy_class_type
@@ -53,7 +53,7 @@ CREATE TRIGGER tg_energy_class_type
 /******************************************************************************
  * TYPE: trigger
  * NAME: tg_heating_type
-
+ *
  * DESC: trigger to block any action but select on the heating_type table
  *****************************************************************************/
 CREATE TRIGGER tg_heating_type
@@ -66,7 +66,7 @@ CREATE TRIGGER tg_heating_type
 /******************************************************************************
  * TYPE: trigger
  * NAME: tg_air_cond_type
-
+ *
  * DESC: trigger to block any action but select on the air_cond_type table
  *****************************************************************************/
 CREATE TRIGGER tg_air_cond_type
@@ -79,7 +79,7 @@ CREATE TRIGGER tg_air_cond_type
 /******************************************************************************
  * TYPE: trigger
  * NAME: tg_property_type
-
+ *
  * DESC: trigger to block any action but select on the property_type table
  *****************************************************************************/
 CREATE TRIGGER tg_property_type
@@ -92,7 +92,7 @@ CREATE TRIGGER tg_property_type
 /******************************************************************************
  * TYPE: trigger
  * NAME: tg_condition_type
-
+ *
  * DESC: trigger to block any action but select on the condition_type table
  *****************************************************************************/
 CREATE TRIGGER tg_condition_type
@@ -105,8 +105,9 @@ CREATE TRIGGER tg_condition_type
 /******************************************************************************
  * TYPE: trigger
  * NAME: tg_rental_contract_type
-
- * DESC: trigger to block any action but select on the rental_contract_type table
+ *
+ * DESC: trigger to block any action but select
+ *       on the rental_contract_type table
  *****************************************************************************/
 CREATE TRIGGER tg_rental_contract_type
     BEFORE INSERT OR UPDATE OR DELETE
@@ -118,8 +119,9 @@ CREATE TRIGGER tg_rental_contract_type
 /******************************************************************************
  * TYPE: trigger
  * NAME: tg_rental_utilities_type
-
- * DESC: trigger to block any action but select on the rental_utilities_type table
+ *
+ * DESC: trigger to block any action but select
+ *       on the rental_utilities_type table
  *****************************************************************************/
 CREATE TRIGGER tg_rental_utilities_type
     BEFORE INSERT OR UPDATE OR DELETE
@@ -131,7 +133,7 @@ CREATE TRIGGER tg_rental_utilities_type
 /******************************************************************************
  * TYPE: trigger
  * NAME: tg_usr_type
-
+ *
  * DESC: trigger to block any action but select on the usr_type table
  *****************************************************************************/
 CREATE TRIGGER tg_usr_type
@@ -144,7 +146,7 @@ CREATE TRIGGER tg_usr_type
 /******************************************************************************
  * TYPE: trigger
  * NAME: tg_action_type
-
+ *
  * DESC: trigger to block any action but select on the action_type table
  *****************************************************************************/
 CREATE TRIGGER tg_action_type
