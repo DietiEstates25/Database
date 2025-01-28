@@ -98,7 +98,7 @@ CREATE OR REPLACE FUNCTION tf_rental_info_only_if_rental()
     RETURNS TRIGGER
 AS $$
     BEGIN
-        -- ! not sure about this check, probably is optimizable.
+        
         IF NOT EXISTS (
             SELECT 1
             FROM tb_ads_type JOIN tb_estate
@@ -108,49 +108,6 @@ AS $$
             call raise_custom_error('rental_violation');
         END IF;
 
-        /*
-        * Probably if we partition on ads_type we can exploit indexes at their
-        * best with this code below:
-        */
-
-        /*
-            SELECT id INTO var_ads_type
-            FROM tb_ads_type
-            WHERE type = 'rental';
-
-            IF NOT EXISTS (
-                SELECT 1
-                FROM tb_estate
-                WHERE id_ads_type = var_ads_type
-                AND id_estate = NEW.id_estate
-            ) THEN
-                call raise_custom_error('rental_violation');
-            END IF;
-        */
-
-        /*
-        * I think that this way is easier for postgres to optimize the query
-        * going through the indexes initially and then checking the existence
-        * of the estate only in the partitio of estates that are rentals
-        */
     END;
 $$  LANGUAGE plpgsql;
--------------------------------------------------------------------------------
-
-/******************************************************************************
- * TYPE: function - trigger
- * NAME: tf_type_block
-
- * DESC: block anything but retrieval on any type table
- *****************************************************************************/
-CREATE OR REPLACE FUNCTION tf_type_block()
-    RETURNS TRIGGER
-    LANGUAGE plpgsql
-AS $$
-    BEGIN
-        RAISE prohibited_sql_statement_attempted USING
-            MESSAGE = 'Prohibited SQL statement attempted',
-            HINT = 'Only SELECT operations are allowed on type tables';
-    END;
-$$;
 -------------------------------------------------------------------------------

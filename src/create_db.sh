@@ -15,9 +15,9 @@ echo "LOG DATE: $(date)" >> .log
 
 export PGPASSWORD="${DB_PASS}"
 
-for file in *.sql; do
+find . -type f -name "*.sql" | sort | while read -r file; do
     echo "" >> .log
-    echo "Executing file ""${file}" >> .log
+    echo "Executing file ""${file#*./}" >> .log
     psql -h localhost -d "${DB_NAME}" -U "${DB_USER}" -f "${file}" >> .log 2>&1
 done
 

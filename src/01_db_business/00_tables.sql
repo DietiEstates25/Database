@@ -22,7 +22,7 @@ CREATE TABLE tb_usr (
  *****************************************************************************/
 CREATE TABLE tb_usr_data (
     id_usr      integer PRIMARY KEY,
-    first_name  dm_smp_str NOT NULL,
+    first_name   dm_smp_str NOT NULL,
     last_name   dm_smp_str NOT NULL,
     dob         dm_dob NOT NULL,
     gender      ty_gender NOT NULL
@@ -144,7 +144,7 @@ CREATE TABLE tb_tmp_estate (
 );
 -------------------------------------------------------------------------------
 
-
+-- TODO: this one placed here for now, but should be moved in another file
 CREATE OR REPLACE FUNCTION fn_calculate_tot_area(
     main_area       integer,
     storage_area    integer,

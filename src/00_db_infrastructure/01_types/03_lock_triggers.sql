@@ -8,7 +8,7 @@ CREATE TRIGGER tg_ads_type
     BEFORE INSERT OR UPDATE OR DELETE
     ON tb_ads_type
     FOR EACH STATEMENT
-    EXECUTE FUNCTION tf_type_block();
+    EXECUTE FUNCTION tf_infrastructure_tables_lock();
 -------------------------------------------------------------------------------
 
 /******************************************************************************
@@ -21,7 +21,7 @@ CREATE TRIGGER tg_estate_type
     BEFORE INSERT OR UPDATE OR DELETE
     ON tb_estate_type
     FOR EACH STATEMENT
-    EXECUTE FUNCTION tf_type_block();
+    EXECUTE FUNCTION tf_infrastructure_tables_lock();
 -------------------------------------------------------------------------------
 
 /******************************************************************************
@@ -34,7 +34,7 @@ CREATE TRIGGER tg_furniture_type
     BEFORE INSERT OR UPDATE OR DELETE
     ON tb_furniture_type
     FOR EACH STATEMENT
-    EXECUTE FUNCTION tf_type_block();
+    EXECUTE FUNCTION tf_infrastructure_tables_lock();
 -------------------------------------------------------------------------------
 
 /******************************************************************************
@@ -47,7 +47,7 @@ CREATE TRIGGER tg_energy_class_type
     BEFORE INSERT OR UPDATE OR DELETE
     ON tb_energy_class_type
     FOR EACH STATEMENT
-    EXECUTE FUNCTION tf_type_block();
+    EXECUTE FUNCTION tf_infrastructure_tables_lock();
 -------------------------------------------------------------------------------
 
 /******************************************************************************
@@ -60,7 +60,7 @@ CREATE TRIGGER tg_heating_type
     BEFORE INSERT OR UPDATE OR DELETE
     ON tb_heating_type
     FOR EACH STATEMENT
-    EXECUTE FUNCTION tf_type_block();
+    EXECUTE FUNCTION tf_infrastructure_tables_lock();
 -------------------------------------------------------------------------------
 
 /******************************************************************************
@@ -73,7 +73,7 @@ CREATE TRIGGER tg_air_cond_type
     BEFORE INSERT OR UPDATE OR DELETE
     ON tb_air_cond_type
     FOR EACH STATEMENT
-    EXECUTE FUNCTION tf_type_block();
+    EXECUTE FUNCTION tf_infrastructure_tables_lock();
 -------------------------------------------------------------------------------
 
 /******************************************************************************
@@ -86,7 +86,7 @@ CREATE TRIGGER tg_property_type
     BEFORE INSERT OR UPDATE OR DELETE
     ON tb_property_type
     FOR EACH STATEMENT
-    EXECUTE FUNCTION tf_type_block();
+    EXECUTE FUNCTION tf_infrastructure_tables_lock();
 -------------------------------------------------------------------------------
 
 /******************************************************************************
@@ -99,7 +99,7 @@ CREATE TRIGGER tg_condition_type
     BEFORE INSERT OR UPDATE OR DELETE
     ON tb_condition_type
     FOR EACH STATEMENT
-    EXECUTE FUNCTION tf_type_block();
+    EXECUTE FUNCTION tf_infrastructure_tables_lock();
 -------------------------------------------------------------------------------
 
 /******************************************************************************
@@ -112,7 +112,7 @@ CREATE TRIGGER tg_rental_contract_type
     BEFORE INSERT OR UPDATE OR DELETE
     ON tb_rental_contract_type
     FOR EACH STATEMENT
-    EXECUTE FUNCTION tf_type_block();
+    EXECUTE FUNCTION tf_infrastructure_tables_lock();
 -------------------------------------------------------------------------------
 
 /******************************************************************************
@@ -125,7 +125,7 @@ CREATE TRIGGER tg_rental_utilities_type
     BEFORE INSERT OR UPDATE OR DELETE
     ON tb_rental_utilities_type
     FOR EACH STATEMENT
-    EXECUTE FUNCTION tf_type_block();
+    EXECUTE FUNCTION tf_infrastructure_tables_lock();
 -------------------------------------------------------------------------------
 
 /******************************************************************************
@@ -138,7 +138,7 @@ CREATE TRIGGER tg_usr_type
     BEFORE INSERT OR UPDATE OR DELETE
     ON tb_usr_type
     FOR EACH STATEMENT
-    EXECUTE FUNCTION tf_type_block();
+    EXECUTE FUNCTION tf_infrastructure_tables_lock();
 -------------------------------------------------------------------------------
 
 /******************************************************************************
@@ -151,5 +151,5 @@ CREATE TRIGGER tg_action_type
     BEFORE INSERT OR UPDATE OR DELETE
     ON tb_action_type
     FOR EACH STATEMENT
-    EXECUTE FUNCTION tf_type_block();
+    EXECUTE FUNCTION tf_infrastructure_tables_lock();
 -------------------------------------------------------------------------------

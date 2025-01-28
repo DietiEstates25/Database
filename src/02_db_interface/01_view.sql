@@ -260,5 +260,3 @@ FROM tb_estate
         ON tb_rental_info.id_rental_contract_type = tb_rental_contract_type.id
     JOIN tb_rental_utilities_type
         ON tb_rental_info.id_rental_utilities_type = tb_rental_utilities_type.id;
-
-

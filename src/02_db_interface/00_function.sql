@@ -124,7 +124,7 @@ AS $$
             e.id = id_estate;
 
         IF (estate_record IS NULL) THEN
-            --exeption
+            call raise_custom_error('estate_violation');
         END IF;
 
         INSERT INTO tb_estate(
