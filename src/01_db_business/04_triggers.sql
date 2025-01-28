@@ -1,20 +1,6 @@
 
 /******************************************************************************
  * TYPE: trigger
- * NAME: tg_bss_usr_hierarchy
- *
- * DESC: trigger to check if the role hierarchy is consistent
- *****************************************************************************/
-CREATE TRIGGER tg_bss_usr_hierarchy
-    BEFORE INSERT OR UPDATE
-    ON tb_usr
-    FOR EACH ROW
-    EXECUTE FUNCTION tf_bss_hierarchy_check();
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: trigger
  * NAME: tg_bss_usr_root
  *
  * DESC: trigger to prevent multiple root roles per agency
