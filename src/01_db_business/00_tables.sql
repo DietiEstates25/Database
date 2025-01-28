@@ -1,3 +1,6 @@
+TODO: creare tabelle tmp con LIKE 
+TODO: creare tabella estate vendute
+
 /******************************************************************************
  * TYPE: table
  * NAME: tb_usr
