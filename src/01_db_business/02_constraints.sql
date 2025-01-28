@@ -479,7 +479,7 @@ ALTER TABLE tb_feature_comp
  *****************************************************************************/
 ALTER TABLE tb_feature_comp
     ADD CONSTRAINT feature_comp_fk_furniture_type
-        FOREIGN KEY (id_type_furniture)
+        FOREIGN KEY (id_furniture_type)
         REFERENCES tb_furniture_type(id)
         ON DELETE cascade
         ON UPDATE cascade;
@@ -526,7 +526,7 @@ ALTER TABLE tb_tmp_feature_comp
  *****************************************************************************/
 ALTER TABLE tb_tmp_feature_comp
     ADD CONSTRAINT tmp_feature_comp_fk_furniture_type
-        FOREIGN KEY (id_type_furniture)
+        FOREIGN KEY (id_furniture_type)
         REFERENCES tb_furniture_type(id)
         ON DELETE cascade
         ON UPDATE cascade;

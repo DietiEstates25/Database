@@ -22,7 +22,7 @@ CREATE TABLE tb_usr (
  *****************************************************************************/
 CREATE TABLE tb_usr_data (
     id_usr      integer PRIMARY KEY,
-    first_name   dm_smp_str NOT NULL,
+    first_name  dm_smp_str NOT NULL,
     last_name   dm_smp_str NOT NULL,
     dob         dm_dob NOT NULL,
     gender      ty_gender NOT NULL
@@ -52,7 +52,7 @@ CREATE TABLE tb_phone (
 CREATE TABLE tb_address (
     id              serial PRIMARY KEY,
     street          text NOT NULL,
-    st_number          text NOT NULL,
+    st_number       text NOT NULL,
     neighborhood    text NOT NULL, -- ? shouldn't it be nullable?
     city            text NOT NULL,
     state_province  text NOT NULL,
@@ -153,7 +153,8 @@ CREATE OR REPLACE FUNCTION fn_calculate_tot_area(
     garage_area     integer,
     n_indoor_park   integer,
     n_outdoor_park  integer
-) RETURNS integer
+)
+RETURNS integer
 LANGUAGE plpgsql
 IMMUTABLE
 AS $$
@@ -305,7 +306,7 @@ CREATE TABLE tb_feature_comp (
     kitchens            dm_int0plus NOT NULL DEFAULT 0,
     liveable_kitchen    boolean NOT NULL DEFAULT false,
     bedrooms            dm_int0plus NOT NULL DEFAULT 0,
-    id_type_furniture   integer NOT NULL
+    id_furniture_type   integer NOT NULL
 );
 -------------------------------------------------------------------------------
 
@@ -323,7 +324,7 @@ CREATE TABLE tb_tmp_feature_comp (
     kitchens            dm_int0plus NOT NULL DEFAULT 0,
     liveable_kitchen    boolean NOT NULL DEFAULT false,
     bedrooms            dm_int0plus NOT NULL DEFAULT 0,
-    id_type_furniture   integer NOT NULL
+    id_furniture_type   integer NOT NULL
 );
 -------------------------------------------------------------------------------
 

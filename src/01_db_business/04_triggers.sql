@@ -1,4 +1,3 @@
-
 /******************************************************************************
  * TYPE: trigger
  * NAME: tg_bss_usr_root
@@ -17,7 +16,7 @@ CREATE TRIGGER tg_bss_usr_root
  * NAME: tg_bss_usr_agency
  *
  * DESC: trigger to check if the agency of the user is consistent with the
-         agency of the superior role
+ *       agency of the superior role
  *****************************************************************************/
 CREATE TRIGGER tg_bss_usr_agency
     BEFORE INSERT OR UPDATE

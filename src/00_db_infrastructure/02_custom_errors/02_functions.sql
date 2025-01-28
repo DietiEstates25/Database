@@ -15,7 +15,7 @@ AS $$
         RETURN 'CE' || to_char(num_err_code, '999');
     END;
 $$;
-
+-------------------------------------------------------------------------------
 
 
 /******************************************************************************
@@ -36,7 +36,7 @@ AS $$
         str_err_code varchar(5);
     BEGIN
 
-        IF (err_msg IS NULL) THEN
+        IF err_msg IS NULL THEN
             err_msg := '(CE000) An unknown error occurred';
             str_err_code := 'CE000';
         ELSE
@@ -44,7 +44,7 @@ AS $$
             err_msg = '[' || str_err_code || '] ' || err_msg;
         END IF;
 
-        IF (err_hint IS NOT NULL) THEN
+        IF err_hint IS NOT NULL THEN
             RAISE EXCEPTION USING
                 ERRCODE = str_err_code,
                 MESSAGE = err_msg,
@@ -57,6 +57,8 @@ AS $$
         END IF;
     END;
 $$;
+-------------------------------------------------------------------------------
+
 
 /******************************************************************************
  * TYPE: function - utility
@@ -77,21 +79,16 @@ AS $$
         var_err_hint  TEXT;
     BEGIN
         -- Find error message in the custom_error_messages table 
-        SELECT
-            error_message,
-            error_hint
-        INTO
-            var_err_msg,
-            var_err_hint
-        FROM
-            tb_custom_errors
-        WHERE
-            error_code = ext_err_code;
+        SELECT error_message, error_hint
+        INTO var_err_msg, var_err_hint
+        FROM tb_custom_errors
+        WHERE error_code = ext_err_code;
 
         PERFORM handle_custom_error(ext_err_code,var_err_name, var_err_hint);
 
     END;
 $$;
+-------------------------------------------------------------------------------
 
 
 /******************************************************************************
@@ -109,20 +106,13 @@ AS $$
         var_err_code  smallint;
     BEGIN
 
-        SELECT
-            error_code,
-            error_message,
-            error_hint
-        INTO
-            var_err_code,
-            var_err_msg,
-            var_err_hint
-        FROM
-            tb_custom_errors
-        WHERE
-            error_name = ext_err_name;
+        SELECT error_code, error_message, error_hint
+        INTO var_err_code, var_err_msg, var_err_hint
+        FROM tb_custom_errors
+        WHERE error_name = ext_err_name;
 
         CALL handle_custom_error(var_err_code, var_err_msg, var_err_hint);
 
     END;
 $$;
+-------------------------------------------------------------------------------
