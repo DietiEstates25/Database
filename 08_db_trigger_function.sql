@@ -22,7 +22,6 @@ AS $$
                 FROM tb_bss_role
                 WHERE hierarchy > NEW.id_role
             ) THEN
-                -- ? what should i raise here?
                 call raise_custom_error('bss_hierarchy_violation');
             END IF;
         ELSE
@@ -31,7 +30,6 @@ AS $$
             WHERE id_email = NEW.id_super;
 
             IF sup_role <= NEW.id_role THEN
-                -- ? what should i raise here?
                 call raise_custom_error('bss_hierarchy_violation');
             END IF;
         END IF;
@@ -55,7 +53,6 @@ AS $$
                 WHERE id_agency = NEW.id_agency
                 AND id_super IS NULL
             ) THEN
-            -- ? what should i raise here?
             call raise_custom_error('bss_multiple_root_violation');
         END IF;
     END;
@@ -82,7 +79,6 @@ AS $$
             WHERE id_email = NEW.id_super;
 
             IF sup_agency <> NEW.id_agency THEN
-                -- ? what should i raise here?
                 call raise_custom_error('bss_agency_violation');
             END IF;
         END IF;
@@ -109,8 +105,7 @@ AS $$
             ON tb_ads_type.id = tb_estate.id_ads_type
             WHERE type = 'rental' AND id_estate = NEW.id_estate
         ) THEN
-            -- ? what should i raise here?
-            call raise_custom_error('rental_info_only_if_rental');
+            call raise_custom_error('rental_violation');
         END IF;
 
         /*
@@ -129,7 +124,7 @@ AS $$
                 WHERE id_ads_type = var_ads_type
                 AND id_estate = NEW.id_estate
             ) THEN
-                call raise_custom_error('rental_info_only_if_rental');
+                call raise_custom_error('rental_violation');
             END IF;
         */
 
@@ -140,4 +135,22 @@ AS $$
         */
     END;
 $$  LANGUAGE plpgsql;
+-------------------------------------------------------------------------------
+
+/******************************************************************************
+ * TYPE: function - trigger
+ * NAME: tf_type_block
+
+ * DESC: block anything but retrieval on any type table
+ *****************************************************************************/
+CREATE OR REPLACE FUNCTION tf_type_block()
+    RETURNS TRIGGER
+    LANGUAGE plpgsql
+AS $$
+    BEGIN
+        RAISE prohibited_sql_statement_attempted USING
+            MESSAGE = 'Prohibited SQL statement attempted',
+            HINT = 'Only SELECT operations are allowed on type tables';
+    END;
+$$;
 -------------------------------------------------------------------------------

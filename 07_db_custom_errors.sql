@@ -159,6 +159,6 @@ VALUES
     ('bss_agency_violation',
         'Business user agency violation',
         'Business user must belong to the same agency of his superior'),
-    ('rental_info_only_if_rental',
-        'Rental information are only allowed for rental properties',
-        null);
+    ('rental_violation',
+        'Rental related action performed on non-rental property',
+        'Rental info can be added or retrieved only for rental properties');

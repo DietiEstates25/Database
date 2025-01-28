@@ -13,28 +13,17 @@ AS $$
 
     BEGIN
         SELECT tb_usr.id, tb_usr.id_usr_type, tb_bss_usr.id_agency
-        INTO creator_record
+        INTO STRICT creator_record
         FROM tb_usr JOIN tb_bss_usr ON tb_usr.id = tb_bss_usr.id_usr
         WHERE tb_usr.email = email_creator;
 
-        IF (creator_record IS NULL) THEN
-            -- raise exeption
-            RETURN (NULL);
-        END IF;
-
         SELECT tb_usr_type.id
-        INTO new_role_id
+        INTO STRICT new_role_id
         FROM tb_usr_type
         WHERE tb_usr_type.type = new_role AND tb_usr_type.is_bss;
 
-        IF (new_role_id IS NULL) THEN
-            -- raise exeption
-            RETURN (NULL);
-        END IF;
-
         IF (creator_record.id_usr_type >= new_role_id) THEN
-           -- raise exeption 
-            RETURN (NULL);
+           call raise_custom_error('bss_hierarchy_violation');
         END IF;
 
         INSERT INTO tb_usr(
@@ -74,16 +63,12 @@ AS $$
         bss_usr_record  RECORD;
     BEGIN
         SELECT tb_bss_usr.id_usr,tb_bss_usr.id_super, tb_bss_usr.id_agency
-        INTO bss_usr_record
+        INTO STRICT bss_usr_record
         FROM tb_tmp_bss_usr
             JOIN tb_phone ON tb_tmp_bss_usr.id_usr = tb_phone.id_usr
             JOIN tb_usr_data ON tb_tmp_bss_usr.id_usr = tb_usr_data.id_usr
         WHERE
             tb_tmp_bss_usr.id_usr = id_bss_usr;
-
-        IF (bss_usr_record IS NULL) THEN 
-            -- exeption
-        END IF;
 
         INSERT INTO tb_bss_usr(
             id_usr,
@@ -121,7 +106,7 @@ AS $$
             WHERE r.id_estate = id_estate;
 
             IF (rent_record IS NULL) THEN
-                --exeption
+                call raise_custom_error('rental_violation');
             END IF;
         END IF;
 
