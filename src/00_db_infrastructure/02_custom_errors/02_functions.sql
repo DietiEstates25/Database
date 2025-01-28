@@ -92,12 +92,15 @@ $$;
 
 
 /******************************************************************************
- * TYPE: procedure - utility
+ * TYPE: function - utility
  * NAME: raise_custom_error
  *
  * DESC: overloaded version for raising custom error by name
  *****************************************************************************/
-CREATE OR REPLACE PROCEDURE raise_custom_error(ext_err_name dm_err_name)
+CREATE OR REPLACE FUNCTION raise_custom_error(
+    ext_err_name    dm_err_name
+)
+RETURNS void
 LANGUAGE plpgsql
 AS $$
     DECLARE
@@ -111,7 +114,7 @@ AS $$
         FROM tb_custom_errors
         WHERE error_name = ext_err_name;
 
-        CALL handle_custom_error(var_err_code, var_err_msg, var_err_hint);
+        SELECT handle_custom_error(var_err_code, var_err_msg, var_err_hint);
 
     END;
 $$;
