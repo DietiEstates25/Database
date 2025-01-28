@@ -22,7 +22,7 @@ CREATE TABLE tb_usr (
  *****************************************************************************/
 CREATE TABLE tb_usr_data (
     id_usr      integer PRIMARY KEY,
-    firs_name   dm_smp_str NOT NULL,
+    first_name  dm_smp_str NOT NULL,
     last_name   dm_smp_str NOT NULL,
     dob         dm_dob NOT NULL,
     gender      ty_gender NOT NULL
