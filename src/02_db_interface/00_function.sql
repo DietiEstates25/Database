@@ -607,8 +607,64 @@ AS $$
     BEGIN
 
         INSERT INTO tb_feature_other(
+            id_estate,
+            near_school,
+            near_kindergarten,
+            near_university,
+            near_park,
+            near_shopping,
+            near_market,
+            near_transport,
+            near_subway,
+            near_catering,
+            near_healthcare,
+            near_laisure,
+            near_nature,
+            near_office,
+            near_parking,
+            near_railway,
+            near_airpoty,
+            near_service,
+            near_beach,
+            near_adult,
+            near_heritage,
+            near_entertainment,
+            near_sport,
+            populated_area,
+            low_emission_zone,
+            lgbt_friendly,
+            pet_friendly,
+            opt_fiber_coverage,
         )
         SELECT
+            new_id,
+            tb_tmp_feature_other.near_school,
+            tb_tmp_feature_other.near_kindergarten,
+            tb_tmp_feature_other.near_university,
+            tb_tmp_feature_other.near_park,
+            tb_tmp_feature_other.near_shopping,
+            tb_tmp_feature_other.near_market,
+            tb_tmp_feature_other.near_transport,
+            tb_tmp_feature_other.near_subway,
+            tb_tmp_feature_other.near_catering,
+            tb_tmp_feature_other.near_healthcare,
+            tb_tmp_feature_other.near_laisure,
+            tb_tmp_feature_other.near_nature,
+            tb_tmp_feature_other.near_office,
+            tb_tmp_feature_other.near_parking,
+            tb_tmp_feature_other.near_railway,
+            tb_tmp_feature_other.near_airpoty,
+            tb_tmp_feature_other.near_service,
+            tb_tmp_feature_other.near_beach,
+            tb_tmp_feature_other.near_adult,
+            tb_tmp_feature_other.near_heritage,
+            tb_tmp_feature_other.near_entertainment,
+            tb_tmp_feature_other.near_sport,
+            tb_tmp_feature_other.populated_area,
+            tb_tmp_feature_other.low_emission_zone,
+            tb_tmp_feature_other.lgbt_friendly,
+            tb_tmp_feature_other.pet_friendly,
+            tb_tmp_feature_other.opt_fiber_coverage,
         FROM
             tb_tmp_feature_other
         WHERE
@@ -720,15 +776,15 @@ AS $$
             INTO
                 id_estate;
 
-            CALL fn_new_feature_sz(id_estate);
-            CALL fn_new_feature_floor(id_estate);
-            CALL fn_new_feature_comp(id_estate);
-            CALL fn_new_feature_energy_eff(id_estate);
-            CALL fn_new_feature_condition(id_estate);
-            CALL fn_new_feature_other(id_estate);
-            CALL fn_new_feature_price(id_estate);
+            CALL fn_new_feature_sz(id_tmp_estate, id_estate);
+            CALL fn_new_feature_floor(id_tmp_estate, id_estate);
+            CALL fn_new_feature_comp(id_tmp_estate, id_estate);
+            CALL fn_new_feature_energy_eff(id_tmp_estate, id_estate);
+            CALL fn_new_feature_condition(id_tmp_estate, id_estate);
+            CALL fn_new_feature_other(id_tmp_estate, id_estate);
+            CALL fn_new_feature_price(id_tmp_estate, id_estate);
             IF (is_rent) THEN
-                CALL fn_new_feature_rental_info(id_estate);
+                CALL fn_new_feature_rental_info(id_tmp_estate, id_estate);
             END IF;
             
         EXEPTION

@@ -23,18 +23,18 @@ WHERE
 
 CREATE VIEW vw_bss_usr AS
 SELECT
-    vw_end_usr.creation         AS "creation",
-    vw_end_usr.id               AS "id",
-    vw_end_usr.email            AS "email",
-    vw_end_usr.first_name       AS "first_name",
-    vw_end_usr.last_name        AS "last_name",
-    vw_end_usr.dob              AS "dob",
-    vw_end_usr.gender           AS "gender",
-    vw_end_usr.phone            AS "phone",
-    vw_end_usr.type             AS "role",
-    vw_end_usr.is_bss           AS "is_bss",
-    tb_usr_super.email          AS "email_super",
-    tb_agency.name              AS "agency"
+    vw_end_usr.creation     AS "creation",
+    vw_end_usr.id           AS "id",
+    vw_end_usr.email        AS "email",
+    vw_end_usr.first_name   AS "first_name",
+    vw_end_usr.last_name    AS "last_name",
+    vw_end_usr.dob          AS "dob",
+    vw_end_usr.gender       AS "gender",
+    vw_end_usr.phone        AS "phone",
+    vw_end_usr.type         AS "role",
+    vw_end_usr.is_bss       AS "is_bss",
+    tb_usr_super.email      AS "email_super",
+    tb_agency.name          AS "agency"
 FROM vw_end_usr
     JOIN tb_bss_usr
         ON tb_usr.id = tb_bss_usr.id_usr
@@ -345,7 +345,7 @@ SELECT
     tb_furniture_type.type            AS "furniture_type"
 FROM tb_feature_comp
     JOIN tb_furniture_type
-        ON tb_feature_comp.id_type_furniture = tb_furniture_type.id
+        ON tb_feature_comp.id_furniture_type = tb_furniture_type.id
 
 CREATE VIEW vw_typed_tmp_feature_comp AS
 SELECT
@@ -358,7 +358,7 @@ SELECT
     tb_furniture_type.type                AS "furniture_type"
 FROM tb_tmp_feature_comp
     JOIN tb_furniture_type
-        ON tb_tmp_feature_comp.id_type_furniture = tb_furniture_type.id
+        ON tb_tmp_feature_comp.id_furniture_type = tb_furniture_type.id
 
 CREATE VIEW vw_typed_feature_energy_eff AS
 SELECT
