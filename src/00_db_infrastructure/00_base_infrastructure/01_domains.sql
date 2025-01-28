@@ -18,7 +18,7 @@ CREATE DOMAIN dm_dob AS date
  * DESC: domain for email addresses with format validation (RFC 5322)
  *****************************************************************************/
 CREATE DOMAIN dm_email AS varchar(320)
-CHECK (
+    CHECK (
         VALUE ~ '^((?:[A-Za-z0-9!#$%&''*+\-\/=?^_`{|}~]|(?<=^|\.)"|"'
                 '(?=$|\.|@)|(?<=".*)[.](?=.*")|(?<!\.)\.){1,64})(@)'
                 '((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$'
@@ -83,7 +83,7 @@ CREATE DOMAIN dm_smp_str AS varchar(666)
 /******************************************************************************
  * TYPE: domain
  * NAME: dm_error_name
-
+ *
  * DESC: domain for error name with format validation
  *****************************************************************************/
 CREATE DOMAIN dm_err_name AS text
