@@ -140,8 +140,7 @@ CREATE TABLE tb_tmp_estate (
     id_bss_usr      integer NOT NULL,
     id_estate_type  integer,
     id_address      integer,
-    id_ads_type     integer NOT NULL,
-    is_completed    boolean DEFAULT false
+    id_ads_type     integer NOT NULL
 );
 -------------------------------------------------------------------------------
 
