@@ -23,25 +23,19 @@ WHERE
 
 CREATE VIEW vw_bss_usr AS
 SELECT
-    tb_usr.creation         AS "creation",
-    tb_usr.id               AS "id",
-    tb_usr.email            AS "email",
-    tb_usr_data.first_name  AS "first_name",
-    tb_usr_data.last_name   AS "last_name",
-    tb_usr_data.dob         AS "dob",
-    tb_usr_data.gender      AS "gender",
-    tb_phone.phone          AS "phone",
-    tb_usr_type.type        AS "role",
-    tb_usr_type.is_bss      AS "is_bss",
-    tb_usr_super.email      AS "email_super",
-    tb_agency.name          AS "agency"
-FROM tb_usr
-    JOIN tb_usr_type
-        ON tb_usr.id_usr_type = tb_usr_type.id
-    JOIN tb_usr_data
-        ON tb_usr.id = tb_usr_data.id_usr
-    JOIN tb_phone
-        ON tb_usr.id = tb_phone.id_usr
+    vw_end_usr.creation         AS "creation",
+    vw_end_usr.id               AS "id",
+    vw_end_usr.email            AS "email",
+    vw_end_usr.first_name       AS "first_name",
+    vw_end_usr.last_name        AS "last_name",
+    vw_end_usr.dob              AS "dob",
+    vw_end_usr.gender           AS "gender",
+    vw_end_usr.phone            AS "phone",
+    vw_end_usr.type             AS "role",
+    vw_end_usr.is_bss           AS "is_bss",
+    tb_usr_super.email          AS "email_super",
+    tb_agency.name              AS "agency"
+FROM vw_end_usr
     JOIN tb_bss_usr
         ON tb_usr.id = tb_bss_usr.id_usr
     LEFT OUTER JOIN tb_usr tb_usr_super
@@ -260,3 +254,209 @@ FROM tb_estate
         ON tb_rental_info.id_rental_contract_type = tb_rental_contract_type.id
     JOIN tb_rental_utilities_type
         ON tb_rental_info.id_rental_utilities_type = tb_rental_utilities_type.id;
+
+--------------------------------------------------------------------------------
+
+CREATE VIEW vw_end_usr AS
+SELECT
+    tb_usr.creation         AS "creation",
+    tb_usr.id               AS "id",
+    tb_usr.email            AS "email",
+    tb_usr_data.first_name  AS "first_name",
+    tb_usr_data.last_name   AS "last_name",
+    tb_usr_data.dob         AS "dob",
+    tb_usr_data.gender      AS "gender",
+    tb_phone.phone          AS "phone",
+    tb_usr_type.type        AS "role",
+    tb_usr_type.is_bss      AS "is_bss"
+FROM tb_usr
+    JOIN tb_usr_type
+        ON tb_usr.id_usr_type = tb_usr_type.id
+    LEFT OUTER JOIN tb_usr_data
+        ON tb_usr.id = tb_usr_data.id_usr
+    LEFT OUTER JOIN tb_phone
+        ON tb_usr.id = tb_phone.id_usr
+WHERE
+    tb_usr.is_bss;
+
+
+CREATE VIEW vw_typed_bss_usr AS
+SELECT
+    vw_end_usr.creation    AS "creation",
+    vw_end_usr.id          AS "id",
+    vw_end_usr.email       AS "email",
+    vw_end_usr.first_name  AS "first_name",
+    vw_end_usr.last_name   AS "last_name",
+    vw_end_usr.dob         AS "dob",
+    vw_end_usr.gender      AS "gender",
+    vw_end_usr.phone       AS "phone",
+    vw_end_usr.type        AS "role",
+    vw_end_usr.is_bss      AS "is_bss",
+    tb_usr_super.email     AS "email_super",
+    tb_agency.name         AS "agency"
+FROM vw_end_usr
+    JOIN tb_bss_usr
+        ON tb_usr.id = tb_bss_usr.id_usr
+    LEFT OUTER JOIN tb_usr tb_usr_super
+        ON tb_bss_usr.id_super = tb_usr_super.id
+    JOIN tb_agency
+        ON tb_bss_usr.id_agency = tb_agency.id;
+
+CREATE VIEW vw_typed_estate AS
+SELECT
+    tb_estate.id          AS "id",
+    tb_estate.id_bss_usr  AS "id_bss_usr",
+    tb_estate.id_address  AS "id_address",
+    tb_estate.is_sold     AS "is_sold",
+    tb_estate_type.type   AS "estate_type",
+    tb_ads_type.type      AS "advertisment_type",
+FROM tb_estate
+    JOIN tb_address
+        ON tb_estate.id_address = tb_address.id
+    JOIN tb_estate_type
+        ON tb_estate.id_estate_type = tb_estate_type.id
+    JOIN tb_ads_type
+        ON tb_estate.id_ads_type = tb_ads_type.id
+
+CREATE VIEW vw_typed_tmp_estate AS
+SELECT
+    tb_tmp_estate.id          AS "id",
+    tb_tmp_estate.id_bss_usr  AS "id_bss_usr",
+    tb_tmp_estate.id_address  AS "id_address",
+    tb_tmp_estate.is_sold     AS "is_sold",
+    tb_estate_type.type       AS "estate_type",
+    tb_ads_type.type          AS "advertisment_type",
+FROM tb_tmp_estate
+    JOIN tb_address
+        ON tb_tmp_estate.id_address = tb_address.id
+    JOIN tb_estate_type
+        ON tb_tmp_estate.id_estate_type = tb_estate_type.id
+    JOIN tb_ads_type
+        ON tb_tmp_estate.id_ads_type = tb_ads_type.id
+
+CREATE VIEW vw_typed_feature_comp AS
+SELECT
+    tb_feature_comp.id_estate         AS "id_estate",
+    tb_feature_comp.rooms             AS "rooms",
+    tb_feature_comp.bathrooms         AS "bathrooms",
+    tb_feature_comp.kitchens          AS "kitchens",
+    tb_feature_comp.liveable_kitchen  AS "liveable_kitchen",
+    tb_feature_comp.bedrooms          AS "bedrooms",
+    tb_furniture_type.type            AS "furniture_type"
+FROM tb_feature_comp
+    JOIN tb_furniture_type
+        ON tb_feature_comp.id_type_furniture = tb_furniture_type.id
+
+CREATE VIEW vw_typed_tmp_feature_comp AS
+SELECT
+    tb_tmp_feature_comp.id_estate         AS "id_estate",
+    tb_tmp_feature_comp.rooms             AS "rooms",
+    tb_tmp_feature_comp.bathrooms         AS "bathrooms",
+    tb_tmp_feature_comp.kitchens          AS "kitchens",
+    tb_tmp_feature_comp.liveable_kitchen  AS "liveable_kitchen",
+    tb_tmp_feature_comp.bedrooms          AS "bedrooms",
+    tb_furniture_type.type                AS "furniture_type"
+FROM tb_tmp_feature_comp
+    JOIN tb_furniture_type
+        ON tb_tmp_feature_comp.id_type_furniture = tb_furniture_type.id
+
+CREATE VIEW vw_typed_feature_energy_eff AS
+SELECT
+    tb_feature_energy_eff.id_estate  AS "id_estate",
+    tb_energy_class_type.type        AS "energy_class_type",
+    tb_feature_energy_eff.epgl       AS "epgl",
+    tb_heating_type.type             AS "heating_type",
+    tb_air_cond_type.type            AS "air_cond_type"
+FROM tb_feature_energy_eff
+    JOIN tb_energy_class_type
+        ON tb_feature_energy_eff.id_energy_class_type = tb_energy_class_type.id
+    JOIN tb_heating_type
+        ON tb_feature_energy_eff.id_heating_type = tb_heating_type.id
+    JOIN tb_air_cond_type
+        ON tb_feature_energy_eff.id_air_cond_type = tb_air_cond_type.id
+
+CREATE VIEW vw_typed_tmp_feature_energy_eff AS
+SELECT
+    tb_tmp_feature_energy_eff.id_estate  AS "id_estate",
+    tb_energy_class_type.type            AS "energy_class_type",
+    tb_tmp_feature_energy_eff.epgl       AS "epgl",
+    tb_heating_type.type                 AS "heating_type",
+    tb_air_cond_type.type                AS "air_cond_type"
+FROM tb_tmp_feature_energy_eff
+    JOIN tb_energy_class_type
+        ON tb_tmp_feature_energy_eff.id_energy_class_type = tb_energy_class_type.id
+    JOIN tb_heating_type
+        ON tb_tmp_feature_energy_eff.id_heating_type = tb_heating_type.id
+    JOIN tb_air_cond_type
+        ON tb_tmp_feature_energy_eff.id_air_cond_type = tb_air_cond_type.id
+
+CREATE VIEW vw_typed_feature_condition AS
+SELECT
+    tb_feature_condition.id_estate           AS "id_estate",
+    tb_property_type.type                    AS "property_type",
+    tb_condition_type.type                   AS "condition_type",
+    tb_feature_condition.construction_year   AS "construction_year"
+FROM tb_feature_condition
+    JOIN tb_property_type
+        ON tb_feature_condition.id_property_type = tb_property_type.id
+    JOIN tb_condition_type
+        ON tb_feature_condition.id_condition_type = tb_condition_type.id
+
+CREATE VIEW vw_typed_tmp_feature_condition AS
+SELECT
+    tb_tmp_feature_condition.id_estate          AS "id_estate",
+    tb_property_type.type                       AS "property_type",
+    tb_condition_type.type                      AS "condition_type",
+    tb_tmp_feature_condition.construction_year  AS "construction_year"
+FROM tb_tmp_feature_condition
+    JOIN tb_property_type
+        ON tb_tmp_feature_condition.id_property_type = tb_property_type.id
+    JOIN tb_condition_type
+        ON tb_tmp_feature_condition.id_condition_type = tb_condition_type.id
+
+CREATE VIEW vw_typed_rental_info AS
+SELECT
+    tb_rental_info.id_estate       AS "id_estate",
+    tb_rental_contract_type.type   AS "rental_contract_type",
+    tb_rental_info.rent_to_own     AS "rent_to_own",
+    tb_rental_info.roommates       AS "roommates",
+    tb_rental_utilities_type.type  AS "rental_utilities_type"
+FROM tb_rental_info
+    JOIN tb_rental_contract_type
+        ON tb_rental_info.id_rental_contract_type = tb_rental_contract_type.id
+    JOIN tb_rental_utilities_type
+        ON tb_rental_info.id_rental_utilities_type = tb_rental_utilities_type.id
+
+CREATE VIEW vw_typed_tmp_rental_info AS
+SELECT
+    tb_tmp_rental_info.id_estate    AS "id_estate",
+    tb_rental_contract_type.type    AS "rental_contract_type",
+    tb_tmp_rental_info.rent_to_own  AS "rent_to_own",
+    tb_tmp_rental_info.roommates    AS "roommates",
+    tb_rental_utilities_type.type   AS "rental_utilities_type"
+FROM tb_tmp_rental_info
+    JOIN tb_rental_contract_type
+        ON tb_tmp_rental_info.id_rental_contract_type = tb_rental_contract_type.id
+    JOIN tb_rental_utilities_type
+        ON tb_tmp_rental_info.id_rental_utilities_type = tb_rental_utilities_type.id
+
+CREATE VIEW vw_typed_usr_action AS
+SELECT
+    tb_usr_action.id_usr      AS "id_usr",
+    tb_usr_action.id_estate   AS "id_estate",
+    tb_action_type.action     AS "action",
+    tb_usr_action.time_stamp  AS "time_stamp"
+FROM tb_usr_action
+    JOIN tb_action_type
+        ON tb_usr_action.id_action_type = tb_action_type.id
+
+CREATE MATERIALIZED VIEW mv_estate_stats AS
+SELECT 
+    vw_typed_usr_action.id_estate        AS "id_estate",
+    COUNT(vw_typed_usr_action.id_)       AS "n_actions",
+    vw_typed_usr_action.action           AS "action",
+    DATE(vw_typed_usr_action.time_stamp) AS "date"
+FROM vw_typed_usr_action
+GROUP BY vw_typed_usr_action.id_estate,
+        DATE(vw_typed_usr_action.time_stamp),
+        vw_typed_usr_action.action;
