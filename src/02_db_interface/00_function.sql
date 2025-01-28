@@ -43,7 +43,7 @@ AS $$
             new_role_id,
             true 
         )
-        RETURNING id INTO id_new_usr;
+        RETURNING id INTO new_usr_id;
 
         INSERT INTO tb_tmp_bss_usr(
             id_usr,
@@ -56,7 +56,7 @@ AS $$
             agency_id
         );
 
-        RETURN (id_new_usr);
+        RETURN (new_usr_id);
 
     END;
 $$;
@@ -72,24 +72,17 @@ AS $$
     DECLARE
         super_id    integer;
         agency_id   integer;
-
+        ctrl        integer;
     BEGIN
+        SELECT 1
+        INTO STRICT ctrl
+        FROM tb_usr_data
+        WHERE tb_usr_data.id_usr = id_bss_usr;
 
-        IF NOT EXISTS (
-            SELECT 1
-            FROM tb_usr_data
-            WHERE tb_usr_data.id_usr = id_bss_usr
-        ) THEN 
-            SELECT raise_custom_error('bss_usr_confermation_violation');
-        END IF;
-
-        IF NOT EXISTS (
-            SELECT 1
-            FROM tb_phone
-            WHERE tb_phone.id_usr = id_bss_usr
-        ) THEN 
-            SELECT raise_custom_error('bss_usr_confermation_violation');
-        END IF;
+        SELECT 1
+        INTO STRICT ctrl
+        FROM tb_phone
+        WHERE tb_phone.id_usr = id_bss_usr;
 
         SELECT tb_bss_usr.id_super, tb_bss_usr.id_agency
         INTO STRICT super_id, agency_id
@@ -106,7 +99,9 @@ AS $$
             super_id,
             agency_id
         );
-
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            SELECT raise_custom_error('bss_usr_not_found');
     END;
 $$;
 
@@ -119,71 +114,48 @@ LANGUAGE plpgsql
 AS $$
     DECLARE
         is_rent boolean := false;
-
+        ctrl    integer;
     BEGIN
-        IF NOT EXISTS (
-            SELECT 1
-            FROM tb_tmp_estate
-            WHERE tb_tmp_estate.id = id_tmp_estate
-        ) THEN 
-            SELECT raise_custom_error('estate_confirmation_violation');
-        END IF;
+         
+        SELECT 1
+        INTO STRICT ctrl
+        FROM tb_tmp_estate
+        WHERE tb_tmp_estate.id = id_tmp_estate;
+        
+        SELECT 1
+        INTO STRICT ctrl
+        FROM tb_tmp_feature_sz
+        WHERE tb_tmp_feature_sz.id_estate = id_tmp_estate;
 
-        IF NOT EXISTS (
-            SELECT 1
-            FROM tb_tmp_feature_sz
-            WHERE tb_tmp_feature_sz.id_estate = id_tmp_estate
-        ) THEN 
-            SELECT raise_custom_error('estate_confirmation_violation');
-        END IF;
+        SELECT 1
+        INTO STRICT ctrl
+        FROM tb_tmp_feature_floor
+        WHERE tb_tmp_feature_floor.id_estate = id_tmp_estate;
 
-        IF NOT EXISTS (
-            SELECT 1
-            FROM tb_tmp_feature_floor
-            WHERE tb_tmp_feature_floor.id_estate = id_tmp_estate
-        ) THEN 
-            SELECT raise_custom_error('estate_confirmation_violation');
-        END IF;
+        SELECT 1
+        INTO STRICT ctrl
+        FROM tb_tmp_feature_comp
+        WHERE tb_tmp_feature_comp.id_estate = id_tmp_estate;
 
-        IF NOT EXISTS (
-            SELECT 1
-            FROM tb_tmp_feature_comp
-            WHERE tb_tmp_feature_comp.id_estate = id_tmp_estate
-        ) THEN 
-            SELECT raise_custom_error('estate_confirmation_violation');
-        END IF;
+        SELECT 1
+        INTO STRICT ctrl
+        FROM tb_tmp_feature_energy_eff
+        WHERE tb_tmp_feature_energy_eff.id_estate = id_tmp_estate;
 
-        IF NOT EXISTS (
-            SELECT 1
-            FROM tb_tmp_feature_energy_eff
-            WHERE tb_tmp_feature_energy_eff.id_estate = id_tmp_estate
-        ) THEN 
-            SELECT raise_custom_error('estate_confirmation_violation');
-        END IF;
+        SELECT 1
+        INTO STRICT ctrl
+        FROM tb_tmp_feature_condition
+        WHERE tb_tmp_feature_.id_estate = id_tmp_estate;
 
-        IF NOT EXISTS (
-            SELECT 1
-            FROM tb_tmp_feature_condition
-            WHERE tb_tmp_feature_.id_estate = id_tmp_estate
-        ) THEN 
-            SELECT raise_custom_error('estate_confirmation_violation');
-        END IF;
+        SELECT 1
+        INTO STRICT ctrl
+        FROM tb_tmp_feature_other
+        WHERE tb_tmp_feature_other.id_estate = id_tmp_estate
 
-        IF NOT EXISTS (
-            SELECT 1
-            FROM tb_tmp_feature_other
-            WHERE tb_tmp_feature_other.id_estate = id_tmp_estate
-        ) THEN 
-            SELECT raise_custom_error('estate_confirmation_violation');
-        END IF;
-
-        IF NOT EXISTS (
-            SELECT 1
-            FROM tb_tmp_price
-            WHERE tb_tmp_price.id_estate = id_tmp_estate
-        ) THEN 
-            SELECT raise_custom_error('estate_confirmation_violation');
-        END IF;
+        SELECT 1
+        INTO STRICT ctrl
+        FROM tb_tmp_price
+        WHERE tb_tmp_price.id_estate = id_tmp_estate;
 
         SELECT (tb_ads_type.type = 'RENT')
         INTO is_rent
@@ -192,16 +164,18 @@ AS $$
         WHERE tb_tmp_estate.id = id_tmp_estate;
 
         IF (is_rent) THEN
-            IF NOT EXISTS (
-                SELECT 1
-                FROM tb_tmp_rental_info
-                WHERE tb_tmp_rental_info.id_estate = id_tmp_estate
-            ) THEN 
-                SELECT raise_custom_error('estate_confirmation_violation');
-            END IF;
+            SELECT 1
+            INTO STRICT ctrl
+            FROM tb_tmp_rental_info
+            WHERE tb_tmp_rental_info.id_estate = id_tmp_estate
         END IF;
 
         RETURN (is_rent);
+
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            SELECT raise_custom_error('tmp_estate_not_found');
+
     END;
 $$;
 
@@ -242,7 +216,7 @@ AS $$
             tb_tmp_feature_sz
         WHERE
             tb_tmp_feature_sz.id_estate = id_tmp_estate;
-           
+
     END;
 $$;
 
@@ -421,7 +395,7 @@ AS $$
             low_emission_zone,
             lgbt_friendly,
             pet_friendly,
-            opt_fiber_coverage,
+            opt_fiber_coverage
         )
         SELECT
             new_id,
@@ -544,14 +518,13 @@ AS $$
             id_bss_usr,
             id_estate_type,
             id_address,
-            id_ads_type,
-            false
+            id_ads_type
         )
         SELECT
             tb_tmp_estate.id_bss_usr,
             tb_tmp_estate.id_estate_type,
             tb_tmp_estate.id_address,
-            tb_tmp_estate.id_ads_type,
+            tb_tmp_estate.id_ads_type
         FROM
             tb_tmp_estate
         WHERE
