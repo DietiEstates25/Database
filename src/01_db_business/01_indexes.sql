@@ -60,7 +60,7 @@ CREATE INDEX idx_estate_on_estate_type
  * DESC: index for the main_area column in the feature_sz table
  *****************************************************************************/
 CREATE INDEX idx_feature_sz_on_main_area
-    ON tb_feature_sz(main_area); -- TODO: da cambiare
+    ON tb_feature_sz(total_area);
 -------------------------------------------------------------------------------
 
 
