@@ -24,20 +24,6 @@ CREATE TABLE tb_tmp_estate (LIKE tb_estate INCLUDING ALL);
 --     DROP COLUMN is_sold;
 -------------------------------------------------------------------------------
 
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_available_estate & tb_not_available_estate
- *
- * DESC: partitioned tables for available and not available properties
- *****************************************************************************/
-CREATE TABLE tb_available_estate PARTITION OF tb_estate
-    FOR VALUES IN (true);
-
-CREATE TABLE tb_not_available_estate PARTITION OF tb_estate
-    FOR VALUES IN (false);
--------------------------------------------------------------------------------
-
 /******************************************************************************
  * TYPE: table
  * NAME: tb_tmp_feature_sz

@@ -106,9 +106,8 @@ CREATE TABLE tb_estate (
     id_bss_usr      integer NOT NULL,
     id_estate_type  integer NOT NULL,
     id_address      integer NOT NULL,
-    id_ads_type     integer NOT NULL,
-    is_available    boolean NOT NULL DEFAULT true
-) PARTITION BY LIST (is_available);
+    id_ads_type     integer NOT NULL
+);
 -------------------------------------------------------------------------------
 
 
