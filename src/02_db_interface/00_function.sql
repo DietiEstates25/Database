@@ -12,7 +12,6 @@ AS $$
         agency_id           integer;
         new_role_id         integer;
         new_usr_id          integer;
-
     BEGIN
         SELECT tb_usr.id, tb_usr.id_usr_type
         INTO STRICT creator_id, creator_usr_type_id
@@ -33,17 +32,26 @@ AS $$
         FROM tb_bss_usr
         WHERE tb_bss_usr.id_usr = creator_id;
 
+        -- ? maybe a check if already exists as end_usr, maybe upsert?
         INSERT INTO tb_usr(
-            new_email,
+            email,
             id_usr_type,
             is_bss
         )
         VALUES (
-            email,
+            new_email,
             new_role_id,
             true 
         )
         RETURNING id INTO new_usr_id;
+        /*ON CONFLICT (email) DO UPDATE
+        SET id_usr_type = EXCLUDED.id_usr_type, is_bss = true
+        WHERE tb_usr.id_usr_type = ( 
+            SELECT id
+            FROM tb_usr_type
+            WHERE type = 'USER'
+        );
+        */
 
         INSERT INTO tb_tmp_bss_usr(
             id_usr,
@@ -150,7 +158,7 @@ AS $$
         SELECT 1
         INTO STRICT ctrl
         FROM tb_tmp_feature_other
-        WHERE tb_tmp_feature_other.id_estate = id_tmp_estate
+        WHERE tb_tmp_feature_other.id_estate = id_tmp_estate;
 
         SELECT 1
         INTO STRICT ctrl
@@ -167,7 +175,7 @@ AS $$
             SELECT 1
             INTO STRICT ctrl
             FROM tb_tmp_rental_info
-            WHERE tb_tmp_rental_info.id_estate = id_tmp_estate
+            WHERE tb_tmp_rental_info.id_estate = id_tmp_estate;
         END IF;
 
         RETURN (is_rent);
@@ -425,7 +433,7 @@ AS $$
             tb_tmp_feature_other.low_emission_zone,
             tb_tmp_feature_other.lgbt_friendly,
             tb_tmp_feature_other.pet_friendly,
-            tb_tmp_feature_other.opt_fiber_coverage,
+            tb_tmp_feature_other.opt_fiber_coverage
         FROM
             tb_tmp_feature_other
         WHERE

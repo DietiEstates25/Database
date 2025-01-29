@@ -37,4 +37,6 @@ CREATE TRIGGER rental_info_only_if_rental
     ON tb_tmp_rental_info
     FOR EACH ROW
     EXECUTE FUNCTION tf_rental_info_only_if_rental();
-------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------
+
+-- TODO trigger to assur a bss_usr has a role flagged as is_bss in usr table

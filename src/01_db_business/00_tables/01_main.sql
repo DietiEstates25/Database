@@ -1,5 +1,4 @@
-TODO: creare tabelle tmp con LIKE 
-TODO: creare tabella estate vendute
+-- TODO: creare tabella estate vendute
 
 /******************************************************************************
  * TYPE: table
@@ -56,7 +55,7 @@ CREATE TABLE tb_address (
     id              serial PRIMARY KEY,
     street          text NOT NULL,
     st_number       text NOT NULL,
-    neighborhood    text NOT NULL, -- ? shouldn't it be nullable?
+    neighborhood    text NOT NULL,
     city            text NOT NULL,
     state_province  text NOT NULL,
     postal_code     text NOT NULL,
@@ -82,7 +81,6 @@ CREATE TABLE tb_agency (
 -------------------------------------------------------------------------------
 
 
--- TODO: check hierarchy (Maybe only in temp)
 /******************************************************************************
  * TYPE: table
  * NAME: tb_bss_usr
@@ -91,20 +89,6 @@ CREATE TABLE tb_agency (
  *       and agency affiliations
  *****************************************************************************/
 CREATE TABLE tb_bss_usr (
-    id_usr      integer PRIMARY KEY,
-    id_super    integer,
-    id_agency   integer NOT NULL
-);
--------------------------------------------------------------------------------
-
--- TODO: check hierarchy
-/******************************************************************************
- * TYPE: table
- * NAME: tb_tmp_bss_usr
- *
- * DESC: temporary table for business user registration process
- *****************************************************************************/
-CREATE TABLE tb_tmp_bss_usr (
     id_usr      integer PRIMARY KEY,
     id_super    integer,
     id_agency   integer NOT NULL
@@ -124,93 +108,11 @@ CREATE TABLE tb_estate (
     id_bss_usr      integer NOT NULL,
     id_estate_type  integer NOT NULL,
     id_address      integer NOT NULL,
-    id_ads_type     integer NOT NULL,
-    is_sold         boolean NOT NULL DEFAULT false
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_tmp_estate
- *
- * DESC: temporary table for property listing creation process
- *****************************************************************************/
-CREATE TABLE tb_tmp_estate (
-    id              serial PRIMARY KEY,
-    time_stamp      timestamp NOT NULL DEFAULT NOW(),         
-    id_bss_usr      integer NOT NULL,
-    id_estate_type  integer,
-    id_address      integer,
     id_ads_type     integer NOT NULL
 );
 -------------------------------------------------------------------------------
 
--- TODO: this one placed here for now, but should be moved in another file
-CREATE OR REPLACE FUNCTION fn_calculate_tot_area(
-    main_area       integer,
-    storage_area    integer,
-    terrace_area    integer,
-    balcony_area    integer,
-    garden_area     integer,
-    garage_area     integer,
-    n_indoor_park   integer,
-    n_outdoor_park  integer
-)
-RETURNS integer
-LANGUAGE plpgsql
-IMMUTABLE
-AS $$
-    DECLARE
-        total_area  real := 0.0;
-        ip          real := 0.0;
-    BEGIN 
-        total_area = total_area + main_area;
-        total_area = total_area + storage_area * 0.2;
 
-        IF (terrace_area > 25) THEN
-            total_area = total_area + 8.75;
-            total_area = total_area + (terrace_area - 25) * 0.1;
-        ELSE
-            total_area = total_area + terrace_area * 0.35;
-        END IF;
-
-        IF (balcony_area > 25) THEN
-            total_area = total_area + 6.25;
-            total_area = total_area + (balcony_area - 25) * 0.1;
-        ELSE
-            total_area = total_area + terrace_area * 0.25;
-        END IF;
-
-        IF (garden_area > 25) THEN
-            total_area = total_area + 3.75;
-            total_area = total_area + (garden_area - 25) * 0.05;
-        ELSE
-            total_area = total_area + garden_area * 0.15;
-        END IF;
-
-        IF (garden_area > 25) THEN
-            total_area = total_area + 3.75;
-            total_area = total_area + (garden_area - 25) * 0.05;
-        ELSE
-            total_area = total_area + garden_area * 0.15;
-        END IF;
-
-        IF (n_indoor_park + n_outdoor_park = 0) THEN
-            RETURN (total_area::integer);
-        END IF;
-
-        ip := (n_indoor_park::real / (n_indoor_park + n_outdoor_park));
-
-        total_area = total_area + ip * garage_area * 0.35;
-        total_area = total_area + (1.0 - ip) * garage_area * 0.2;
-
-        RETURN (total_area::integer);
-    END;
-$$;
-
-
--- TODO: discuss about storing total area in db (maybe needed for search)
 /******************************************************************************
  * TYPE: table
  * NAME: tb_feature_sz
@@ -245,47 +147,11 @@ CREATE TABLE tb_feature_sz (
 
 /******************************************************************************
  * TYPE: table
- * NAME: tb_tmp_feature_sz
- *
- * DESC: temporary table for size-related features during property creation
- *****************************************************************************/
-CREATE TABLE tb_tmp_feature_sz (
-    id_estate       integer PRIMARY KEY,
-    main_area       dm_int0plus NOT NULL,
-    storage_area    dm_int0plus NOT NULL DEFAULT 0,
-    terrace_area    dm_int0plus NOT NULL DEFAULT 0,
-    balcony_area    dm_int0plus NOT NULL DEFAULT 0,
-    garden_area     dm_int0plus NOT NULL DEFAULT 0,
-    garage_area     dm_int0plus NOT NULL DEFAULT 0,
-    n_indoor_park   dm_int0plus NOT NULL DEFAULT 0, 
-    n_outdoor_park  dm_int0plus NOT NULL DEFAULT 0 
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
  * NAME: tb_feature_floor
  *
  * DESC: table storing floor-related features and accessibility information
  *****************************************************************************/
 CREATE TABLE tb_feature_floor (
-    id_estate       integer PRIMARY KEY,
-    total_floor     dm_int0plus NOT NULL,
-    elevators       dm_int0plus NOT NULL DEFAULT 0,
-    estate_floor    dm_int0plus NOT NULL,
-    disabled_access boolean NOT NULL DEFAULT false
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_tmp_feature_floor
- *
- * DESC: temporary table for floor-related features during property creation
- *****************************************************************************/
-CREATE TABLE tb_tmp_feature_floor (
     id_estate       integer PRIMARY KEY,
     total_floor     dm_int0plus NOT NULL,
     elevators       dm_int0plus NOT NULL DEFAULT 0,
@@ -314,23 +180,6 @@ CREATE TABLE tb_feature_comp (
 -------------------------------------------------------------------------------
 
 
-/******************************************************************************
- * TYPE: table
- * NAME: tb_tmp_feature_comp
- *
- * DESC: temporary table for composition features during property creation
- *****************************************************************************/
-CREATE TABLE tb_tmp_feature_comp (
-    id_estate           integer PRIMARY KEY,
-    rooms               dm_int0plus NOT NULL,
-    bathrooms           dm_int0plus NOT NULL DEFAULT 0,
-    kitchens            dm_int0plus NOT NULL DEFAULT 0,
-    liveable_kitchen    boolean NOT NULL DEFAULT false,
-    bedrooms            dm_int0plus NOT NULL DEFAULT 0,
-    id_furniture_type   integer NOT NULL
-);
--------------------------------------------------------------------------------
-
 
 /******************************************************************************
  * TYPE: table
@@ -339,23 +188,6 @@ CREATE TABLE tb_tmp_feature_comp (
  * DESC: table storing energy efficiency features of properties
  *****************************************************************************/
 CREATE TABLE tb_feature_energy_eff (
-    id_estate               integer PRIMARY KEY,
-    id_energy_class_type    integer NOT NULL,
-    epgl                    dm_int0plus NOT NULL,
-    id_heating_type         integer NOT NULL,
-    id_air_cond_type        integer NOT NULL
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_tmp_feature_energy_eff
- *
- * DESC: temporary table for energy efficiency features during
- *       property creation
- *****************************************************************************/
-CREATE TABLE tb_tmp_feature_energy_eff (
     id_estate               integer PRIMARY KEY,
     id_energy_class_type    integer NOT NULL,
     epgl                    dm_int0plus NOT NULL,
@@ -382,67 +214,11 @@ CREATE TABLE tb_feature_condition (
 
 /******************************************************************************
  * TYPE: table
- * NAME: tb_tmp_feature_condition
- *
- * DESC: temporary table for condition features during property creation
- *****************************************************************************/
-CREATE TABLE tb_tmp_feature_condition (
-    id_estate           integer PRIMARY KEY,
-    id_property_type    integer NOT NULL,
-    id_condition_type   integer NOT NULL,
-    construction_year   dm_int0plus NOT NULL
-);
--------------------------------------------------------------------------------
-
--- ! I added a lot of things here, we need to discuss this
-
-/******************************************************************************
- * TYPE: table
  * NAME: tb_feature_other
  *
  * DESC: table storing proximity to amenities and other property features
  *****************************************************************************/
 CREATE TABLE tb_feature_other (
-    id_estate               integer PRIMARY KEY,
-    near_school             boolean NOT NULL DEFAULT false,
-    near_kindergarten       boolean NOT NULL DEFAULT false,
-    near_university         boolean NOT NULL DEFAULT false,
-    near_park               boolean NOT NULL DEFAULT false,
-    near_shopping           boolean NOT NULL DEFAULT false,
-    near_market             boolean NOT NULL DEFAULT false,
-    near_transport          boolean NOT NULL DEFAULT false,
-    near_subway             boolean NOT NULL DEFAULT false,
-    near_catering           boolean NOT NULL DEFAULT false,
-    near_healthcare         boolean NOT NULL DEFAULT false,
-    near_laisure            boolean NOT NULL DEFAULT false,
-    near_nature             boolean NOT NULL DEFAULT false,
-    near_office             boolean NOT NULL DEFAULT false,
-    near_parking            boolean NOT NULL DEFAULT false,
-    near_railway            boolean NOT NULL DEFAULT false,
-    near_airpoty            boolean NOT NULL DEFAULT false,
-    near_service            boolean NOT NULL DEFAULT false,
-    near_beach              boolean NOT NULL DEFAULT false,
-    near_adult              boolean NOT NULL DEFAULT false,
-    near_heritage           boolean NOT NULL DEFAULT false,
-    near_entertainment      boolean NOT NULL DEFAULT false,
-    near_sport              boolean NOT NULL DEFAULT false,
-    populated_area          boolean NOT NULL DEFAULT false,
-    low_emission_zone       boolean NOT NULL DEFAULT false,
-    lgbt_friendly           boolean NOT NULL DEFAULT false,
-    pet_friendly            boolean NOT NULL DEFAULT false,
-    opt_fiber_coverage      boolean NOT NULL DEFAULT false
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_tmp_feature_other
- *
- * DESC: temporary table for amenity and other features during
- *       property creation
- *****************************************************************************/
-CREATE TABLE tb_tmp_feature_other (
     id_estate               integer PRIMARY KEY,
     near_school             boolean NOT NULL DEFAULT false,
     near_kindergarten       boolean NOT NULL DEFAULT false,
@@ -494,45 +270,11 @@ CREATE TABLE tb_price (
 
 /******************************************************************************
  * TYPE: table
- * NAME: tb_tmp_price
- *
- * DESC: temporary table for price information during property creation
- *****************************************************************************/
-CREATE TABLE tb_tmp_price (
-    id_estate       integer PRIMARY KEY,
-    price           dm_int0plus NOT NULL,
-    condo_fees      dm_int0plus NOT NULL DEFAULT 0,
-    income_property boolean NOT NULL DEFAULT false,
-    is_free         boolean NOT NULL DEFAULT false,
-    is_negotiable   boolean NOT NULL DEFAULT false
-);
--------------------------------------------------------------------------------
-
-
--- TODO: trigger to see if estate is at rent
-/******************************************************************************
- * TYPE: table
  * NAME: tb_rental_info
  *
  * DESC: table storing rental-specific information for rental properties
  *****************************************************************************/
 CREATE TABLE tb_rental_info (
-    id_estate                   integer PRIMARY KEY,
-    id_rental_contract_type     integer NOT NULL,
-    rent_to_own                 boolean NOT NULL DEFAULT false,
-    roommates                   boolean NOT NULL DEFAULT false,
-    id_rental_utilities_type    integer NOT NULL
-);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_tmp_rental_info
- *
- * DESC: temporary table for rental information during property creation
- *****************************************************************************/
-CREATE TABLE tb_tmp_rental_info (
     id_estate                   integer PRIMARY KEY,
     id_rental_contract_type     integer NOT NULL,
     rent_to_own                 boolean NOT NULL DEFAULT false,

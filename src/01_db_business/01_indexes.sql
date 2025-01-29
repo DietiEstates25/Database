@@ -121,14 +121,13 @@ CREATE INDEX idx_feature_energy_eff_on_heating_type
 -------------------------------------------------------------------------------
 
 
--- TODO: this name are starting to be too long
 /******************************************************************************
  * TYPE: index
- * NAME: idx_feature_energy_eff_on_air_cond_type
+ * NAME: idx_feature_ee_on_ac_type
  *
  * DESC: index for the id_air_cond_type column in the feature_energy_eff table
  *****************************************************************************/
-CREATE INDEX idx_feature_energy_eff_on_air_cond_type
+CREATE INDEX idx_feature_ee_on_ac_type
     ON tb_feature_energy_eff(id_air_cond_type);
 -------------------------------------------------------------------------------
 

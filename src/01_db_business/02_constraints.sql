@@ -143,7 +143,6 @@ ALTER TABLE tb_tmp_bss_usr
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
-  -- TODO: here we need a trigger to check if the usr is already in tb_bss_usr
 
 
 /******************************************************************************
