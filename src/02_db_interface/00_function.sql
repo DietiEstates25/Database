@@ -1,5 +1,3 @@
--- TODO: deletion after moving
-
 CREATE OR REPLACE FUNCTION fn_new_tmp_bss_user(
     new_email       dm_email,
     new_role        dm_smp_str,    
@@ -100,6 +98,10 @@ AS $$
             super_id,
             agency_id
         );
+
+        DELETE FROM tb_tmp_bss_usr
+        WHERE tb_tmp_bss_usr.id_usr = id_bss_usr;
+
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
             SELECT raise_custom_error('bss_usr_not_found');
@@ -107,7 +109,7 @@ AS $$
 $$;
 
 
-CREATE OR REPLACE FUNCTION fn_validate_tmp_estate(
+CREATE OR REPLACE FUNCTION fn_validate_tmp_available_estate(
     id_tmp_estate   integer
 )
 RETURNS boolean
@@ -121,7 +123,7 @@ AS $$
         SELECT 1
         INTO STRICT ctrl
         FROM tb_tmp_estate
-        WHERE tb_tmp_estate.id = id_tmp_estate;
+        WHERE tb_tmp_available_estate.id = id_tmp_estate;
         
         SELECT 1
         INTO STRICT ctrl
@@ -160,9 +162,9 @@ AS $$
 
         SELECT (tb_ads_type.type = 'RENT')
         INTO is_rent
-        FROM tb_tmp_estate JOIN tb_ads_type
-            ON tb_tmp_estate.id_ads_type = tb_ads_type.id
-        WHERE tb_tmp_estate.id = id_tmp_estate;
+        FROM tb_tmp_available_estate JOIN tb_ads_type
+            ON tb_tmp_available_estate.id_ads_type = tb_ads_type.id
+        WHERE tb_tmp_available_estate.id = id_tmp_estate;
 
         IF (is_rent) THEN
             SELECT 1
@@ -505,7 +507,9 @@ AS $$
 $$;
 
 
-CREATE OR REPLACE FUNCTION fn_new_estate(id_tmp_estate integer)
+CREATE OR REPLACE FUNCTION fn_new_estate(
+    id_tmp_estate integer
+)
 RETURNS void
 LANGUAGE plpgsql
 AS $$
@@ -513,7 +517,7 @@ AS $$
         is_rent     boolean;
         id_estate   integer;
     BEGIN
-        is_rent := fn_validate_tmp_estate(id_tmp_estate);
+        is_rent := fn_validate_tmp_available_estate(id_tmp_estate);
 
         INSERT INTO tb_estate(
             id_bss_usr,
@@ -522,14 +526,14 @@ AS $$
             id_ads_type
         )
         SELECT
-            tb_tmp_estate.id_bss_usr,
-            tb_tmp_estate.id_estate_type,
-            tb_tmp_estate.id_address,
-            tb_tmp_estate.id_ads_type
+            tb_tmp_available_estate.id_bss_usr,
+            tb_tmp_available_estate.id_estate_type,
+            tb_tmp_available_estate.id_address,
+            tb_tmp_available_estate.id_ads_type
         FROM
-            tb_tmp_estate
+            tb_tmp_available_estate
         WHERE
-            tb_tmp_estate.id_estate = id_tmp_estate
+            tb_tmp_available_estate.id_estate = id_tmp_estate
         RETURNING
             id
         INTO
@@ -545,6 +549,9 @@ AS $$
         IF (is_rent) THEN
             SELECT fn_new_feature_rental_info(id_tmp_estate, id_estate);
         END IF;
+
+        DELETE FROM tb_tmp_available_estate
+        WHERE tb_tmp_available_estate.id = id_tmp_estate;
             
     END;
 $$;
