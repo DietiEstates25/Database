@@ -1,3 +1,5 @@
+-- TODO: deletion after moving
+
 CREATE OR REPLACE FUNCTION fn_new_tmp_bss_user(
     new_email       dm_email,
     new_role        dm_smp_str,    
@@ -32,7 +34,6 @@ AS $$
         FROM tb_bss_usr
         WHERE tb_bss_usr.id_usr = creator_id;
 
-        -- ? maybe a check if already exists as end_usr, maybe upsert?
         INSERT INTO tb_usr(
             email,
             id_usr_type,
@@ -44,14 +45,6 @@ AS $$
             true 
         )
         RETURNING id INTO new_usr_id;
-        /*ON CONFLICT (email) DO UPDATE
-        SET id_usr_type = EXCLUDED.id_usr_type, is_bss = true
-        WHERE tb_usr.id_usr_type = ( 
-            SELECT id
-            FROM tb_usr_type
-            WHERE type = 'USER'
-        );
-        */
 
         INSERT INTO tb_tmp_bss_usr(
             id_usr,

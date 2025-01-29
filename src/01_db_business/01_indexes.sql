@@ -75,7 +75,6 @@ CREATE INDEX idx_feature_floor_on_estate_floor
 -------------------------------------------------------------------------------
 
 
--- ? maybe not needed?
 /******************************************************************************
  * TYPE: index
  * NAME: idx_feature_comp_on_rooms

@@ -1,18 +1,5 @@
 /* 
   TODO: discuss what to include in this table.
-  * By doc the options are:
-  * - COMMENTS: Comments for the copied columns, constraints, and indexes will be copied
-  * - COMPRESSION: Compression method of the columns will be copied 
-  * - DEFAULT: Default expressions for the copied column definitions will be copied
-  *          NOTE: Note that copying defaults that call database-modification functions,
-  *                such as nextval, may create a functional linkage between the original and new tables (serial?)
-  * - GENERATED: Generated expressions for the copied column definitions will be copied
-  * - IDENTITY: Identity columns will be copied
-  * - INDEXES: Indexes will be copied (as PK, UNIQUE and EXCLUDE). New names for the indexes are automatically generated
-  * - STORAGE: STORAGE settings for the copied column definitions will be copied.
-  * - ALL: all of the above
-
-  * Reference: https://www.postgresql.org/docs/current/sql-createtable.html
 */
 
 /******************************************************************************
@@ -36,15 +23,18 @@ CREATE TABLE tb_tmp_estate ( LIKE tb_estate INCLUDING ALL);
 --     DROP COLUMN is_sold;
 -------------------------------------------------------------------------------
 
--- FIXME: this cause problem with stats fk. Maybe we should consider
--- partitioning instead
+
 /******************************************************************************
  * TYPE: table
- * NAME: tb_sold_estate
+ * NAME: tb_available_estate & tb_not_available_estate
  *
- * DESC: table for storing sold properties.
+ * DESC: partitioned tables for available and not available properties
  *****************************************************************************/
-CREATE TABLE tb_sold_estate ( LIKE tb_tmp_estate);
+CREATE TABLE tb_available_estate PARTITION OF tb_estate
+    FOR VALUES IN (true);
+
+CREATE TABLE tb_not_available_estate PARTITION OF tb_estate
+    FOR VALUES IN (false);
 -------------------------------------------------------------------------------
 
 /******************************************************************************
@@ -53,7 +43,7 @@ CREATE TABLE tb_sold_estate ( LIKE tb_tmp_estate);
  *
  * DESC: temporary table for size-related features during property creation
  *****************************************************************************/
-CREATE TABLE tb_tmp_feature_sz ( LIKE tb_feature_sz);
+CREATE TABLE tb_tmp_feature_sz ( LIKE tb_feature_sz INCLUDING ALL);
 
 ALTER TABLE tb_tmp_feature_sz
     DROP COLUMN total_area;
@@ -65,7 +55,7 @@ ALTER TABLE tb_tmp_feature_sz
  *
  * DESC: temporary table for floor-related features during property creation
  *****************************************************************************/
-CREATE TABLE tb_tmp_feature_floor ( LIKE tb_feature_floor);
+CREATE TABLE tb_tmp_feature_floor ( LIKE tb_feature_floor INCLUDING ALL );
 -------------------------------------------------------------------------------
 
 /******************************************************************************
