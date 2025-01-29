@@ -4,8 +4,12 @@
  *
  * DESC: main schema for the real estate database system
  *****************************************************************************/
+SET client_min_messages TO WARNING;
+
 DROP SCHEMA IF EXISTS public CASCADE;
 DROP SCHEMA IF EXISTS dieti_estate CASCADE;
+
+SET client_min_messages TO NOTICE;
 
 CREATE SCHEMA dieti_estate;
 CREATE SCHEMA public;
