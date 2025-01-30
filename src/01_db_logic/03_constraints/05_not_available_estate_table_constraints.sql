@@ -100,13 +100,13 @@ DO $$
 
     BEGIN
         FOREACH table_name IN ARRAY feature_estate_tables LOOP
-            EXECUTE format('
-                ALTER TABLE tb_not_available_%1$s
-                    ADD CONSTRAINT not_available_%1$s_fk_not_available_estate
-                        FOREIGN KEY (id_estate)
-                        REFERENCES tb_not_available_estate(id_estate)
-                        ON DELETE cascade
-                        ON UPDATE cascade,
+            EXECUTE format(
+                'ALTER TABLE tb_not_available_%1$s'
+                    'ADD CONSTRAINT not_available_%1$s_fk_not_available_estate'
+                        'FOREIGN KEY (id_estate)'
+                        'REFERENCES tb_not_available_estate(id_estate)'
+                        'ON DELETE cascade'
+                        'ON UPDATE cascade',
                 table_name
             );    
         END LOOP; 

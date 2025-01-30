@@ -23,10 +23,10 @@ DO $$
 
     BEGIN
         FOREACH table_name IN ARRAY estate_tables LOOP
-            EXECUTE format('
-                CREATE TABLE tb_not_available_%1$s (
-                    LIKE tb_available_%1$s INCLUDING ALL
-                ),
+            EXECUTE format(
+                'CREATE TABLE tb_not_available_%1$s ('
+                    'LIKE tb_available_%1$s INCLUDING ALL'
+                ')',
                 table_name
             );    
         END LOOP; 

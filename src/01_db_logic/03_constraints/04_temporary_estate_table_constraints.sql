@@ -85,13 +85,13 @@ DO $$
 
     BEGIN
         FOREACH table_name IN ARRAY feature_estate_tables LOOP
-            EXECUTE format('
-                ALTER TABLE tb_tmp_%1$s
-                    ADD CONSTRAINT tmp_%1$s_fk_tmp_estate
-                        FOREIGN KEY (id_estate)
-                        REFERENCES tb_tmp_estate(id_estate)
-                        ON DELETE cascade
-                        ON UPDATE cascade,
+            EXECUTE format(
+                'ALTER TABLE tb_tmp_%1$s'
+                    'ADD CONSTRAINT tmp_%1$s_fk_tmp_estate'
+                        'FOREIGN KEY (id_estate)'
+                        'REFERENCES tb_tmp_estate(id_estate)'
+                        'ON DELETE cascade'
+                        'ON UPDATE cascade',
                 table_name
             );    
         END LOOP; 
