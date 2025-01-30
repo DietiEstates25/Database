@@ -27,7 +27,7 @@ CREATE INDEX idx_bss_usr_on_super
  * DESC: index for the id_address column in the estate table
  *****************************************************************************/
 CREATE INDEX idx_estate_on_address
-    ON tb_estate(id_address);
+    ON tb_available_estate(id_address);
 -------------------------------------------------------------------------------
 
 
@@ -38,7 +38,7 @@ CREATE INDEX idx_estate_on_address
  * DESC: index for the id_bss_usr column in the estate table
  *****************************************************************************/
 CREATE INDEX idx_estate_on_bss_usr
-    ON tb_estate(id_bss_usr);
+    ON tb_available_estate(id_bss_usr);
 -------------------------------------------------------------------------------
 
 
@@ -49,7 +49,7 @@ CREATE INDEX idx_estate_on_bss_usr
  * DESC: index for the id_estate_type column in the estate table
  *****************************************************************************/
 CREATE INDEX idx_estate_on_estate_type
-    ON tb_estate(id_estate_type);
+    ON tb_available_estate(id_estate_type);
 -------------------------------------------------------------------------------
 
 

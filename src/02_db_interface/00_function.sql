@@ -519,7 +519,7 @@ AS $$
     BEGIN
         is_rent := fn_validate_tmp_available_estate(id_tmp_estate);
 
-        INSERT INTO tb_estate(
+        INSERT INTO tb_available_estate(
             id_bss_usr,
             id_estate_type,
             id_address,

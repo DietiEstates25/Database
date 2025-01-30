@@ -179,13 +179,30 @@ ALTER TABLE tb_tmp_bss_usr
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: estate_fk_bss_usr
+ * NAME: available_estate_fk_estate
+ *
+ * DESC: foreign key constraint associating each available estate with the
+ *       corresponding estate
+ *****************************************************************************/
+ALTER TABLE tb_available_estate
+    ADD CONSTRAINT available_estate_fk_estate
+        FOREIGN KEY (id_estate)
+        REFERENCES tb_available_estate(id_estate)
+        ON DELETE cascade
+        ON UPDATE cascade;
+-------------------------------------------------------------------------------
+
+
+
+/******************************************************************************
+ * TYPE: constraint - foreign key
+ * NAME: available_estate_fk_bss_usr
  *
  * DESC: foreign key constraint associating each estate with the businesses 
  *       user that created it
  *****************************************************************************/
-ALTER TABLE tb_estate
-    ADD CONSTRAINT estate_fk_bss_usr
+ALTER TABLE tb_available_estate
+    ADD CONSTRAINT available_estate_fk_bss_usr
         FOREIGN KEY (id_bss_usr)
         REFERENCES tb_bss_usr(id_usr)
         ON DELETE cascade
@@ -195,12 +212,12 @@ ALTER TABLE tb_estate
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: estate_fk_estete_type
+ * NAME: available_estate_fk_estete_type
  *
  * DESC: foreign key constraint associating each estate with it's type
 *****************************************************************************/
-ALTER TABLE tb_estate
-    ADD CONSTRAINT estate_fk_estate_type
+ALTER TABLE tb_available_estate
+    ADD CONSTRAINT available_estate_fk_estate_type
         FOREIGN KEY (id_estate_type)
         REFERENCES tb_estate_type(id)
         ON DELETE cascade
@@ -210,12 +227,12 @@ ALTER TABLE tb_estate
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: estate_fk_address
+ * NAME: available_estate_fk_address
  *
  * DESC: foreign key constraint associating each estate with it's address
  *****************************************************************************/
-ALTER TABLE tb_estate
-    ADD CONSTRAINT estate_fk_address
+ALTER TABLE tb_available_estate
+    ADD CONSTRAINT available_estate_fk_address
         FOREIGN KEY (id_address)
         REFERENCES tb_address(id)
         ON DELETE cascade
@@ -225,13 +242,13 @@ ALTER TABLE tb_estate
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: estate_fk_ads_type
+ * NAME: available_estate_fk_ads_type
  *
  * DESC: foreign key constraint associating each estate with the type of ads 
  *       selling it
 *****************************************************************************/
-ALTER TABLE tb_estate
-    ADD CONSTRAINT estate_fk_ads_type
+ALTER TABLE tb_available_estate
+    ADD CONSTRAINT available_estate_fk_ads_type
         FOREIGN KEY (id_ads_type)
         REFERENCES tb_ads_type(id)
         ON DELETE cascade
@@ -241,13 +258,13 @@ ALTER TABLE tb_estate
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_estate_fk_bss_usr
+ * NAME: tmp_available_estate_fk_bss_usr
  *
  * DESC: foreign key constraint associating each temporary estate with the 
  *       businesses user that created it
  *****************************************************************************/
-ALTER TABLE tb_tmp_estate
-    ADD CONSTRAINT tmp_estate_fk_bss_usr
+ALTER TABLE tb_tmp_available_estate
+    ADD CONSTRAINT tmp_available_estate_fk_bss_usr
         FOREIGN KEY (id_bss_usr)
         REFERENCES tb_bss_usr(id_usr)
         ON DELETE cascade
@@ -257,13 +274,13 @@ ALTER TABLE tb_tmp_estate
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_estate_fk_estate_type
+ * NAME: tmp_available_estate_fk_estate_type
  *
  * DESC: foreign key constraint associating each temporary estate with it's 
  *       type
  *****************************************************************************/
-ALTER TABLE tb_tmp_estate
-    ADD CONSTRAINT tmp_estate_fk_estate_type
+ALTER TABLE tb_tmp_available_estate
+    ADD CONSTRAINT tmp_available_estate_fk_estate_type
         FOREIGN KEY (id_estate_type)
         REFERENCES tb_estate_type(id)
         ON DELETE cascade
@@ -273,13 +290,13 @@ ALTER TABLE tb_tmp_estate
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_estate_fk_address
+ * NAME: tmp_available_estate_fk_address
  *
  * DESC: foreign key constraint associating each temporary estate with it's 
  *       address
  *****************************************************************************/
-ALTER TABLE tb_tmp_estate
-    ADD CONSTRAINT tmp_estate_fk_address
+ALTER TABLE tb_tmp_available_estate
+    ADD CONSTRAINT tmp_available_estate_fk_address
         FOREIGN KEY (id_address)
         REFERENCES tb_address(id)
         ON DELETE cascade
@@ -289,13 +306,13 @@ ALTER TABLE tb_tmp_estate
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_estate_fk_ads_type
+ * NAME: tmp_available_estate_fk_ads_type
  *
  * DESC: foreign key constraint associating each temporary estate with the type 
  *       of ads selling it
  *****************************************************************************/
-ALTER TABLE tb_tmp_estate
-    ADD CONSTRAINT tmp_estate_fk_ads_type
+ALTER TABLE tb_tmp_available_estate
+    ADD CONSTRAINT tmp_available_estate_fk_ads_type
         FOREIGN KEY (id_ads_type)
         REFERENCES tb_ads_type(id)
         ON DELETE cascade
@@ -312,7 +329,7 @@ ALTER TABLE tb_tmp_estate
 ALTER TABLE tb_feature_sz
     ADD CONSTRAINT feature_sz_fk_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_estate(id)
+        REFERENCES tb_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -349,15 +366,15 @@ ALTER TABLE tb_feature_sz
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_feature_sz_fk_tmp_estate
+ * NAME: tmp_feature_sz_fk_tmp_available_estate
  *
  * DESC: foreign key constraint associating the temporary size features with
  *       it's estate
  *****************************************************************************/
 ALTER TABLE tb_tmp_feature_sz
-    ADD CONSTRAINT tmp_feature_sz_fk_tmp_estate
+    ADD CONSTRAINT tmp_feature_sz_fk_tmp_available_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -401,7 +418,7 @@ ALTER TABLE tb_tmp_feature_sz
 ALTER TABLE tb_feature_floor
     ADD CONSTRAINT feature_floor_fk_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_estate(id)
+        REFERENCES tb_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -424,15 +441,15 @@ ALTER TABLE tb_feature_floor
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_feature_floor_fk_tmp_estate
+ * NAME: tmp_feature_floor_fk_tmp_available_estate
  *
  * DESC: foreign key constraint associating the temporary floor features with
  *       the estate
  *****************************************************************************/
 ALTER TABLE tb_tmp_feature_floor
-    ADD CONSTRAINT tmp_feature_floor_fk_tmp_estate
+    ADD CONSTRAINT tmp_feature_floor_fk_tmp_available_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -463,7 +480,7 @@ ALTER TABLE tb_tmp_feature_floor
 ALTER TABLE tb_feature_comp
     ADD CONSTRAINT feature_comp_fk_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_estate(id)
+        REFERENCES tb_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -502,15 +519,15 @@ ALTER TABLE tb_feature_comp
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_feature_comp_fk_tmp_estate
+ * NAME: tmp_feature_comp_fk_tmp_available_estate
  *
  * DESC: foreign key constraint associating the temporary composition features
  *       with the estate
  *****************************************************************************/
 ALTER TABLE tb_tmp_feature_comp
-    ADD CONSTRAINT tmp_feature_comp_fk_tmp_estate
+    ADD CONSTRAINT tmp_feature_comp_fk_tmp_available_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -557,7 +574,7 @@ ALTER TABLE tb_tmp_feature_comp
 ALTER TABLE tb_feature_energy_eff
     ADD CONSTRAINT feature_energy_eff_fk_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_estate(id)
+        REFERENCES tb_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -627,15 +644,15 @@ ALTER TABLE tb_feature_energy_eff
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_feature_energy_eff_fk_tmp_estate
+ * NAME: tmp_feature_energy_eff_fk_tmp_available_estate
  *
  * DESC: foreign key constraint associating the temporary energy efficiency
  *       features with the estate
  *****************************************************************************/
 ALTER TABLE tb_tmp_feature_energy_eff
-    ADD CONSTRAINT tmp_feature_energy_eff_fk_tmp_estate
+    ADD CONSTRAINT tmp_feature_energy_eff_fk_tmp_available_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -713,7 +730,7 @@ ALTER TABLE tb_tmp_feature_energy_eff
 ALTER TABLE tb_feature_condition
     ADD CONSTRAINT feature_condition_fk_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_estate(id)
+        REFERENCES tb_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -753,15 +770,15 @@ ALTER TABLE tb_feature_condition
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_feature_condition_fk_tmp_estate
+ * NAME: tmp_feature_condition_fk_tmp_available_estate
  *
  * DESC: foreign key constraint associating the temporary condition features
  *       with the estate
  *****************************************************************************/
 ALTER TABLE tb_tmp_feature_condition
-    ADD CONSTRAINT tmp_feature_condition_fk_tmp_estate
+    ADD CONSTRAINT tmp_feature_condition_fk_tmp_available_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -808,7 +825,7 @@ ALTER TABLE tb_tmp_feature_condition
 ALTER TABLE tb_feature_other
     ADD CONSTRAINT feature_other_fk_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_estate(id)
+        REFERENCES tb_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -816,15 +833,15 @@ ALTER TABLE tb_feature_other
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_feature_other_fk_tmp_estate
+ * NAME: tmp_feature_other_fk_tmp_available_estate
  *
  * DESC: foreign key constraint associating the temporary other features with
  *       the estate
  *****************************************************************************/
 ALTER TABLE tb_tmp_feature_other
-    ADD CONSTRAINT tmp_feature_other_fk_tmp_estate
+    ADD CONSTRAINT tmp_feature_other_fk_tmp_available_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -839,7 +856,7 @@ ALTER TABLE tb_tmp_feature_other
 ALTER TABLE tb_price
     ADD CONSTRAINT price_fk_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_estate(id)
+        REFERENCES tb_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -861,14 +878,14 @@ ALTER TABLE tb_price
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_price_fk_tmp_estate
+ * NAME: tmp_price_fk_tmp_available_estate
  *
  * DESC: foreign key constraint associating the temporary price with the estate
  *****************************************************************************/
 ALTER TABLE tb_tmp_price
-    ADD CONSTRAINT tmp_price_fk_tmp_estate
+    ADD CONSTRAINT tmp_price_fk_tmp_available_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -897,7 +914,7 @@ ALTER TABLE tb_tmp_price
 ALTER TABLE tb_rental_info
     ADD CONSTRAINT rental_info_fk_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_estate(id)
+        REFERENCES tb_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -937,15 +954,15 @@ ALTER TABLE tb_rental_info
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_rental_info_fk_tmp_estate
+ * NAME: tmp_rental_info_fk_tmp_available_estate
  *
  * DESC: foreign key constraint associating the temporary rental info with the
  *       estate
  *****************************************************************************/
 ALTER TABLE tb_tmp_rental_info
-    ADD CONSTRAINT tmp_rental_info_fk_tmp_estate
+    ADD CONSTRAINT tmp_rental_info_fk_tmp_available_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_tmp_estate(id)
+        REFERENCES tb_tmp_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -1020,7 +1037,7 @@ ALTER TABLE tb_usr_action
 ALTER TABLE tb_usr_action
     ADD CONSTRAINT usr_action_fk_estate
         FOREIGN KEY (id_estate)
-        REFERENCES tb_estate(id)
+        REFERENCES tb_available_estate(id_estate)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------

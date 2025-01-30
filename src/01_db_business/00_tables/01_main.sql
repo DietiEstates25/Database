@@ -102,6 +102,20 @@ CREATE TABLE tb_bss_usr (
  *****************************************************************************/
 CREATE TABLE tb_estate (
     id              serial PRIMARY KEY,
+    is_available    boolean NOT NULL DEFAULT true
+);
+-------------------------------------------------------------------------------
+
+
+
+/******************************************************************************
+ * TYPE: table
+ * NAME: tb_available_estate
+ *
+ * DESC: main table storing available real estate property listings
+ *****************************************************************************/
+CREATE TABLE tb_available_estate (
+    id_estate       integer PRIMARY KEY,
     time_stamp      timestamp NOT NULL DEFAULT NOW(),         
     id_bss_usr      integer NOT NULL,
     id_estate_type  integer NOT NULL,

@@ -11,17 +11,24 @@
 CREATE TABLE tb_tmp_bss_usr (LIKE tb_bss_usr INCLUDING ALL);
 -------------------------------------------------------------------------------
 
--- TODO: ?? LIKE tb_available_estate ??
+
 /******************************************************************************
  * TYPE: table
- * NAME: tb_tmp_estate
+ * NAME: tb_not_available_estate
  *
- * DESC: temporary table for property listing creation process
+ * DESC: temporary table for not available property listing creation process
  *****************************************************************************/
-CREATE TABLE tb_tmp_estate (LIKE tb_estate INCLUDING ALL);
+CREATE TABLE tb_not_available_estate (LIKE tb_available_estate INCLUDING ALL);
+-------------------------------------------------------------------------------
 
--- ALTER TABLE tb_tmp_estate
---     DROP COLUMN is_sold;
+
+/******************************************************************************
+ * TYPE: table
+ * NAME: tb_tmp_available_estate
+ *
+ * DESC: temporary table for available property listing creation process
+ *****************************************************************************/
+CREATE TABLE tb_tmp_available_estate (LIKE tb_available_estate INCLUDING ALL);
 -------------------------------------------------------------------------------
 
 /******************************************************************************
