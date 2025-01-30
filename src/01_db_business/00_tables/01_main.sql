@@ -107,7 +107,6 @@ CREATE TABLE tb_estate (
 -------------------------------------------------------------------------------
 
 
-
 /******************************************************************************
  * TYPE: table
  * NAME: tb_available_estate
@@ -123,6 +122,25 @@ CREATE TABLE tb_available_estate (
     id_ads_type     integer NOT NULL
 );
 -------------------------------------------------------------------------------
+
+
+/******************************************************************************
+ * TYPE: table
+ * NAME: tb_tmp_available_estate
+ *
+ * DESC: main table storing available real estate property listings for
+ *       inserting
+ *****************************************************************************/
+CREATE TABLE tb_tmp_available_estate (
+    id              serial PRIMARY KEY,
+    time_stamp      timestamp NOT NULL DEFAULT NOW(),         
+    id_bss_usr      integer NOT NULL,
+    id_estate_type  integer NOT NULL,
+    id_address      integer NOT NULL,
+    id_ads_type     integer NOT NULL
+);
+-------------------------------------------------------------------------------
+
 
 
 /******************************************************************************

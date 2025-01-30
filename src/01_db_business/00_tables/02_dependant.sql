@@ -2,6 +2,12 @@
   TODO: discuss what to include in this table.
 */
 
+-- TODO: abbiamo un bel cazzo di problema
+--       praticamente le tabelle temporanee come FK si riferiscono
+--       alle colonne cui si riferiscono quelle non temporanee
+--       Dio cane
+--       Va modificato tutto
+
 /******************************************************************************
  * TYPE: table
  * NAME: tb_tmp_bss_usr
@@ -21,15 +27,6 @@ CREATE TABLE tb_tmp_bss_usr (LIKE tb_bss_usr INCLUDING ALL);
 CREATE TABLE tb_not_available_estate (LIKE tb_available_estate INCLUDING ALL);
 -------------------------------------------------------------------------------
 
-
-/******************************************************************************
- * TYPE: table
- * NAME: tb_tmp_available_estate
- *
- * DESC: temporary table for available property listing creation process
- *****************************************************************************/
-CREATE TABLE tb_tmp_available_estate (LIKE tb_available_estate INCLUDING ALL);
--------------------------------------------------------------------------------
 
 /******************************************************************************
  * TYPE: table

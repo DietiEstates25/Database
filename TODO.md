@@ -16,3 +16,7 @@
 
 - [ ] Informarsi su estensione GIS per PostgreSQL
 - [ ] Informarsi su estensione azioni on clock per PostgreSQL
+
+## Big problema. Leggi TODO file delle tabelle temporanee generate
+
+- [ ] Necessario rimodellare suddivisione file per seguire uno schema logico/funzionale
