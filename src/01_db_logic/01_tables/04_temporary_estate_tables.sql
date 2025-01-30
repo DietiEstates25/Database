@@ -4,8 +4,9 @@
  *
  * DESC: create temporary tables related to estate tables
  *****************************************************************************/
+DO
 LANGUAGE plpgsql
-DO $$
+$$
     DECLARE
         estate_tables text[] := ARRAY[
             'estate',

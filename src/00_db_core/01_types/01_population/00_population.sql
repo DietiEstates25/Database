@@ -146,7 +146,7 @@ INSERT INTO tb_usr_type ( id, type, is_bss ) VALUES
 *
 * DESC: populate the action type table with before lockdown
 *****************************************************************************/
-INSERT INTO tb_action_type( action ) VALUES
+INSERT INTO tb_action_type( type ) VALUES
     ('VIEW'),
     ('BOOK'),
     ('OFFER');

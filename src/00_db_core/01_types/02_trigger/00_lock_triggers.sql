@@ -4,8 +4,9 @@
  *
  * DESC: triggers for locking all type tables
  *****************************************************************************/
+DO
 LANGUAGE plpgsql
-DO $$
+$$
     DECLARE
         type_tables text[] := ARRAY[
             'tb_usr_type',
@@ -27,10 +28,10 @@ DO $$
     BEGIN
         FOREACH table_name IN ARRAY type_tables LOOP
             EXECUTE format(
-               'CREATE TRIGGER tg_%1$s_lock'
-                   'BEFORE INSERT OR UPDATE OR DELETE'
-                    'ON %1$I'
-                    'FOR EACH STATEMENT'
+               'CREATE TRIGGER tg_%1$s_lock '
+                   'BEFORE INSERT OR UPDATE OR DELETE '
+                    'ON %1$I '
+                    'FOR EACH STATEMENT '
                     'EXECUTE FUNCTION tf_lock_table()',
                 table_name
             );    

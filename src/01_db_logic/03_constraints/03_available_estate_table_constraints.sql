@@ -82,8 +82,9 @@ ALTER TABLE tb_available_estate
  * DESC: create foreign keys for available estate feature table to
  *       available estate table
  *****************************************************************************/
+DO
 LANGUAGE plpgsql
-DO $$
+$$
     DECLARE
         feature_estate_tables text[] := ARRAY[
             'feature_sz',
@@ -101,11 +102,11 @@ DO $$
     BEGIN
         FOREACH table_name IN ARRAY feature_estate_tables LOOP
             EXECUTE format(
-                'ALTER TABLE tb_available_%1$s'
-                    'ADD CONSTRAINT available_%1$s_fk_available_estate'
-                        'FOREIGN KEY (id_estate)'
-                        'REFERENCES tb_available_estate(id_estate)'
-                        'ON DELETE cascade'
+                'ALTER TABLE tb_available_%1$s '
+                    'ADD CONSTRAINT available_%1$s_fk_available_estate '
+                        'FOREIGN KEY (id_estate) '
+                        'REFERENCES tb_available_estate(id_estate) '
+                        'ON DELETE cascade '
                         'ON UPDATE cascade',
                 table_name
             );    
