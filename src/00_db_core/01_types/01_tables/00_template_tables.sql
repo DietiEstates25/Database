@@ -1,20 +1,21 @@
 /******************************************************************************
  * TYPE: table
- * NAME: tb_usr_type
+ * NAME: tb_template_type
  *
- * DESC: table defining user types and hierarchy
+ * DESC: template for a table of types
  *****************************************************************************/
-CREATE TABLE tb_usr_type (LIKE tb_template_type INCLUDING ALL);
-
-ALTER TABLE tb_usr_type
-    ADD COLUMN is_bss boolean NOT NULL;
+CREATE TABLE tb_template_type (
+    id      serial PRIMARY KEY,
+    type    text UNIQUE NOT NULL
+);
 -------------------------------------------------------------------------------
+
 
 /******************************************************************************
  * TYPE: constraint - index 
- * NAME: ix_usr_type_is_bss
+ * NAME: idx_table_type
  *
- * DESC: index for business or not business users
+ * DESC: index for table of types
  *****************************************************************************/
-CREATE INDEX ix_usr_type_is_bss ON tb_usr_type (is_bss);
+CREATE UNIQUE INDEX idx_table_type ON tb_template_type (type);
 -------------------------------------------------------------------------------
