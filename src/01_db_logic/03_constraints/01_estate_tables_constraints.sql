@@ -23,5 +23,3 @@ ALTER TABLE tb_estate
     ADD CONSTRAINT uq_estate
         UNIQUE (id, id_bss_usr, id_agency);
 -------------------------------------------------------------------------------
-
-

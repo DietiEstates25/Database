@@ -42,7 +42,7 @@ $$;
  *
  * DESC: foreign key constraint associating each estate with the type of ads 
  *       selling it
-*****************************************************************************/
+ *****************************************************************************/
 DO
 LANGUAGE plpgsql
 $$
@@ -73,7 +73,7 @@ $$;
  * NAME: [available/not_available/tmp]_estate_type_fk_estate_type
  *
  * DESC: foreign key constraint associating each estate with the type of estate 
-*****************************************************************************/
+ *****************************************************************************/
 DO
 LANGUAGE plpgsql
 $$
@@ -105,7 +105,7 @@ $$;
  *
  * DESC: foreign key constraint associating each estate
  *       with the type of furniture
-*****************************************************************************/
+ *****************************************************************************/
 DO
 LANGUAGE plpgsql
 $$
@@ -137,7 +137,7 @@ $$;
  *
  * DESC: foreign key constraint associating each estate
  *       with the type of energy class
-*****************************************************************************/
+ *****************************************************************************/
 DO
 LANGUAGE plpgsql
 $$
@@ -169,7 +169,7 @@ $$;
  *
  * DESC: foreign key constraint associating each estate
  *       with the type of heating
-*****************************************************************************/
+ *****************************************************************************/
 DO
 LANGUAGE plpgsql
 $$
@@ -201,7 +201,7 @@ $$;
  *
  * DESC: foreign key constraint associating each estate
  *       with the type of air conditioning
-*****************************************************************************/
+ *****************************************************************************/
 DO
 LANGUAGE plpgsql
 $$
@@ -233,7 +233,7 @@ $$;
  *
  * DESC: foreign key constraint associating each estate
  *       with the type of property
-*****************************************************************************/
+ *****************************************************************************/
 DO
 LANGUAGE plpgsql
 $$
@@ -265,7 +265,7 @@ $$;
  *
  * DESC: foreign key constraint associating each estate
  *       with the type of condition
-*****************************************************************************/
+ *****************************************************************************/
 DO
 LANGUAGE plpgsql
 $$
@@ -297,7 +297,7 @@ $$;
  *
  * DESC: foreign key constraint associating each estate
  *       with the type of rental contract
-*****************************************************************************/
+ *****************************************************************************/
 DO
 LANGUAGE plpgsql
 $$
@@ -329,7 +329,7 @@ $$;
  *
  * DESC: foreign key constraint associating each estate
  *       with the type of rental utilities
-*****************************************************************************/
+ *****************************************************************************/
 DO
 LANGUAGE plpgsql
 $$

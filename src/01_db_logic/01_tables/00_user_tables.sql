@@ -64,15 +64,16 @@ CREATE TABLE tb_end_usr (
  * DESC: table storing info for all system business users
  *****************************************************************************/
 CREATE TABLE tb_bss_usr (
-    id                  serial PRIMARY KEY,
-    email               dm_email UNIQUE NOT NULL,
-    id_bss_usr_type     integer NOT NULL,
-    hierarchy_path      ltree NOT NULL,
-    id_super_bss_usr    integer,
-    id_agency           integer NOT NULL,
-    creation            timestamp NOT NULL DEFAULT NOW(),
-    completed           boolean NOT NULL DEFAULT false,
-    verified            timestamp DEFAULT NULL
+    id                      serial PRIMARY KEY,
+    email                   dm_email UNIQUE NOT NULL,
+    id_bss_usr_type         integer NOT NULL,
+    hierarchy_path          ltree NOT NULL,
+    id_super_bss_usr        integer,
+    super_hierarchy_path    ltree NOT NULL,
+    id_agency               integer NOT NULL,
+    creation                timestamp NOT NULL DEFAULT NOW(),
+    completed               boolean NOT NULL DEFAULT false,
+    verified                timestamp DEFAULT NULL
 );
 -------------------------------------------------------------------------------
 

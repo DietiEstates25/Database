@@ -2,11 +2,26 @@
  * TYPE: constraint - unique
  * NAME: uq_bss_usr_id_id_agency
  *
- * DESC: unique constraint associating an id and id_agency for a business user
+ * DESC: unique constraint associating an id and id_agency
+ *       for a business user
  *****************************************************************************/
 ALTER TABLE tb_bss_usr
     ADD CONSTRAINT uq_bss_usr_id_id_agency
         UNIQUE (id, id_agency);
+-------------------------------------------------------------------------------
+
+
+
+/******************************************************************************
+ * TYPE: constraint - unique
+ * NAME: uq_bss_usr_id_hierarchy_id_agency
+ *
+ * DESC: unique constraint associating an id, hierarchy path and id_agency
+ *       for a business user
+ *****************************************************************************/
+ALTER TABLE tb_bss_usr
+    ADD CONSTRAINT uq_bss_usr_id_hierarchy_id_agency
+        UNIQUE (id, hierarchy_path, id_agency);
 -------------------------------------------------------------------------------
 
 
@@ -80,8 +95,8 @@ ALTER TABLE tb_bss_usr
  *****************************************************************************/
 ALTER TABLE tb_bss_usr
     ADD CONSTRAINT bss_usr_fk_super_bss_usr
-        FOREIGN KEY (id_super_bss_usr, id_agency)
-        REFERENCES tb_bss_usr(id, id_agency)
+        FOREIGN KEY (id_super_bss_usr, super_hierarchy_path, id_agency)
+        REFERENCES tb_bss_usr(id, hierarchy_path, id_agency)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
