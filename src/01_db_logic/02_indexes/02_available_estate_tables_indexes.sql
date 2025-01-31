@@ -1,33 +1,33 @@
 /******************************************************************************
  * TYPE: index
- * NAME: idx_estate_on_address
+ * NAME: idx_available_ads_type_on_ads_type
  *
- * DESC: index for the id_address column in the estate table
+ * DESC: index for the id_ads_type in the available ads type table
  *****************************************************************************/
-CREATE INDEX idx_estate_on_address
-    ON tb_available_estate(id_address);
+CREATE INDEX idx_available_ads_type_on_ads_type
+    ON tb_available_ads_type(id_ads_type);
 -------------------------------------------------------------------------------
 
 
 /******************************************************************************
  * TYPE: index
- * NAME: idx_estate_on_bss_usr
+ * NAME: idx_available_estate_type_on_estate_type
  *
- * DESC: index for the id_bss_usr column in the estate table
+ * DESC: index for the id_estate_type column in the available estate type table
  *****************************************************************************/
-CREATE INDEX idx_estate_on_bss_usr
-    ON tb_available_estate(id_bss_usr);
+CREATE INDEX idx_available_estate_type_on_estate_type
+    ON tb_available_estate_type(id_estate_type);
 -------------------------------------------------------------------------------
 
 
 /******************************************************************************
  * TYPE: index
- * NAME: idx_estate_on_estate_type
+ * NAME: idx_available_address_on_city_neighborhood
  *
- * DESC: index for the id_estate_type column in the estate table
+ * DESC: index for the city column in the available address table
  *****************************************************************************/
-CREATE INDEX idx_estate_on_estate_type
-    ON tb_available_estate(id_estate_type);
+CREATE INDEX idx_available_address_on_city_neighborhood
+    ON tb_available_address(city,neighborhood);
 -------------------------------------------------------------------------------
 
 

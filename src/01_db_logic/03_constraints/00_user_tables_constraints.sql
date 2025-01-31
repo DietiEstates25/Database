@@ -57,17 +57,14 @@ ALTER TABLE tb_phone
 
 
 /******************************************************************************
- * TYPE: constraint - foreign key
- * NAME: agency_fk_address
+ * TYPE: constraint - unique
+ * NAME: uq_id_usr_id_agency
  *
- * DESC: foreign key constraint associating each agency with it's address
+ * DESC: unique constraint associating a business user id and the agency id
  *****************************************************************************/
-ALTER TABLE tb_agency
-    ADD CONSTRAINT agency_fk_address
-        FOREIGN KEY (id_address)
-        REFERENCES tb_address(id)
-        ON DELETE cascade
-        ON UPDATE cascade;
+ALTER TABLE tb_bss_usr
+    ADD CONSTRAINT uq_id_usr_id_agency
+        UNIQUE (id_usr, id_agency);
 -------------------------------------------------------------------------------
 
 
@@ -114,6 +111,18 @@ ALTER TABLE tb_bss_usr
         REFERENCES tb_agency(id)
         ON DELETE cascade
         ON UPDATE cascade;
+-------------------------------------------------------------------------------
+
+
+/******************************************************************************
+ * TYPE: constraint - unique
+ * NAME: uq_tmp_id_usr_id_agency
+ *
+ * DESC: unique constraint associating a business user id and the agency id
+ *****************************************************************************/
+ALTER TABLE tb_tmp_bss_usr
+    ADD CONSTRAINT uq_tmp_id_usr_id_agency
+        UNIQUE (id_usr, id_agency);
 -------------------------------------------------------------------------------
 
 

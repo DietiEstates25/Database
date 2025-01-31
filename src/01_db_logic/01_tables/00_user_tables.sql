@@ -50,9 +50,14 @@ CREATE TABLE tb_phone (
  * DESC: table storing real estate agency information
  *****************************************************************************/
 CREATE TABLE tb_agency (
-    id          serial PRIMARY KEY,
-    name        dm_smp_str UNIQUE NOT NULL,
-    id_address  integer NOT NULL
+    id              serial PRIMARY KEY,
+    name            dm_smp_str UNIQUE NOT NULL,
+    street          text NOT NULL,
+    st_number       text NOT NULL,
+    city            text NOT NULL,
+    state_province  text NOT NULL,
+    postal_code     text NOT NULL,
+    country         text NOT NULL
 );
 -------------------------------------------------------------------------------
 

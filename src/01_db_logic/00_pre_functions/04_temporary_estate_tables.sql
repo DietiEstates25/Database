@@ -1,15 +1,18 @@
 /******************************************************************************
- * TYPE: tables
- * NAME: tmp_not_available_name_table
+ * TYPE: function
+ * NAME: fn_get_feature_estate_tables
  *
- * DESC: create not available tables related to estate tables
+ * DESC: returns an array with the names of the feature estate tables
  *****************************************************************************/
-DO
+CREATE OR REPLACE FUNCTION get_feature_estate_tables()
+RETURNS text[]
 LANGUAGE plpgsql
-$$
+AS $$
     DECLARE
-        estate_tables text[] := ARRAY[
-            'estate',
+        feature_estate_tables text[] := ARRAY[
+            'ads_type',
+            'estate_type',
+            'address',
             'feature_sz',
             'feature_floor',
             'feature_comp',
@@ -20,17 +23,8 @@ $$
             'rental_info'
         ];
 
-        table_name  text;
-
     BEGIN
-        FOREACH table_name IN ARRAY estate_tables LOOP
-            EXECUTE format(
-                'CREATE TABLE tb_not_available_%1$s ('
-                    'LIKE tb_available_%1$s INCLUDING ALL'
-                ')',
-                table_name
-            );    
-        END LOOP; 
+        RETURN (feature_estate_tables);
     END;
 $$;
 -------------------------------------------------------------------------------

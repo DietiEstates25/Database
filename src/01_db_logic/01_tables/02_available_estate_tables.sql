@@ -1,18 +1,50 @@
 /******************************************************************************
  * TYPE: table
- * NAME: tb_available_estate
+ * NAME: tb_available_ads_type
  *
- * DESC: main table storing available real estate property listings
+ * DESC: table storing available real estate advertisment types
  *****************************************************************************/
-CREATE TABLE tb_available_estate (
+CREATE TABLE tb_available_ads_type (
     id_estate       integer PRIMARY KEY,
-    time_stamp      timestamp NOT NULL DEFAULT NOW(),         
-    id_bss_usr      integer NOT NULL,
-    id_estate_type  integer NOT NULL,
-    id_address      integer NOT NULL,
     id_ads_type     integer NOT NULL
 );
 -------------------------------------------------------------------------------
+
+
+/******************************************************************************
+ * TYPE: table
+ * NAME: tb_available_estate_type
+ *
+ * DESC: table storing available real estate types
+ *****************************************************************************/
+CREATE TABLE tb_available_estate_type (
+    id_estate       integer PRIMARY KEY,
+    id_estate_type  integer NOT NULL
+);
+-------------------------------------------------------------------------------
+
+
+/******************************************************************************
+ * TYPE: table
+ * NAME: tb_available_address
+ *
+ * DESC: table storing available real estate addresses
+ *****************************************************************************/
+CREATE TABLE tb_available_address (
+    id_estate       integer PRIMARY KEY,
+    street          text NOT NULL,
+    st_number       text NOT NULL,
+    neighborhood    text NOT NULL,
+    city            text NOT NULL,
+    state_province  text NOT NULL,
+    postal_code     text NOT NULL,
+    country         text NOT NULL,
+    latitude        decimal(10,8) NOT NULL,
+    longitude       decimal(11,8) NOT NULL
+--    coordinate      geometry(Point, 4326) NOT NULL
+);
+-------------------------------------------------------------------------------
+
 
 
 /******************************************************************************
