@@ -134,11 +134,11 @@ INSERT INTO tb_rental_utilities_type ( type ) VALUES
 *
 * DESC: populate the user type table with before lockdown
 *****************************************************************************/
-INSERT INTO tb_usr_type ( id, type, is_bss ) VALUES
-    (0, 'ROOT', TRUE),
-    (1000, 'ADMIN', TRUE),
-    (2000, 'AGENT', TRUE),
-    (3000, 'USER', FALSE);
+INSERT INTO tb_bss_usr_type ( type, hierarchy_path ) VALUES
+    ('ROOT', '1'),
+    ('ADMIN', '1.2'),
+    ('AGENT1', '1.3'),
+    ('AGENT2', '1.2.3');
 
 
 /******************************************************************************

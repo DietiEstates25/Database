@@ -68,10 +68,16 @@ $$
             );    
         END LOOP; 
 
-        ALTER TABLE tb_usr_type
-            ADD COLUMN is_bss boolean NOT NULL;
+        -- specific only for business user type table
+        ALTER TABLE tb_bss_usr_type
+            ADD COLUMN hierarchy_path ltree UNIQUE NOT NULL;
 
-        CREATE INDEX idx_usr_type_is_bss ON tb_usr_type (is_bss);
+        CREATE INDEX idx_bss_usr_type_on_hierarchy_path
+            ON tb_bss_usr_type (hierarchy_path);
+
+        ALTER TABLE tb_bss_usr_type
+            ADD CONSTRAINT uq_bss_usr_type_id_hierarchy_path
+                UNIQUE (id, hierarchy_path);
 
     END;
 $$;

@@ -1,3 +1,5 @@
+-- TODO: remove. No need anymore
+/*
 /******************************************************************************
  * TYPE: trigger
  * NAME: tg_bss_usr_root
@@ -24,6 +26,7 @@ CREATE TRIGGER tg_bss_usr_agency
     FOR EACH ROW
     EXECUTE FUNCTION tf_bss_usr_agency_consistency();
 ------------------------------------------------------------------------------- 
+*/
 
 /******************************************************************************
  * TYPE: trigger

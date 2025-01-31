@@ -25,3 +25,6 @@ ALTER USER ingsw
 SET search_path
     TO dieti_estate, public;
 -------------------------------------------------------------------------------
+
+CREATE EXTENSION IF NOT EXISTS ltree
+    SCHEMA dieti_estate;

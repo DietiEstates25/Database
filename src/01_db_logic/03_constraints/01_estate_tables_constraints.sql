@@ -8,7 +8,7 @@
 ALTER TABLE tb_estate
     ADD CONSTRAINT estate_fk_bss_usr
         FOREIGN KEY (id_bss_usr, id_agency)
-        REFERENCES tb_bss_usr(id_usr, id_agency)
+        REFERENCES tb_bss_usr(id, id_agency)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------

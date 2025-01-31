@@ -1,99 +1,57 @@
 /******************************************************************************
  * TYPE: constraint - unique
- * NAME: uq_id_is_bss
+ * NAME: uq_bss_usr_id_id_agency
  *
- * DESC: unique constraint associating an id for an user type and information
- *       if it is a business type or not 
- *****************************************************************************/
-ALTER TABLE tb_usr_type
-    ADD CONSTRAINT uq_id_is_bss
-        UNIQUE (id, is_bss);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: constraint - foreign key
- * NAME: usr_fk_usr_type
- *
- * DESC: foreign key constraint associating an user with an user type
- *****************************************************************************/
-ALTER TABLE tb_usr
-    ADD CONSTRAINT usr_fk_usr_type
-        FOREIGN KEY (id_usr_type, is_bss)
-        REFERENCES tb_usr_type(id, is_bss)
-        ON DELETE cascade
-        ON UPDATE cascade;
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: constraint - foreign key
- * NAME: usr_data_fk_usr
- *
- * DESC: foreign key constraint associating each user data with an user
- *****************************************************************************/
-ALTER TABLE tb_usr_data
-    ADD CONSTRAINT usr_data_fk_usr
-        FOREIGN KEY (id_usr)
-        REFERENCES tb_usr(id)
-        ON DELETE cascade
-        ON UPDATE cascade;
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: constraint - foreign key
- * NAME: phone_fk_usr
- *
- * DESC: foreign key constraint associating each phone number with an user
- *****************************************************************************/
-ALTER TABLE tb_phone
-    ADD CONSTRAINT phone_fk_usr
-        FOREIGN KEY (id_usr)
-        REFERENCES tb_usr(id)
-        ON DELETE cascade
-        ON UPDATE cascade;
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: constraint - unique
- * NAME: uq_id_usr_id_agency
- *
- * DESC: unique constraint associating a business user id and the agency id
+ * DESC: unique constraint associating an id and id_agency for a business user
  *****************************************************************************/
 ALTER TABLE tb_bss_usr
-    ADD CONSTRAINT uq_id_usr_id_agency
-        UNIQUE (id_usr, id_agency);
+    ADD CONSTRAINT uq_bss_usr_id_id_agency
+        UNIQUE (id, id_agency);
 -------------------------------------------------------------------------------
 
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: bss_usr_fk_usr
+ * NAME: [end/bss]_usr_fk_email
  *
- * DESC: foreign key constraint associating each businesses user their user
+ * DESC: foreign key constraint associating an user with an email 
  *****************************************************************************/
-ALTER TABLE tb_bss_usr
-    ADD CONSTRAINT bss_usr_fk_usr
-        FOREIGN KEY (id_usr)
-        REFERENCES tb_usr(id)
-        ON DELETE cascade
-        ON UPDATE cascade;
+DO
+LANGUAGE plpgsql
+$$
+    DECLARE
+        prefix_array    text[] := ARRAY['end', 'bss'];
+        prefix          text;
+
+    BEGIN
+        FOREACH prefix IN ARRAY prefix_array LOOP
+            EXECUTE format(
+                'ALTER TABLE tb_%1$s_usr '
+                    'ADD CONSTRAINT %1$s_usr_fk_email '
+                    'FOREIGN KEY (email) '
+                    'REFERENCES tb_email(email) '
+                    'ON DELETE cascade '
+                    'ON UPDATE cascade',
+                prefix
+            );
+        END LOOP;
+ 
+    END;
+$$;
 -------------------------------------------------------------------------------
 
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: bss_usr_fk_super_bss_usr
+ * NAME: bss_usr_fk_bss_usr_type
  *
- * DESC: recursive foreign key constraint associating each businesses user with 
- *       their superior
+ * DESC: foreign key constraint associating each business user with
+ *       a business user type 
  *****************************************************************************/
 ALTER TABLE tb_bss_usr
-    ADD CONSTRAINT bss_usr_fk_super_bss_usr
-        FOREIGN KEY (id_super)
-        REFERENCES tb_bss_usr(id_usr)
+    ADD CONSTRAINT bss_usr_fk_bss_usr_type
+        FOREIGN KEY (id_bss_usr_type, hierarchy_path)
+        REFERENCES tb_bss_usr_type(id, hierarchy_path)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -103,7 +61,7 @@ ALTER TABLE tb_bss_usr
  * TYPE: constraint - foreign key
  * NAME: bss_usr_fk_agency
  *
- * DESC: foreign key constraint for tb_bss_usr to tb_agency
+ * DESC: foreign key constraint associating each business user with an agency
  *****************************************************************************/
 ALTER TABLE tb_bss_usr
     ADD CONSTRAINT bss_usr_fk_agency
@@ -115,28 +73,15 @@ ALTER TABLE tb_bss_usr
 
 
 /******************************************************************************
- * TYPE: constraint - unique
- * NAME: uq_tmp_id_usr_id_agency
- *
- * DESC: unique constraint associating a business user id and the agency id
- *****************************************************************************/
-ALTER TABLE tb_tmp_bss_usr
-    ADD CONSTRAINT uq_tmp_id_usr_id_agency
-        UNIQUE (id_usr, id_agency);
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_bss_usr_fk_usr
+ * NAME: bss_usr_fk_super_bss_usr
  *
- * DESC: foreign key constraint associating each temporary businesses user with 
- *       their usr
+ * DESC: foreign key constraint associating each business user with its super 
  *****************************************************************************/
-ALTER TABLE tb_tmp_bss_usr
-    ADD CONSTRAINT tmp_bss_usr_fk_usr
-        FOREIGN KEY (id_usr)
-        REFERENCES tb_usr(id)
+ALTER TABLE tb_bss_usr
+    ADD CONSTRAINT bss_usr_fk_super_bss_usr
+        FOREIGN KEY (id_super_bss_usr, id_agency)
+        REFERENCES tb_bss_usr(id, id_agency)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -144,31 +89,61 @@ ALTER TABLE tb_tmp_bss_usr
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_bss_usr_fk_super_bss_usr
+ * NAME: [end/bss]_usr_data_fk_[end/bss]_usr
  *
- * DESC: foreign key constraint associating each temporary businesses user with 
- *       their superior
+ * DESC: foreign key constraint associating user data with an user
  *****************************************************************************/
-ALTER TABLE tb_tmp_bss_usr
-    ADD CONSTRAINT tmp_bss_usr_fk_bss_usr
-        FOREIGN KEY (id_super)
-        REFERENCES tb_bss_usr(id_usr)
-        ON DELETE cascade
-        ON UPDATE cascade;
+DO
+LANGUAGE plpgsql
+$$
+    DECLARE
+        prefix_array    text[] := ARRAY['end', 'bss'];
+        prefix          text;
+
+    BEGIN
+        FOREACH prefix IN ARRAY prefix_array LOOP
+            EXECUTE format(
+                'ALTER TABLE tb_%1$s_usr_data '
+                    'ADD CONSTRAINT %1$s_usr_data_fk_%1$s_usr '
+                    'FOREIGN KEY (id_usr) '
+                    'REFERENCES tb_%1$s_usr(id) '
+                    'ON DELETE cascade '
+                    'ON UPDATE cascade',
+                prefix
+            );
+        END LOOP;
+ 
+    END;
+$$;
 -------------------------------------------------------------------------------
 
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: tmp_bss_usr_fk_agency
+ * NAME: [end/bss]_usr_phone_[end/bss]_usr
  *
- * DESC: foreign key constraint associating each temporary businesses user with 
- *       their agency
+ * DESC: foreign key constraint associating user phone number with an user
  *****************************************************************************/
-ALTER TABLE tb_tmp_bss_usr
-    ADD CONSTRAINT tmp_bss_usr_fk_agency
-        FOREIGN KEY (id_agency)
-        REFERENCES tb_agency(id)
-        ON DELETE cascade
-        ON UPDATE cascade;
+DO
+LANGUAGE plpgsql
+$$
+    DECLARE
+        prefix_array    text[] := ARRAY['end', 'bss'];
+        prefix          text;
+
+    BEGIN
+        FOREACH prefix IN ARRAY prefix_array LOOP
+            EXECUTE format(
+                'ALTER TABLE tb_%1$s_usr_phone '
+                    'ADD CONSTRAINT %1$s_usr_phone_fk_%1$s_usr '
+                    'FOREIGN KEY (id_usr) '
+                    'REFERENCES tb_%1$s_usr(id) '
+                    'ON DELETE cascade '
+                    'ON UPDATE cascade',
+                prefix
+            );
+        END LOOP;
+ 
+    END;
+$$;
 -------------------------------------------------------------------------------
