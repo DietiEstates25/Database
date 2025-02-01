@@ -9,10 +9,9 @@ export function validatePR({
     const prTitleRegExp = new RegExp(prTitleRegexPattern);
     const prTitleMatchResult = prTitleRegExp.test(title);
 
-    if (title.startsWith("Merge") || title.startsWith("merge"))
-    {
+    if (title.startsWith('Merge') || title.startsWith('merge')) {
       return {
-        status: "success",
+        status: 'success',
         message: `
           Pull request title 
           **************************************************************************************
@@ -30,7 +29,7 @@ export function validatePR({
 
     if (!prTitleMatchResult) {
       return {
-        status: "failure",
+        status: 'failure',
         message: `Pull request title 
         **************************************************************************************
         ${title}
@@ -38,11 +37,11 @@ export function validatePR({
         does not match ${prTitleRegexPattern}`,
       };
     }
-  
+
     const prBodyRegExp = new RegExp(prBodyRegexPattern);
     if (!prBodyRegExp.test(body)) {
       return {
-        status: "failure",
+        status: 'failure',
         message: `Pull request body 
         **************************************************************************************
         ${body}
@@ -51,7 +50,7 @@ export function validatePR({
       };
     }
     return {
-      status: "success",
+      status: 'success',
       message: `
         Pull request title 
         **************************************************************************************
@@ -65,16 +64,14 @@ export function validatePR({
         matches ${prBodyRegexPattern}
         `,
     };
-  }  else {
+  } else {
     if (type === 'push') {
-
       const prTitleRegExp = new RegExp(prTitleRegexPattern);
       const prTitleMatchResult = prTitleRegExp.test(title);
 
-      if (title.startsWith("Merge") || title.startsWith("merge"))
-      {
+      if (title.startsWith('Merge') || title.startsWith('merge')) {
         return {
-          status: "success",
+          status: 'success',
           message: `
           Push request title 
             **************************************************************************************
@@ -84,10 +81,10 @@ export function validatePR({
             `,
         };
       }
-      
+
       if (!prTitleMatchResult) {
         return {
-          status: "failure",
+          status: 'failure',
           message: `Push request title 
           **************************************************************************************
           ${title}
@@ -96,7 +93,7 @@ export function validatePR({
         };
       }
       return {
-        status: "success",
+        status: 'success',
         message: `
         Push request title 
           **************************************************************************************
