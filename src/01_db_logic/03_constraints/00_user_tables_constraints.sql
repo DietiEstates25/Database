@@ -1,27 +1,12 @@
 /******************************************************************************
  * TYPE: constraint - unique
- * NAME: uq_bss_usr_id_id_agency
+ * NAME: uq_tb_bss_usr
  *
- * DESC: unique constraint associating an id and id_agency
- *       for a business user
+ * DESC: unique constraint for business user (needed for references)
  *****************************************************************************/
 ALTER TABLE tb_bss_usr
-    ADD CONSTRAINT uq_bss_usr_id_id_agency
-        UNIQUE (id, id_agency);
--------------------------------------------------------------------------------
-
-
-
-/******************************************************************************
- * TYPE: constraint - unique
- * NAME: uq_bss_usr_id_hierarchy_id_agency
- *
- * DESC: unique constraint associating an id, hierarchy path and id_agency
- *       for a business user
- *****************************************************************************/
-ALTER TABLE tb_bss_usr
-    ADD CONSTRAINT uq_bss_usr_id_hierarchy_id_agency
-        UNIQUE (id, hierarchy_path, id_agency);
+ ADD CONSTRAINT uq_tb_bss_usr
+    UNIQUE (id, hierarchy_super_id);
 -------------------------------------------------------------------------------
 
 
@@ -58,45 +43,15 @@ $$;
 
 /******************************************************************************
  * TYPE: constraint - foreign key
- * NAME: bss_usr_fk_bss_usr_type
+ * NAME: bss_usr_fk_bss_hierarchy
  *
  * DESC: foreign key constraint associating each business user with
- *       a business user type 
+ *       a business hierarchy
  *****************************************************************************/
 ALTER TABLE tb_bss_usr
-    ADD CONSTRAINT bss_usr_fk_bss_usr_type
-        FOREIGN KEY (id_bss_usr_type, hierarchy_path)
-        REFERENCES tb_bss_usr_type(id, hierarchy_path)
-        ON DELETE cascade
-        ON UPDATE cascade;
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: constraint - foreign key
- * NAME: bss_usr_fk_agency
- *
- * DESC: foreign key constraint associating each business user with an agency
- *****************************************************************************/
-ALTER TABLE tb_bss_usr
-    ADD CONSTRAINT bss_usr_fk_agency
-        FOREIGN KEY (id_agency)
-        REFERENCES tb_agency(id)
-        ON DELETE cascade
-        ON UPDATE cascade;
--------------------------------------------------------------------------------
-
-
-/******************************************************************************
- * TYPE: constraint - foreign key
- * NAME: bss_usr_fk_super_bss_usr
- *
- * DESC: foreign key constraint associating each business user with its super 
- *****************************************************************************/
-ALTER TABLE tb_bss_usr
-    ADD CONSTRAINT bss_usr_fk_super_bss_usr
-        FOREIGN KEY (id_super_bss_usr, super_hierarchy_path, id_agency)
-        REFERENCES tb_bss_usr(id, hierarchy_path, id_agency)
+    ADD CONSTRAINT bss_usr_fk_bss_hierarchy
+        FOREIGN KEY (hierarchy_role)
+        REFERENCES tb_bss_hierarchy(hierarchy)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------

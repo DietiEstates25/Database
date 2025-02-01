@@ -82,12 +82,12 @@ CREATE DOMAIN dm_smp_str AS varchar(666)
 
 /******************************************************************************
  * TYPE: domain
- * NAME: dm_error_name
+ * NAME: dm_usalnum
  *
- * DESC: domain for error name with format validation
+ * DESC: domain for alphanumerical string with underscore as separator
  *****************************************************************************/
-CREATE DOMAIN dm_err_name AS text
+CREATE DOMAIN dm_usalnum AS text
     CHECK (
-        VALUE ~ '^([0-9a-z]+_)*[0-9a-z]+$'
+        VALUE ~ '^([0-9a-zA-Z]+_)*[0-9a-zA-z]+$'
     );
 -------------------------------------------------------------------------------

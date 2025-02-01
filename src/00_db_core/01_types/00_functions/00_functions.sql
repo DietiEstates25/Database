@@ -10,7 +10,6 @@ LANGUAGE plpgsql
 AS $$
     DECLARE
         type_tables text[] := ARRAY[
-            'bss_usr',
             'ads',
             'estate',
             'furniture',

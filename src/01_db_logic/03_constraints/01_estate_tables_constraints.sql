@@ -3,12 +3,12 @@
  * NAME: estate_fk_bss_usr
  *
  * DESC: foreign key constraint associating each estate with the businesses 
- *       user (and its agency) that created it
+ *       user (and its hierarchy) that created it
  *****************************************************************************/
 ALTER TABLE tb_estate
     ADD CONSTRAINT estate_fk_bss_usr
-        FOREIGN KEY (id_bss_usr, id_agency)
-        REFERENCES tb_bss_usr(id, id_agency)
+        FOREIGN KEY (id_bss_usr, hierarchy_super_id)
+        REFERENCES tb_bss_usr(id, hierarchy_super_id)
         ON DELETE cascade
         ON UPDATE cascade;
 -------------------------------------------------------------------------------
@@ -21,5 +21,5 @@ ALTER TABLE tb_estate
  *****************************************************************************/
 ALTER TABLE tb_estate
     ADD CONSTRAINT uq_estate
-        UNIQUE (id, id_bss_usr, id_agency);
+        UNIQUE (id, id_bss_usr, hierarchy_super_id);
 -------------------------------------------------------------------------------

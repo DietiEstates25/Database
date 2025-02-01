@@ -6,7 +6,7 @@
  *       error code with that integer
  *****************************************************************************/
 CREATE OR REPLACE FUNCTION int2err_code(
-    num_err_code smallint
+    num_err_code    smallint
 )
 RETURNS varchar(5)
 LANGUAGE plpgsql
@@ -25,9 +25,9 @@ $$;
  * DESC: given custom error details raise an exception accordingly
  *****************************************************************************/
 CREATE OR REPLACE FUNCTION handle_custom_error(
-    err_code smallint,
-    err_msg text,
-    err_hint text
+    err_code    smallint,
+    err_msg     text,
+    err_hint    text
 )
 RETURNS void
 LANGUAGE plpgsql
@@ -69,7 +69,7 @@ $$;
  *       (if error code is not found, raise exception with a generic message)
  *****************************************************************************/
 CREATE OR REPLACE FUNCTION raise_custom_error(
-    ext_err_code smallint
+    ext_err_code    smallint
 )
 RETURNS void
 LANGUAGE plpgsql
@@ -98,7 +98,7 @@ $$;
  * DESC: overloaded version for raising custom error by name
  *****************************************************************************/
 CREATE OR REPLACE FUNCTION raise_custom_error(
-    ext_err_name    dm_err_name
+    ext_err_name    dm_usalnum
 )
 RETURNS void
 LANGUAGE plpgsql

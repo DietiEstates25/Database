@@ -6,7 +6,7 @@
  *****************************************************************************/
 CREATE TABLE tb_template_type (
     id      serial PRIMARY KEY,
-    type    text UNIQUE NOT NULL
+    type    dm_usalnum UNIQUE NOT NULL
 );
 -------------------------------------------------------------------------------
 
